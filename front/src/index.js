@@ -2,11 +2,25 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import Login from "./pages/Login";
 import reportWebVitals from "./reportWebVitals";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import "./index.css";
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#ffb07a",
+    },
+    secondary: {
+      main: "#ffb07a",
+    },
+  },
+});
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Login></Login>
+    <ThemeProvider theme={theme}>
+      <Login></Login>
+    </ThemeProvider>
   </React.StrictMode>
 );
 
