@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import reportWebVitals from "./reportWebVitals";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "./index.css";
+import Register from "./pages/Register";
 const theme = createTheme({
   palette: {
     primary: {
@@ -19,7 +20,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <Login></Login>
+      <Register></Register>
     </ThemeProvider>
   </React.StrictMode>
 );
