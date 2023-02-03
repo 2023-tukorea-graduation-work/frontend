@@ -33,7 +33,9 @@ const Register = () => {
             {countStep === 0 && (
               <StepFirst IncreaseStep={IncreaseStep} isMento={isMento} />
             )}
-            {countStep === 1 && Mento && <StepSecondMentor />}
+            {countStep === 1 && Mento && (
+              <StepSecondMentor IncreaseStep={IncreaseStep} />
+            )}
             {countStep === 1 && !Mento && <StepSecondMentee />}
             {countStep === 2 && <StepThird />}
           </WhiteBox>

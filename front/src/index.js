@@ -1,10 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import reportWebVitals from "./reportWebVitals";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "./index.css";
 import Register from "./pages/Register";
+import { BrowserRouter } from "react-router-dom";
 const theme = createTheme({
   palette: {
     primary: {
@@ -20,7 +22,12 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <Register></Register>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/register" element={<Register />}></Route>
+          <Route path="/" element={<Login />}></Route>
+        </Routes>
+      </BrowserRouter>
     </ThemeProvider>
   </React.StrictMode>
 );
