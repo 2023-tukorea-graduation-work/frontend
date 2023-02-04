@@ -22,4 +22,8 @@
   font-family: "NotoSansBlack";
   src: url(./fonts/NotoSansKR-Black.otf);
 }
+@font-face {
+  font-family: "Inter";
+  src: url(./fonts/Inter-Regular.ttf);
+}
 /* 아래로 갈수록 점차 두꺼워집니다 */

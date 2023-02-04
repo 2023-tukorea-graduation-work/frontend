@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 const LeftProcess = (props) => {
   const LeftStyle = styled.div`
     width: 15%;
-    height: 90vh;
+    height: 87vh;
     background-color: rgba(255, 204, 170, 0.3);
     font-family: "NotoSansMedium";
     text-align: center;

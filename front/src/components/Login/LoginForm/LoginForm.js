@@ -73,7 +73,7 @@ const CheckStyled = styled.div`
 const LogoStyled = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 13rem;
+  margin-top: 6rem;
   border: 1px solid red;
   width: 100%;
   height: 1rem;

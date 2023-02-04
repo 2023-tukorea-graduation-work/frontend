@@ -260,14 +260,12 @@ const StepSecond = (props) => {
                 backgroundColor: "#f8f8f8",
               }}
             >
-              {teachingStyle.map((value, index) => {
-                return (
-                  <>
-                    <input type="checkbox" key={index} value={value}></input>
-                    {value}
-                  </>
-                );
-              })}
+              {teachingStyle.map((value, index) => (
+                <>
+                  <input type="checkbox" key={index} value={value}></input>
+                  {value}
+                </>
+              ))}
             </div>
           </InformationBoxLine>
           <InformationBoxLine>

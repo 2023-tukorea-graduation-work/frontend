@@ -17,7 +17,7 @@ const Register = () => {
     console.log(countStep);
   };
   const WhiteBox = styled.div`
-    height: 90vh;
+    height: 87vh;
     width: 85%;
     box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.15);
     background-color: #fff;
@@ -27,7 +27,7 @@ const Register = () => {
     <>
       <Grid container>
         <Grid xs={1}></Grid>
-        <Grid xs={10} sx={{ display: "flex", marginTop: "10vh" }}>
+        <Grid xs={10} sx={{ display: "flex" }}>
           <LeftProcess countStep={countStep} />
           <WhiteBox>
             {countStep === 0 && (

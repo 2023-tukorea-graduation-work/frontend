@@ -7,6 +7,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "./index.css";
 import Register from "./pages/Register";
 import { BrowserRouter } from "react-router-dom";
+import Header from "./components/Header/Header";
 const theme = createTheme({
   palette: {
     primary: {
@@ -22,6 +23,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
+      <Header />
       <BrowserRouter>
         <Routes>
           <Route path="/register" element={<Register />}></Route>
