@@ -36,7 +36,9 @@ const Register = () => {
             {countStep === 1 && Mento && (
               <StepSecondMentor IncreaseStep={IncreaseStep} />
             )}
-            {countStep === 1 && !Mento && <StepSecondMentee />}
+            {countStep === 1 && !Mento && (
+              <StepSecondMentee IncreaseStep={IncreaseStep} />
+            )}
             {countStep === 2 && <StepThird />}
           </WhiteBox>
         </Grid>

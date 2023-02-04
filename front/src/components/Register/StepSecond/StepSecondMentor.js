@@ -412,7 +412,7 @@ const InformationBoxLine = styled.div`
   margin-bottom: 2%;
 `;
 const IdWithPasswordBox = styled.div`
-  margin-top: 5%;
+  margin-top: 2%;
   font-family: NotoSansRegular;
   height: 20%;
   display: flex;
