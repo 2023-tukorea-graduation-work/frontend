@@ -1,17 +1,18 @@
 import React from "react";
-
+import Grid from "@mui/material/Unstable_Grid2";
+import LoginForm from "../components/Login/LoginForm/LoginForm";
+import LoginMenu from "../components/Login/LoginMenu/LoginMenu";
 const Login = () => {
   return (
     <>
-      <div>hellow world</div>
-      <div
-        style={{
-          width: "5px",
-          height: "50px",
-          backgroundColor: "peru",
-          transform: "rotate(-45deg)",
-        }}
-      ></div>
+      <Grid container>
+        <Grid xs={3}></Grid>
+        <Grid xs={6}>
+          <LoginForm></LoginForm>
+          <LoginMenu></LoginMenu>
+        </Grid>
+        <Grid xs={3}></Grid>
+      </Grid>
     </>
   );
 };

@@ -1,12 +1,36 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import reportWebVitals from "./reportWebVitals";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import "./index.css";
+import Register from "./pages/Register";
+import { BrowserRouter } from "react-router-dom";
+import Header from "./components/Header/Header";
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#ffb07a",
+    },
+    secondary: {
+      main: "#ffb07a",
+    },
+  },
+});
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Login></Login>
+    <ThemeProvider theme={theme}>
+      <Header />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/register" element={<Register />}></Route>
+          <Route path="/" element={<Login />}></Route>
+        </Routes>
+      </BrowserRouter>
+    </ThemeProvider>
   </React.StrictMode>
 );
 
