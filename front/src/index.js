@@ -8,6 +8,7 @@ import "./index.css";
 import Register from "./pages/Register";
 import { BrowserRouter } from "react-router-dom";
 import Header from "./components/Header/Header";
+import MyPage from "./pages/MyPage";
 const theme = createTheme({
   palette: {
     primary: {
@@ -27,6 +28,7 @@ root.render(
       <BrowserRouter>
         <Routes>
           <Route path="/register" element={<Register />}></Route>
+          <Route path="/myPage" element={<MyPage />}></Route>
           <Route path="/" element={<Login />}></Route>
         </Routes>
       </BrowserRouter>

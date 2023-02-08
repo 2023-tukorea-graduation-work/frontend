@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "@emotion/styled";
 const LeftProcess = (props) => {
   const LeftStyle = styled.div`
