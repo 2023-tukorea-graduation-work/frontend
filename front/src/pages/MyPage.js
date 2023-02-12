@@ -3,7 +3,7 @@ import Grid from "@mui/material/Unstable_Grid2";
 import MyPageFalse from "../components/MyPage/MyPageFalse";
 import MyPageTrue from "../components/MyPage/MyPageTrue";
 const MyPage = () => {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
   return (
     <>
       <Grid container>
