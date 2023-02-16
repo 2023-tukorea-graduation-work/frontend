@@ -6,6 +6,7 @@ const LeftProcess = (props) => {
     height: 87vh;
     background-color: rgba(255, 204, 170, 0.3);
     font-family: "NotoSansMedium";
+    font-size: 1.1rem;
     text-align: center;
     box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.15);
   `;
@@ -19,17 +20,15 @@ const LeftProcess = (props) => {
   return (
     <>
       <LeftStyle>
-        {["01.멘토/멘티설정", "02.기본정보입력", "03.회원가입완료"].map(
-          (value, index) => {
-            if (index === props.countStep)
-              return (
-                <ProcessStyle key={index} style={{ color: "#000" }}>
-                  {value}
-                </ProcessStyle>
-              );
-            return <ProcessStyle key={index}>{value}</ProcessStyle>;
-          }
-        )}
+        {props.orderProcess.map((value, index) => {
+          if (index === props.countStep)
+            return (
+              <ProcessStyle key={index} style={{ color: "#000" }}>
+                {value}
+              </ProcessStyle>
+            );
+          return <ProcessStyle key={index}>{value}</ProcessStyle>;
+        })}
       </LeftStyle>
     </>
   );

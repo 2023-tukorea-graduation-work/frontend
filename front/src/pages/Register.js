@@ -7,12 +7,12 @@ import StepSecondMentor from "../components/Register/StepSecond/StepSecondMentor
 import StepThird from "../components/Register/StepThird/StepThird";
 import StepSecondMentee from "../components/Register/StepSecond/StepSecondMentee";
 const Register = () => {
-  const [Mento, setMento] = useState(false);
+  const [mento, setMento] = useState(false);
   const [countStep, setCountStep] = useState(0);
   const isMento = () => {
-    setMento(!Mento);
+    setMento(!mento);
   };
-  const IncreaseStep = () => {
+  const increaseStep = () => {
     setCountStep((state) => state + 1);
     console.log(countStep);
   };
@@ -28,16 +28,23 @@ const Register = () => {
       <Grid container>
         <Grid xs={1}></Grid>
         <Grid xs={10} sx={{ display: "flex" }}>
-          <LeftProcess countStep={countStep} />
+          <LeftProcess
+            countStep={countStep}
+            orderProcess={[
+              "01.멘토/멘티설정",
+              "02.기본정보입력",
+              "03.회원가입완료",
+            ]}
+          />
           <WhiteBox>
             {countStep === 0 && (
-              <StepFirst IncreaseStep={IncreaseStep} isMento={isMento} />
+              <StepFirst increaseStep={increaseStep} isMento={isMento} />
             )}
-            {countStep === 1 && Mento && (
-              <StepSecondMentor IncreaseStep={IncreaseStep} />
+            {countStep === 1 && mento && (
+              <StepSecondMentor increaseStep={increaseStep} />
             )}
-            {countStep === 1 && !Mento && (
-              <StepSecondMentee IncreaseStep={IncreaseStep} />
+            {countStep === 1 && !mento && (
+              <StepSecondMentee increaseStep={increaseStep} />
             )}
             {countStep === 2 && <StepThird />}
           </WhiteBox>
