@@ -360,7 +360,7 @@ const StepSecond = (props) => {
             fontFamily: "NotoSansLight",
             boxShadow: "0",
           }}
-          onClick={props.IncreaseStep}
+          onClick={props.increaseStep}
         >
           회원가입하기
         </Button>
