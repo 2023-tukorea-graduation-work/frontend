@@ -1,11 +1,8 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import styled from "@emotion/styled";
-import { FormControl, Input, MenuItem, Select } from "@mui/material";
-const PrStepSecond = () => {
+import { Button, FormControl, Input, MenuItem, Select } from "@mui/material";
+const PrStepSecond = (props) => {
   const [grade, setGrade] = useState("");
-  const gradeHandleChange = (event) => {
-    setGrade(event.target.value);
-  };
   const teachingStyle = [
     "온라인",
     "오프라인",
@@ -14,6 +11,26 @@ const PrStepSecond = () => {
     "인천",
     "그외지역",
   ];
+  const [plan, setPlan] = useState([
+    { id: 1, title: "" },
+    { id: 2, title: "" },
+  ]);
+  const week = useRef(2);
+  const gradeHandleChange = (event) => {
+    setGrade(event.target.value);
+    console.log(grade);
+  };
+  function titleHandleChange(event, index) {
+    const copyPlan = [...plan];
+    copyPlan[index].title = event.target.value;
+    setPlan(copyPlan);
+  }
+  const addPlan = () => {
+    week.current += 1;
+    setPlan((state) => [...state, { id: week.current, title: "" }]);
+    console.log(week.current);
+  };
+
   return (
     <BasicForm>
       <InformationBox>
@@ -109,7 +126,59 @@ const PrStepSecond = () => {
       </InformationBox>
       <LearningPlan>
         <p>학습 계획</p>
+        <table style={{ border: "solid 1px #d6d6d6" }}>
+          <tbody>
+            {plan.map((state, index) => (
+              <>
+                <tr>
+                  <td
+                    style={{
+                      border: "solid 1px #d6d6d6",
+                      textAlign: "center",
+                      paddingTop: "5%",
+                      height: "5rem",
+                    }}
+                  >
+                    {state.id}주차
+                  </td>
+                  <td
+                    style={{
+                      border: "solid 1px #d6d6d6",
+                    }}
+                  >
+                    <Input
+                      disableUnderline={true}
+                      onChange={(event) => titleHandleChange(event, index)}
+                      value={state.title}
+                      sx={{
+                        height: "100%",
+                        width: "100%",
+                        border: "0",
+                        boxShadow: "0",
+                      }}
+                    />
+                  </td>
+                </tr>
+              </>
+            ))}
+          </tbody>
+        </table>
+        <button onClick={addPlan}>추가</button>
       </LearningPlan>
+      <Button
+        variant="contained"
+        color="primary"
+        sx={{
+          width: "20%",
+          height: "4%",
+          fontSize: "100%",
+          fontFamily: "NotoSansRegular",
+          boxShadow: "0",
+        }}
+        onClick={props.increaseStep}
+      >
+        작성 완료
+      </Button>
     </BasicForm>
   );
 };
@@ -121,6 +190,9 @@ const BasicForm = styled.div`
   text-align: start;
   font-family: "NotoSansRegular";
   font-size: 1.2rem;
+  align-items: center;
+  overflow: auto;
+  overflow-x: hidden;
 `;
 const InformationBox = styled.div`
   width: 92%;
