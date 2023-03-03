@@ -10,8 +10,9 @@ import { BrowserRouter } from "react-router-dom";
 import Header from "./components/Header/Header";
 import MyPage from "./pages/MyPage";
 import ProgramCreation from "./pages/ProgramCreation";
-
 import ProjectProgress from "./pages/ProjectProgress";
+import { Provider } from "react-redux";
+import { store } from "./app/store";
 const theme = createTheme({
   palette: {
     primary: {
@@ -26,18 +27,26 @@ const theme = createTheme({
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <Header />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/projectProgress" element={<ProjectProgress />}></Route>
-          <Route path="/programCreation" element={<ProgramCreation />}></Route>
-          <Route path="/register" element={<Register />}></Route>
-          <Route path="/myPage" element={<MyPage />}></Route>
-          <Route path="/" element={<Login />}></Route>
-        </Routes>
-      </BrowserRouter>
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <Header />
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path="/projectProgress"
+              element={<ProjectProgress />}
+            ></Route>
+            <Route
+              path="/programCreation"
+              element={<ProgramCreation />}
+            ></Route>
+            <Route path="/register" element={<Register />}></Route>
+            <Route path="/myPage" element={<MyPage />}></Route>
+            <Route path="/" element={<Login />}></Route>
+          </Routes>
+        </BrowserRouter>
+      </ThemeProvider>
+    </Provider>
   </React.StrictMode>
 );
 

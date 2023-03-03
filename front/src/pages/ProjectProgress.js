@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import Grid from "@mui/material/Unstable_Grid2";
 import styled from "@emotion/styled";
 import LeftBar from "../components/Progress/LeftBar/LeftBar";
+import { useDispatch, useSelector } from "react-redux";
+import { indexChange } from "../features/leftBarSlice/leftBarSlice";
 const ProjectProgress = () => {
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const indexHandler = (index) => {
-    setSelectedIndex(index);
-  };
+  const selectIndex = useSelector((state) => state.leftBar.indexNumber);
   const barArray = [
     { title: <div>0</div>, content: <div>0</div> },
     { title: <div>1</div>, content: <div>1</div> },
@@ -15,6 +14,7 @@ const ProjectProgress = () => {
     { title: <div>4</div>, content: <div>4</div> },
     { title: <div>5</div>, content: <div>5</div> },
   ];
+
   return (
     <>
       <Grid container>
@@ -22,7 +22,7 @@ const ProjectProgress = () => {
         <Grid xs={10} sx={{ display: "flex" }}>
           <LeftBar></LeftBar>
           <Boxx2>
-            <div>{barArray[selectedIndex].content}</div>
+            <div>{barArray[selectIndex].content}</div>
           </Boxx2>
         </Grid>
         <Grid xs={1}></Grid>
