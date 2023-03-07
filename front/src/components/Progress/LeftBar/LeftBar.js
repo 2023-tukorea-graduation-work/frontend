@@ -47,6 +47,7 @@ const Tab = styled.div`
   border-top-left-radius: 25px;
   border-bottom-left-radius: 25px;
   margin-top: 10%;
+  cursor: pointer;
 `;
 const SelectedTab = styled.div`
   height: 7%;
@@ -60,5 +61,6 @@ const SelectedTab = styled.div`
   border-bottom-left-radius: 25px;
   margin-top: 10%;
   font-family: "NotoSansBold";
+  cursor: pointer;
 `;
 export default LeftBar;

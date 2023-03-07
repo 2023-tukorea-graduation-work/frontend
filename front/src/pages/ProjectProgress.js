@@ -4,10 +4,11 @@ import styled from "@emotion/styled";
 import LeftBar from "../components/Progress/LeftBar/LeftBar";
 import { useDispatch, useSelector } from "react-redux";
 import { indexChange } from "../features/leftBarSlice/leftBarSlice";
+import ProgressMain from "../components/Progress/ProgressMain/ProgressMain";
 const ProjectProgress = () => {
   const selectIndex = useSelector((state) => state.leftBar.indexNumber);
   const barArray = [
-    { title: <div>0</div>, content: <div>0</div> },
+    { title: <div>0</div>, content: <ProgressMain /> },
     { title: <div>1</div>, content: <div>1</div> },
     { title: <div>2</div>, content: <div>2</div> },
     { title: <div>3</div>, content: <div>3</div> },
