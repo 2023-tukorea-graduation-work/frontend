@@ -1,20 +1,23 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
 import { Button, FormControl, Input, MenuItem, Select } from "@mui/material";
-
+import { Controller, useForm } from "react-hook-form";
 const StepSecond = (props) => {
+  const {
+    control,
+    register,
+    getValues,
+    formState: { errors, isSubmitting },
+    handleSubmit,
+  } = useForm();
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [email, setEmail] = useState("");
   const [grade, setGrade] = useState("");
-  const teachingStyle = [
-    "온라인",
-    "오프라인",
-    "서울",
-    "경기도",
-    "인천",
-    "그외지역",
-  ];
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordComfirm, setpasswordComfirm] = useState("");
+  const teachingStyle = ["온라인", "오프라인", "온라인&오프라인 병행"];
   const nameHandleChange = (event) => {
     setName(event.target.value);
   };
@@ -30,8 +33,26 @@ const StepSecond = (props) => {
   const gradeHandleChange = (event) => {
     setGrade(event.target.value);
   };
+  const idHandleChange = (event) => {
+    setId(event.target.value);
+  };
+  const passwordHandleChange = (event) => {
+    setPassword(event.target.value);
+  };
+  const passwordComfirmHandleChange = (event) => {
+    setpasswordComfirm(event.target.value);
+  };
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+  const onError = (error) => {
+    console.log(error);
+  };
   return (
-    <div style={{ padding: "4%", height: "87%" }}>
+    <form
+      onSubmit={handleSubmit(onSubmit, onError)}
+      style={{ padding: "4%", height: "87%" }}
+    >
       {/* ---------------1번째칸 관심분야---------------  */}
 
       <div
@@ -68,7 +89,6 @@ const StepSecond = (props) => {
           <InformationBoxLine>
             이름
             <Input
-              value={name}
               onChange={nameHandleChange}
               disableUnderline={true}
               placeholder="이름입력"
@@ -82,29 +102,46 @@ const StepSecond = (props) => {
                 borderBottom: "solid 2px",
                 borderBottomColor: "#d6d6d6",
               }}
+              {...register("name", {
+                required: "이메일은 필수입력입니다.",
+              })}
             />
             출생연도
             <FormControl>
-              <Select
-                disableUnderline={true}
-                sx={{
-                  width: "3.9rem",
-                  height: "100%",
-                  border: "solid 1px #d6d6d6",
-                  boxShadow: "0",
-                }}
-                value={age}
-                onChange={ageHandleChange}
-                displayEmpty
-                variant="standard"
-              >
-                <MenuItem value="">
-                  <em>2000</em>
-                </MenuItem>
-                <MenuItem value={1999}>1999</MenuItem>
-                <MenuItem value={1998}>1998</MenuItem>
-                <MenuItem value={1997}>1997</MenuItem>
-              </Select>
+              <Controller
+                defaultValue=""
+                control={control}
+                name="age"
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    disableUnderline={true}
+                    sx={{
+                      width: "3.9rem",
+                      height: "100%",
+                      border: "solid 1px #d6d6d6",
+                      boxShadow: "0",
+                    }}
+                    displayEmpty
+                    variant="standard"
+                    name="age"
+                  >
+                    <MenuItem
+                      disabled
+                      value=""
+                      sx={{
+                        display: "none",
+                      }}
+                    >
+                      <em>-</em>
+                    </MenuItem>
+                    <MenuItem value={2000}>2000</MenuItem>
+                    <MenuItem value={1999}>1999</MenuItem>
+                    <MenuItem value={1998}>1998</MenuItem>
+                    <MenuItem value={1997}>1997</MenuItem>
+                  </Select>
+                )}
+              />
             </FormControl>
             이메일
             <Input
@@ -120,46 +157,10 @@ const StepSecond = (props) => {
                 borderBottom: "solid 2px",
                 borderBottomColor: "#d6d6d6",
               }}
+              {...register("email", {
+                required: "이메일은 필수입력입니다.",
+              })}
             />
-            @
-            <Input
-              disableUnderline={true}
-              value={email}
-              onChange={directEmailHandleChange}
-              placeholder="직접입력"
-              sx={{
-                fontSize: "1rem",
-                height: "100%",
-                width: "11%",
-                boxShadow: "0",
-                border: "0",
-                borderRadius: "0",
-                borderBottom: "solid 2px",
-                borderBottomColor: "#d6d6d6",
-              }}
-            />
-            <FormControl>
-              <Select
-                disableUnderline={true}
-                sx={{
-                  height: "100%",
-                  width: "110%",
-                  border: "solid 1px #d6d6d6",
-                  boxShadow: "0",
-                }}
-                value={email}
-                onChange={emailHandleChange}
-                displayEmpty
-                variant="standard"
-              >
-                <MenuItem value="">
-                  <em style={{}}>메일주소 선택</em>
-                </MenuItem>
-                <MenuItem value={"gmail.com"}>gmail.com</MenuItem>
-                <MenuItem value={"hanmail.com"}>hanmail.com</MenuItem>
-                <MenuItem value={"youtube.com"}>youtube.com</MenuItem>
-              </Select>
-            </FormControl>
           </InformationBoxLine>
           <InformationBoxLine>
             학교
@@ -173,6 +174,9 @@ const StepSecond = (props) => {
                 boxShadow: "0",
               }}
               placeholder="직접입력"
+              {...register("school", {
+                required: "학교는 필수입력입니다.",
+              })}
             />
             학교찾기
             <Input
@@ -187,7 +191,7 @@ const StepSecond = (props) => {
               placeholder="학교명 검색"
             />
           </InformationBoxLine>
-          <InformationBoxLine>
+          <InformationBoxLine style={{ justifyContent: "start" }}>
             학과
             <Input
               disableUnderline={true}
@@ -199,55 +203,46 @@ const StepSecond = (props) => {
                 boxShadow: "0",
               }}
               placeholder="학과"
+              {...register("학과", {
+                required: "학교는 필수입력입니다.",
+              })}
             />
             학년
             <FormControl>
-              <Select
-                disableUnderline={true}
-                sx={{
-                  height: "40px",
-                  width: "120%",
-                  border: "solid 1px #d6d6d6",
-                  boxShadow: "0",
-                }}
-                value={grade}
-                onChange={gradeHandleChange}
-                displayEmpty
-                variant="standard"
-              >
-                <MenuItem value="">
-                  <em>학년</em>
-                </MenuItem>
-                <MenuItem value={1}>1</MenuItem>
-                <MenuItem value={2}>2</MenuItem>
-                <MenuItem value={3}>3</MenuItem>
-                <MenuItem value={4}>4</MenuItem>
-              </Select>
+              <Controller
+                defaultValue=""
+                control={control}
+                name="grade"
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    disableUnderline={true}
+                    sx={{
+                      height: "40px",
+                      width: "120%",
+                      border: "solid 1px #d6d6d6",
+                      boxShadow: "0",
+                    }}
+                    displayEmpty
+                    variant="standard"
+                  >
+                    <MenuItem
+                      disabled
+                      value=""
+                      sx={{
+                        display: "none",
+                      }}
+                    >
+                      <em>학년</em>
+                    </MenuItem>
+                    <MenuItem value={1}>1</MenuItem>
+                    <MenuItem value={2}>2</MenuItem>
+                    <MenuItem value={3}>3</MenuItem>
+                    <MenuItem value={4}>4</MenuItem>
+                  </Select>
+                )}
+              />
             </FormControl>
-            활동가능기간
-            <Input
-              disableUnderline={true}
-              sx={{
-                height: "100%",
-                width: "20%",
-                borderRadius: "4.2px",
-                border: "solid 0.8px #d6d6d6",
-                boxShadow: "0",
-              }}
-              placeholder=""
-            />
-            ~
-            <Input
-              disableUnderline={true}
-              sx={{
-                height: "100%",
-                width: "20%",
-                borderRadius: "4.2px",
-                border: "solid 0.8px #d6d6d6",
-                boxShadow: "0",
-              }}
-              placeholder=""
-            />
           </InformationBoxLine>
           <InformationBoxLine>
             수업방식
@@ -261,10 +256,10 @@ const StepSecond = (props) => {
               }}
             >
               {teachingStyle.map((value, index) => (
-                <>
-                  <input type="checkbox" key={index} value={value}></input>
+                <div key={index}>
+                  <input type="checkbox" value={value}></input>
                   {value}
-                </>
+                </div>
               ))}
             </div>
           </InformationBoxLine>
@@ -280,6 +275,9 @@ const StepSecond = (props) => {
                 boxShadow: "0",
               }}
               placeholder=""
+              {...register("소개", {
+                required: "소개는 필수입력입니다.",
+              })}
             />
           </InformationBoxLine>
         </InformationBox>
@@ -291,8 +289,7 @@ const StepSecond = (props) => {
         <IdWithPasswordLine>
           아아디
           <Input
-            value={name}
-            onChange={nameHandleChange}
+            onChange={idHandleChange}
             disableUnderline={true}
             placeholder="이름을 입력하세요."
             sx={{
@@ -305,13 +302,15 @@ const StepSecond = (props) => {
               borderBottom: "solid 2px",
               borderBottomColor: "#d6d6d6",
             }}
-          />{" "}
+            {...register("아이디", {
+              required: "아이디는 필수입력입니다.",
+            })}
+          />
         </IdWithPasswordLine>
         <IdWithPasswordLine>
           비밀번호
           <Input
-            value={name}
-            onChange={nameHandleChange}
+            onChange={passwordHandleChange}
             disableUnderline={true}
             placeholder="비밀번호입력"
             sx={{
@@ -324,13 +323,15 @@ const StepSecond = (props) => {
               borderBottom: "solid 2px",
               borderBottomColor: "#d6d6d6",
             }}
+            {...register("password", {
+              required: "비밀번호는 필수입력입니다.",
+            })}
           />
         </IdWithPasswordLine>
         <IdWithPasswordLine>
           비밀번호 확인
           <Input
-            value={name}
-            onChange={nameHandleChange}
+            onChange={passwordComfirmHandleChange}
             disableUnderline={true}
             placeholder="비밀번호확인"
             sx={{
@@ -343,6 +344,16 @@ const StepSecond = (props) => {
               borderBottom: "solid 2px",
               borderBottomColor: "#d6d6d6",
             }}
+            {...register("비밀번호2", {
+              required: "비밀번호2는 필수입력입니다.",
+              validate: {
+                confirmPassword: (value) => {
+                  if (getValues("password") !== value) {
+                    return "비밀번호가 일치하지않습니다!.";
+                  }
+                },
+              },
+            })}
           />
         </IdWithPasswordLine>
       </IdWithPasswordBox>
@@ -351,6 +362,8 @@ const StepSecond = (props) => {
 
       <SubmitButton>
         <Button
+          type="submit"
+          disabled={isSubmitting}
           variant="contained"
           color="primary"
           sx={{
@@ -360,12 +373,12 @@ const StepSecond = (props) => {
             fontFamily: "NotoSansLight",
             boxShadow: "0",
           }}
-          onClick={props.increaseStep}
+          // onClick={props.increaseStep}
         >
           회원가입하기
         </Button>
       </SubmitButton>
-    </div>
+    </form>
   );
 };
 

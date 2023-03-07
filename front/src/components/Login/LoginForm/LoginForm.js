@@ -5,50 +5,74 @@ import InputAdornment from "@mui/material/InputAdornment";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Button, Checkbox } from "@mui/material";
-
+import { Controller, useForm } from "react-hook-form";
 import "./LoginForm.css";
 
 const LoginForm = () => {
+  const {
+    control,
+    register,
+    getValues,
+    formState: { errors, isSubmitting },
+    handleSubmit,
+  } = useForm();
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+  const onError = (error) => {
+    console.log(error);
+  };
   return (
     <>
       <LogoStyled>
         <Logo>Logo</Logo>
       </LogoStyled>
+
       <FormStyled>
-        <Input
-          id="id"
-          placeholder="이메일주소 OR 전화번호 입력"
-          sx={{ marginTop: "10rem" }}
-          fullWidth={true}
-          startAdornment={
-            <InputAdornment position="start">
-              <PersonOutlineOutlinedIcon fontSize="medium" />
-            </InputAdornment>
-          }
-        />
-        <Input
-          id="passWord"
-          placeholder="비밀번호 입력"
-          sx={{ marginTop: "1rem" }}
-          fullWidth={true}
-          startAdornment={
-            <InputAdornment position="start">
-              <LockOutlinedIcon fontSize="medium" />
-            </InputAdornment>
-          }
-        />
-        <CheckStyled>
-          <Checkbox color="primary" />
-          로그인 상태 유지
-        </CheckStyled>
-        <Button
-          variant="contained"
-          color="primary"
-          fullWidth={true}
-          sx={{ fontSize: "1.5rem", fontFamily: "NotoSansMedium" }}
-        >
-          로그인
-        </Button>
+        <form onSubmit={handleSubmit(onSubmit, onError)}>
+          <Input
+            id="email"
+            placeholder="이메일주소 OR 전화번호 입력"
+            sx={{ marginTop: "10rem" }}
+            fullWidth={true}
+            startAdornment={
+              <InputAdornment position="start">
+                <PersonOutlineOutlinedIcon fontSize="medium" />
+              </InputAdornment>
+            }
+            {...register("email", {
+              required: "이메일은 필수입력입니다.",
+            })}
+          />
+          <Input
+            id="passWord"
+            placeholder="비밀번호 입력"
+            sx={{ marginTop: "1rem" }}
+            fullWidth={true}
+            startAdornment={
+              <InputAdornment position="start">
+                <LockOutlinedIcon fontSize="medium" />
+              </InputAdornment>
+            }
+            {...register("password", {
+              required: "비밀번호은 필수입력입니다.",
+            })}
+          />
+          <CheckStyled>
+            <Checkbox color="primary" />
+            로그인 상태 유지
+          </CheckStyled>
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            variant="contained"
+            color="primary"
+            fullWidth={true}
+            sx={{ fontSize: "1.5rem", fontFamily: "NotoSansMedium" }}
+          >
+            로그인
+          </Button>
+        </form>
       </FormStyled>
     </>
   );
