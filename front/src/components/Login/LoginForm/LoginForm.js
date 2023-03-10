@@ -7,7 +7,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Button, Checkbox } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import "./LoginForm.css";
-
+import axios from "axios";
 const LoginForm = () => {
   const {
     control,
@@ -17,7 +17,23 @@ const LoginForm = () => {
     handleSubmit,
   } = useForm();
   const onSubmit = (data) => {
+    data.user_gb = "MENTO";
     console.log(data);
+    axios({
+      url: "/api/v1/login",
+      method: "post",
+      data: {
+        email: `${data.email}`,
+        password: `${data.password}`,
+        user_gb: "MENTO",
+      },
+    })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
   const onError = (error) => {
     console.log(error);

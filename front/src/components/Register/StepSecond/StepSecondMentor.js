@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import styled from "@emotion/styled";
 import { Button, FormControl, Input, MenuItem, Select } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
@@ -9,7 +10,7 @@ const StepSecond = (props) => {
     getValues,
     formState: { errors, isSubmitting },
     handleSubmit,
-  } = useForm();
+  } = useForm({ defaultValues: { act_place: "" } });
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [email, setEmail] = useState("");
@@ -42,12 +43,41 @@ const StepSecond = (props) => {
   const passwordComfirmHandleChange = (event) => {
     setpasswordComfirm(event.target.value);
   };
+
   const onSubmit = (data) => {
+    const formData = new FormData();
+    formData.append("file", data.image[0]);
+    delete data.image;
+    delete data.password2;
+    formData.append(
+      "data",
+      new Blob([JSON.stringify(data)], { type: "application/json" })
+    );
     console.log(data);
+    // for (let key of formData.keys()) {
+    //   console.log(key);
+    // }
+    // for (let value of formData.values()) {
+    //   console.log(value);
+    //   value.text().then((x) => console.log(x));
+    // }
+    axios({
+      url: "/api/v1/mento",
+      method: "post",
+      data: formData,
+    })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
+
   const onError = (error) => {
     console.log(error);
   };
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit, onError)}
@@ -70,7 +100,10 @@ const StepSecond = (props) => {
       <div style={{ display: "flex", height: "42.5%" }}>
         <ImageUpload>
           <ImageShow>프로필 사진</ImageShow>
-          <Button
+          <Input
+            {...register("image")}
+            type="file"
+            accept="image/*"
             variant="contained"
             color="primary"
             sx={{
@@ -83,7 +116,7 @@ const StepSecond = (props) => {
             }}
           >
             첨부
-          </Button>
+          </Input>
         </ImageUpload>
         <InformationBox>
           <InformationBoxLine>
@@ -103,7 +136,7 @@ const StepSecond = (props) => {
                 borderBottomColor: "#d6d6d6",
               }}
               {...register("name", {
-                required: "이메일은 필수입력입니다.",
+                required: "이름은 필수입력입니다.",
               })}
             />
             출생연도
@@ -111,7 +144,8 @@ const StepSecond = (props) => {
               <Controller
                 defaultValue=""
                 control={control}
-                name="age"
+                name="birth_year"
+                rules={{ required: "출생년도는 필수선택입니다." }}
                 render={({ field }) => (
                   <Select
                     {...field}
@@ -124,7 +158,7 @@ const StepSecond = (props) => {
                     }}
                     displayEmpty
                     variant="standard"
-                    name="age"
+                    name="birth_year"
                   >
                     <MenuItem
                       disabled
@@ -159,6 +193,10 @@ const StepSecond = (props) => {
               }}
               {...register("email", {
                 required: "이메일은 필수입력입니다.",
+                // pattern: {
+                //   value: /\S+@\S+\.\S+/,
+                //   message: "이메일 형식에 맞지 않습니다.",
+                // },
               })}
             />
           </InformationBoxLine>
@@ -174,7 +212,7 @@ const StepSecond = (props) => {
                 boxShadow: "0",
               }}
               placeholder="직접입력"
-              {...register("school", {
+              {...register("college", {
                 required: "학교는 필수입력입니다.",
               })}
             />
@@ -203,7 +241,7 @@ const StepSecond = (props) => {
                 boxShadow: "0",
               }}
               placeholder="학과"
-              {...register("학과", {
+              {...register("major", {
                 required: "학교는 필수입력입니다.",
               })}
             />
@@ -213,6 +251,7 @@ const StepSecond = (props) => {
                 defaultValue=""
                 control={control}
                 name="grade"
+                rules={{ required: "학년은 필수선택입니다." }}
                 render={({ field }) => (
                   <Select
                     {...field}
@@ -257,7 +296,13 @@ const StepSecond = (props) => {
             >
               {teachingStyle.map((value, index) => (
                 <div key={index}>
-                  <input type="checkbox" value={value}></input>
+                  <input
+                    type="radio"
+                    value={value}
+                    {...register("act_place", {
+                      required: "수업방식은 필수입력입니다.",
+                    })}
+                  ></input>
                   {value}
                 </div>
               ))}
@@ -275,7 +320,7 @@ const StepSecond = (props) => {
                 boxShadow: "0",
               }}
               placeholder=""
-              {...register("소개", {
+              {...register("introduction", {
                 required: "소개는 필수입력입니다.",
               })}
             />
@@ -286,27 +331,6 @@ const StepSecond = (props) => {
       {/* ---------------3번째칸 아이디 & 비밀번호---------------  */}
 
       <IdWithPasswordBox>
-        <IdWithPasswordLine>
-          아아디
-          <Input
-            onChange={idHandleChange}
-            disableUnderline={true}
-            placeholder="이름을 입력하세요."
-            sx={{
-              fontSize: "1rem",
-              height: "100%",
-              width: "70%",
-              boxShadow: "0",
-              border: "0",
-              borderRadius: "0",
-              borderBottom: "solid 2px",
-              borderBottomColor: "#d6d6d6",
-            }}
-            {...register("아이디", {
-              required: "아이디는 필수입력입니다.",
-            })}
-          />
-        </IdWithPasswordLine>
         <IdWithPasswordLine>
           비밀번호
           <Input
@@ -325,6 +349,11 @@ const StepSecond = (props) => {
             }}
             {...register("password", {
               required: "비밀번호는 필수입력입니다.",
+              // pattern: {
+              //   value:
+              //     /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/,
+              //   message: "특수문자 / 문자 / 숫자 포함 형태의 8~15 자리",
+              // },
             })}
           />
         </IdWithPasswordLine>
@@ -344,16 +373,16 @@ const StepSecond = (props) => {
               borderBottom: "solid 2px",
               borderBottomColor: "#d6d6d6",
             }}
-            {...register("비밀번호2", {
-              required: "비밀번호2는 필수입력입니다.",
-              validate: {
-                confirmPassword: (value) => {
-                  if (getValues("password") !== value) {
-                    return "비밀번호가 일치하지않습니다!.";
-                  }
-                },
-              },
-            })}
+            // {...register("password2", {
+            //   required: "비밀번호확인은 필수입력입니다.",
+            //   validate: {
+            //     confirmPassword: (value) => {
+            //       if (getValues("password") !== value) {
+            //         return "비밀번호가 일치하지않습니다!.";
+            //       }
+            //     },
+            //   },
+            // })}
           />
         </IdWithPasswordLine>
       </IdWithPasswordBox>
