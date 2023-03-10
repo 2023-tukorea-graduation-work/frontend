@@ -25,6 +25,16 @@ const Register = () => {
   `;
   return (
     <>
+
+      
+<div
+        style={{
+          width: "100%",
+          height: "30vh",
+          backgroundColor:"#FFB07A"
+        }}
+      >
+
       <Grid container>
         <Grid xs={1}></Grid>
         <Grid xs={10} sx={{ display: "flex" }}>
@@ -51,6 +61,7 @@ const Register = () => {
         </Grid>
         <Grid xs={1}></Grid>
       </Grid>
+      </div>
     </>
   );
 };

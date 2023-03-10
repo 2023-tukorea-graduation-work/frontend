@@ -19,9 +19,9 @@ const LoginMenu = () => {
   );
 };
 const OptionStyled = styled.div`
-  margin-top: 2rem;
+  margin-top: 1rem;
   width: 100%;
-  height: 2rem;
+  height: 1rem;
   text-align: center;
   font-family: NotoSansRegular;
   font-weight: normal;
@@ -30,5 +30,6 @@ const OptionStyled = styled.div`
   line-height: normal;
   letter-spacing: normal;
   color: #777;
+  font-size:0.7rem;
 `;
 export default LoginMenu;

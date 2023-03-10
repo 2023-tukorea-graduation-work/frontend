@@ -78,13 +78,21 @@ const LoginForm = () => {
             <Checkbox color="primary" />
             로그인 상태 유지
           </CheckStyled>
+
+          <MentorCheckStyled>
+          <Checkbox color="primary" />
+          멘토로그인
+          <p className="menteee">**해제시 멘티로 자동선택됩니다.</p>
+          </MentorCheckStyled>
+
+
           <Button
             type="submit"
             disabled={isSubmitting}
             variant="contained"
             color="primary"
             fullWidth={true}
-            sx={{ fontSize: "1.5rem", fontFamily: "NotoSansMedium" }}
+            sx={{ fontSize: "1rem", fontFamily: "NotoSansMedium" }}
           >
             로그인
           </Button>
@@ -93,6 +101,17 @@ const LoginForm = () => {
     </>
   );
 };
+
+const MentorCheckStyled = styled.div`
+margin-top:-1rem;
+justify-content: start;
+display: flex;
+align-items: center;
+font-family: NotoSansLight;
+color: #777;
+font-size:0.7rem;
+`;
+
 const FormStyled = styled.div`
   padding-left: 10%;
   padding-right: 10%;
@@ -109,6 +128,7 @@ const CheckStyled = styled.div`
   align-items: center;
   font-family: NotoSansLight;
   color: #777;
+  font-size:0.7rem;
 `;
 const LogoStyled = styled.div`
   display: flex;

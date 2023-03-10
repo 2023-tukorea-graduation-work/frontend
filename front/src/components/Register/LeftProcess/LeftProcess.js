@@ -6,7 +6,7 @@ const LeftProcess = (props) => {
     height: 87vh;
     background-color: rgba(255, 204, 170, 0.3);
     font-family: "NotoSansMedium";
-    font-size: 1.1rem;
+    font-size: 0.8rem;
     text-align: center;
     box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.15);
   `;

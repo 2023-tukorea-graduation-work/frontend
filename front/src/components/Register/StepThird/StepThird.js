@@ -11,7 +11,7 @@ const StepThird = () => {
       <Button
         variant="contained"
         color="primary"
-        sx={{ height: "2.5rem", width: "12rem", marginTop: "2rem" }}
+        sx={{ height: "2.2rem", width: "11rem", marginTop: "1.2rem" }}
         onClick={() => {
           navigate("/");
         }}
@@ -29,7 +29,8 @@ const MessageStyle = styled.div`
   flex-direction: column;
   align-items: center;
   font-family: NotoSansMedium;
-  font-size: 1.5rem;
+  margin-top:4rem;
+  font-size: 1rem;
 `;
 
 export default StepThird;

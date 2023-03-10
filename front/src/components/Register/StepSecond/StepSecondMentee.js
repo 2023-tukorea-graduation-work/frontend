@@ -90,6 +90,7 @@ const StepSecondMentee = (props) => {
           backgroundColor: "skyblue",
           height: "10rem",
           fontFamily: "NotoSansRegular",
+          marginBottom:"1rem"
         }}
       >
         관심분야 선택
@@ -110,12 +111,13 @@ const StepSecondMentee = (props) => {
               marginTop: "8%",
               width: "80%",
               height: "13%",
-              fontSize: "100%",
+              fontSize: "70%",
+              fontWeight:"bold",
               fontFamily: "NotoSansLight",
               boxShadow: "0",
             }}
           >
-            첨부
+            첨부하기
           </Input>
         </ImageUpload>
         <InformationBox>
@@ -126,14 +128,15 @@ const StepSecondMentee = (props) => {
               disableUnderline={true}
               placeholder="이름입력"
               sx={{
-                fontSize: "1rem",
+                fontSize: "0.8rem",
                 height: "100%",
-                width: "15%",
+                width: "20%",
                 boxShadow: "0",
                 border: "0",
                 borderRadius: "0",
                 borderBottom: "solid 2px",
                 borderBottomColor: "#d6d6d6",
+                marginLeft:"1rem",
               }}
               {...register("name", {
                 required: "이름은 필수입력입니다.",
@@ -151,10 +154,11 @@ const StepSecondMentee = (props) => {
                     {...field}
                     disableUnderline={true}
                     sx={{
-                      width: "3.9rem",
+                      width: "4.8rem",
                       height: "100%",
                       border: "solid 1px #d6d6d6",
                       boxShadow: "0",
+                      fontSize:"0.9rem",
                     }}
                     displayEmpty
                     variant="standard"
@@ -182,9 +186,9 @@ const StepSecondMentee = (props) => {
               disableUnderline={true}
               placeholder="이메일을 입력"
               sx={{
-                fontSize: "1rem",
+                fontSize: "0.8rem",
                 height: "100%",
-                width: "16%",
+                width: "40%",
                 boxShadow: "0",
                 border: "0",
                 borderRadius: "0",
@@ -210,6 +214,8 @@ const StepSecondMentee = (props) => {
                 borderRadius: "4.2px",
                 border: "solid 0.8px #d6d6d6",
                 boxShadow: "0",
+                marginLeft:"1.5rem",
+                fontSize:"0.9rem",
               }}
               placeholder="직접입력"
               {...register("school", {
@@ -221,10 +227,11 @@ const StepSecondMentee = (props) => {
               disableUnderline={true}
               sx={{
                 height: "100%",
-                width: "20%",
+                width: "22%",
                 borderRadius: "4.2px",
                 border: "solid 0.8px #d6d6d6",
                 boxShadow: "0",
+                fontSize:"0.9rem",
               }}
               placeholder="학교명 검색"
             />
@@ -235,10 +242,13 @@ const StepSecondMentee = (props) => {
               disableUnderline={true}
               sx={{
                 height: "100%",
-                width: "20%",
+                width: "24%",
                 borderRadius: "4.2px",
                 border: "solid 0.8px #d6d6d6",
                 boxShadow: "0",
+                fontSize:"0.9rem",
+                marginLeft:"0.6rem",
+                marginRight:"0.8rem",
               }}
               placeholder="학과"
               {...register("major", {
@@ -257,10 +267,12 @@ const StepSecondMentee = (props) => {
                     {...field}
                     disableUnderline={true}
                     sx={{
-                      height: "40px",
+                      height: "33px",
                       width: "120%",
                       border: "solid 1px #d6d6d6",
                       boxShadow: "0",
+                      fontSize:"0.8rem",
+                      marginLeft:"0.6rem",
                     }}
                     displayEmpty
                     variant="standard"
@@ -289,9 +301,13 @@ const StepSecondMentee = (props) => {
               style={{
                 justifyContent: "space-evenly",
                 display: "flex",
-                width: "85%",
+                width: "75%",
                 height: "100%",
+                paddingTop:"0.4rem",
+                paddingBottom:"0.4rem",
                 backgroundColor: "#f8f8f8",
+                fontSize:"0.8rem",
+                marginRight:"7.7rem",
               }}
             >
               {teachingStyle.map((value, index) => (
@@ -313,8 +329,8 @@ const StepSecondMentee = (props) => {
             <Input
               disableUnderline={true}
               sx={{
-                height: "100%",
-                width: "85%",
+                height: "90%",
+                width: "88%",
                 borderRadius: "4.2px",
                 border: "solid 0.8px #d6d6d6",
                 boxShadow: "0",
@@ -338,7 +354,7 @@ const StepSecondMentee = (props) => {
             disableUnderline={true}
             placeholder="비밀번호입력"
             sx={{
-              fontSize: "1rem",
+              fontSize: "0.8rem",
               height: "100%",
               width: "70%",
               boxShadow: "0",
@@ -364,7 +380,7 @@ const StepSecondMentee = (props) => {
             disableUnderline={true}
             placeholder="비밀번호확인"
             sx={{
-              fontSize: "1rem",
+              fontSize: "0.8rem",
               height: "100%",
               width: "70%",
               boxShadow: "0",
@@ -398,9 +414,10 @@ const StepSecondMentee = (props) => {
           sx={{
             width: "20%",
             height: "100%",
-            fontSize: "100%",
+            fontSize: "85%",
             fontFamily: "NotoSansLight",
             boxShadow: "0",
+            fontWeight:"bold",
           }}
           // onClick={props.increaseStep}
         >
@@ -445,6 +462,7 @@ const InformationBox = styled.div`
   font-family: "NotoSansMedium";
   height: 100%;
   width: 100%;
+  font-size:0.8rem;
 `;
 const InformationBoxLine = styled.div`
   width: 100%;
@@ -454,12 +472,13 @@ const InformationBoxLine = styled.div`
   margin-bottom: 2%;
 `;
 const IdWithPasswordBox = styled.div`
-  margin-top: 2%;
+  margin-top: 3%;
   font-family: NotoSansRegular;
-  height: 20%;
+  height: 12%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  font-size:0.8rem;
 `;
 const IdWithPasswordLine = styled.div`
   width: 35%;
@@ -468,8 +487,8 @@ const IdWithPasswordLine = styled.div`
   align-items: center;
 `;
 const SubmitButton = styled.div`
-  margin-top: 5%;
-  height: 5%;
+  margin-top: 4%;
+  height: 6%;
   width: 100%;
   display: flex;
   align-items: center;
