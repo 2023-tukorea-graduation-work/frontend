@@ -5,6 +5,16 @@ import LoginMenu from "../components/Login/LoginMenu/LoginMenu";
 const Login = () => {
   return (
     <>
+
+<div
+        style={{
+          width: "100%",
+          height: "30vh",
+          backgroundColor:"#FFB07A"
+        }}
+      >
+
+
       <Grid container>
         <Grid xs={3}></Grid>
         <Grid xs={6}>
@@ -13,6 +23,7 @@ const Login = () => {
         </Grid>
         <Grid xs={3}></Grid>
       </Grid>
+      </div>
     </>
   );
 };
