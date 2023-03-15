@@ -4,7 +4,7 @@ const LeftProcess = (props) => {
   const LeftStyle = styled.div`
     width: 15%;
     height: 87vh;
-    background-color:#FFF0E6;
+    background-color:#E6F3F3;
     font-family: "NotoSansMedium";
     font-size: 0.8rem;
     text-align: center;
