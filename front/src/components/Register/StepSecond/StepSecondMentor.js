@@ -414,10 +414,9 @@ const StepSecond = (props) => {
           sx={{
             width: "20%",
             height: "100%",
-            fontSize: "85%",
+            fontSize: "80%",
             fontFamily: "NotoSansLight",
             boxShadow: "0",
-            fontWeight:"bold",
           }}
           // onClick={props.increaseStep}
         >

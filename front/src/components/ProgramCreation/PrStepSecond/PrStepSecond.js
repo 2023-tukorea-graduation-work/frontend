@@ -1,15 +1,18 @@
 import React, { useRef, useState } from "react";
 import styled from "@emotion/styled";
-import { Button, FormControl, Input, MenuItem, Select } from "@mui/material";
+import { ko } from 'date-fns/esm/locale';
+// import { FaCalendarAlt } from "react-icons/fa";
+
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+import { Button, FormControl, Input,TextField, MenuItem, Select ,Checkbox} from "@mui/material";
 const PrStepSecond = (props) => {
   const [grade, setGrade] = useState("");
   const teachingStyle = [
     "온라인",
     "오프라인",
-    "서울",
-    "경기도",
-    "인천",
-    "그외지역",
+    "온라인&오프라인 병행",
   ];
   const [plan, setPlan] = useState([
     { id: 1, title: "" },
@@ -31,25 +34,99 @@ const PrStepSecond = (props) => {
     console.log(week.current);
   };
 
+  const StartCal = () => {
+    const [startDate, setStartDate] = useState(new Date());
+    return (
+      <DatePicker 
+      dateFormat="yyyy년 MM월 dd일"
+      minDate={new Date()}
+      selected={startDate} onChange={date => setStartDate(date)}
+      locale={ko}
+      />
+    );
+  };
+
+  const EndCal = () => {
+    const [endDate, setEndDate] = useState(new Date());
+    return (
+      <DatePicker 
+      dateFormat="yyyy년 MM월 dd일"
+      selected={endDate} onChange={date => setEndDate(date)}
+      locale={ko}
+      />
+    );
+  };
+
   return (
     <BasicForm>
+
       <InformationBox>
+      <p
+        style={{marginBottom:"0.9rem",
+                fontSize:"0.7rem",
+                color:"#777777",
+              }}
+      >선택한 카테고리 -> 카테고리세부주제</p>
         <p>주제</p>
         <Input
           disableUnderline={true}
           sx={{
             width: "100%",
-            height: "13%",
+            height: "2.5em",
             borderRadius: "3px",
             border: "solid 1px #d6d6d6",
             boxShadow: "0",
             margin: "1rem 0 1rem 0",
+            fontSize:"0.8rem",
           }}
           placeholder=""
         />
+        <p
+        style={{marginBottom:"1rem",display:"flex"}}
+        >프로그램소개
+        </p>
+
+        <TextField
+          multiline
+          rows={2}
+          disableUnderline={true}
+          style={{
+            width: "100%",
+            borderRadius: "3px",
+            border: "solid 1px #d6d6d6",
+            boxShadow: "0",
+            fontSize:"0.8rem",
+          }}
+          placeholder=""
+        />
+
         <InformationBoxLine>
-          활동가능기간
-          <Input
+          <p
+            style={{marginTop:"1rem"}}
+          >활동가능기간</p>
+          
+          <div
+            style={{marginLeft:"1rem",
+                    marginRight:"1rem",
+                    marginTop:"1rem"
+                  }}
+          > 
+          <StartCal/>
+          </div>
+          <p
+            style={{marginTop:"1rem"}}
+          >~</p>
+          <div
+            style={{marginLeft:"1rem",
+            marginRight:"1rem",
+            marginTop:"1rem"
+          }}
+          >
+          <EndCal/>
+          </div>
+          
+          {/* <FaCalendarAlt/> */}
+          {/* <Input
             disableUnderline={true}
             sx={{
               height: "100%",
@@ -73,7 +150,7 @@ const PrStepSecond = (props) => {
               margin: "0 1rem 0 1rem",
             }}
             placeholder=""
-          />
+          /> */}
         </InformationBoxLine>
         <InformationBoxLine>
           수업방식
@@ -82,9 +159,10 @@ const PrStepSecond = (props) => {
               justifyContent: "space-evenly",
               display: "flex",
               width: "55%",
-              height: "140%",
+              height: "70%",
               backgroundColor: "#f8f8f8",
               alignItems: "center",
+              marginLeft:"2.4rem",
             }}
           >
             {teachingStyle.map((value, index) => (
@@ -94,19 +172,27 @@ const PrStepSecond = (props) => {
               </>
             ))}
           </div>
+          <CheckStyled>
+            <Checkbox style={{color:"#83C2C5"}} />
+            프로젝트생성여부
+          </CheckStyled>
+
         </InformationBoxLine>
         <InformationBoxLine>
+
           모집인원
           <FormControl>
             <Select
               disableUnderline={true}
               sx={{
-                height: "40px",
+                height: "30px",
                 width: "150%",
                 border: "solid 1px #d6d6d6",
                 boxShadow: "0",
-                marginLeft: "20%",
+                marginLeft: "95%",
                 paddingLeft: "20%",
+                fontSize:"0.8rem",
+                
               }}
               value={grade}
               onChange={gradeHandleChange}
@@ -114,19 +200,43 @@ const PrStepSecond = (props) => {
               variant="standard"
             >
               <MenuItem value="">
-                <em>학년</em>
+                <em>-</em>
               </MenuItem>
-              <MenuItem value={1}>1</MenuItem>
-              <MenuItem value={2}>2</MenuItem>
-              <MenuItem value={3}>3</MenuItem>
-              <MenuItem value={4}>4</MenuItem>
+              <MenuItem sx={{fontSize:"0.8rem"}}value={1}>1</MenuItem>
+              <MenuItem sx={{fontSize:"0.8rem"}} value={2}>2</MenuItem>
+              <MenuItem sx={{fontSize:"0.8rem"}} value={3}>3</MenuItem>
+              <MenuItem sx={{fontSize:"0.8rem"}} value={4}>4</MenuItem>
+              <MenuItem sx={{fontSize:"0.8rem"}} value={5}>5</MenuItem>
+              <MenuItem sx={{fontSize:"0.8rem"}} value={6}>6</MenuItem>
             </Select>
           </FormControl>
+
+         <p
+          style={{marginLeft:"4.5rem"}}
+         >모집기간</p>
+          <div
+            style={{marginLeft:"1rem",
+                    marginRight:"1rem",
+                  }}
+          > 
+
+          <StartCal/>
+          </div>
+          ~
+          <div
+            style={{marginLeft:"1rem",
+            marginRight:"1rem"
+          }}
+          >
+          <EndCal/>
+          </div>
+         
         </InformationBoxLine>
+        학습 계획
       </InformationBox>
+
       <LearningPlan>
-        <p>학습 계획</p>
-        <table style={{ border: "solid 1px #d6d6d6" }}>
+        <table style={{ border: "solid 1px #d6d6d6",marginTop:"1rem"}}>
           <tbody>
             {plan.map((state, index) => (
               <>
@@ -136,7 +246,7 @@ const PrStepSecond = (props) => {
                       border: "solid 1px #d6d6d6",
                       textAlign: "center",
                       paddingTop: "5%",
-                      height: "5rem",
+                      height: "3.5rem",
                     }}
                   >
                     {state.id}주차
@@ -148,6 +258,7 @@ const PrStepSecond = (props) => {
                   >
                     <Input
                       disableUnderline={true}
+                      multiline
                       onChange={(event) => titleHandleChange(event, index)}
                       value={state.title}
                       sx={{
@@ -155,6 +266,8 @@ const PrStepSecond = (props) => {
                         width: "100%",
                         border: "0",
                         boxShadow: "0",
+                        fontSize:"0.8rem",
+                        marginLeft:"0.5rem",
                       }}
                     />
                   </td>
@@ -163,17 +276,21 @@ const PrStepSecond = (props) => {
             ))}
           </tbody>
         </table>
-        <button onClick={addPlan}>추가</button>
+        <button 
+        style={{backgroundColor:"#E6F3F3",border: "solid 1px #d6d6d6"}}
+        onClick={addPlan}>추가</button>
       </LearningPlan>
       <Button
         variant="contained"
-        color="primary"
         sx={{
-          width: "20%",
-          height: "4%",
-          fontSize: "100%",
+          width: "18%",
+          height: "5.5%",
+          fontSize: "80%",
           fontFamily: "NotoSansRegular",
           boxShadow: "0",
+          marginTop:"2%",
+          marginBottom:"2%",
+          backgroundColor:"#399DA3"
         }}
         onClick={props.increaseStep}
       >
@@ -191,17 +308,17 @@ const BasicForm = styled.div`
   font-family: "NotoSansRegular";
   font-size: 1.2rem;
   align-items: center;
-  overflow: auto;
-  overflow-x: hidden;
+
 `;
 const InformationBox = styled.div`
   width: 92%;
-  height: 35%;
+  height: 24rem;
   display: flex;
   flex-direction: column;
   margin-left: 4%;
   margin-right: 4%;
-  margin-top: 5%;
+  margin-top: 3%;
+  font-Size:0.8rem;
 `;
 const InformationBoxLine = styled.div`
   width: 100%;
@@ -215,5 +332,12 @@ const LearningPlan = styled.div`
   width: 92%;
   display: flex;
   flex-direction: column;
+  font-Size:0.8rem;
+  overflow: auto;
+`;
+const CheckStyled = styled.div`
+  align-items: center;
+  font-family: NotoSansLight;
+  font-size:0.8rem;
 `;
 export default PrStepSecond;
