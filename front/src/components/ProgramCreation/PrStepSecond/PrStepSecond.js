@@ -66,15 +66,12 @@ const PrStepSecond = (props) => {
   return (
     <BasicForm>
       <InformationBox>
-        <p
-          style={{
-            marginBottom: "0.9rem",
-            fontSize: "0.7rem",
-            color: "#777777",
-          }}
-        >
-          선택한 카테고리 - 카테고리세부주제
-        </p>
+      <p
+        style={{marginBottom:"0.9rem",
+                fontSize:"0.7rem",
+                color:"#777777",
+              }}
+      >선택한 카테고리 - 카테고리세부주제</p>
         <p>주제</p>
         <Input
           disableUnderline={true}
@@ -233,7 +230,7 @@ const PrStepSecond = (props) => {
       </InformationBox>
 
       <LearningPlan>
-        <table style={{ border: "solid 1px #d6d6d6", marginTop: "1rem" }}>
+        <table style={{ border: "solid 1px #d6d6d6",marginTop:"2.5rem"}}>
           <tbody>
             {plan.map((state, index) => (
               <>
@@ -284,9 +281,8 @@ const PrStepSecond = (props) => {
         variant="contained"
         color="mento"
         sx={{
-          width: "18%",
-          height: "5.5%",
-          fontSize: "80%",
+          height: "2.2rem", width: "11rem",
+          fontSize: "1rem",
           fontFamily: "NotoSansRegular",
           boxShadow: "0",
           marginTop: "2%",
