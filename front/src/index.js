@@ -21,6 +21,9 @@ const theme = createTheme({
     secondary: {
       main: "#ffc7a0",
     },
+    mento: {
+      main: "#399DA3",
+    },
   },
 });
 
