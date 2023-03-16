@@ -61,12 +61,7 @@ const PrStepSecond = (props) => {
     <BasicForm>
 
       <InformationBox>
-      <p
-        style={{marginBottom:"0.9rem",
-                fontSize:"0.7rem",
-                color:"#777777",
-              }}
-      >선택한 카테고리 - 카테고리세부주제</p>
+   
         <p>주제</p>
         <Input
           disableUnderline={true}
