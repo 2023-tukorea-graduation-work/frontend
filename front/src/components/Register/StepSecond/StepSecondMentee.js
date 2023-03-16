@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import axios from "axios";
 import styled from "@emotion/styled";
 import { Button, FormControl, Input, MenuItem, Select } from "@mui/material";
@@ -12,7 +12,7 @@ const StepSecondMentee = (props) => {
     handleSubmit,
   } = useForm({ defaultValues: { act_place: "" } });
   const teachingStyle = ["온라인", "오프라인", "온라인&오프라인 병행"];
-
+  const imageInput = useRef();
   const onSubmit = (data) => {
     const formData = new FormData();
     formData.append("file", data.image[0]);
@@ -70,10 +70,15 @@ const StepSecondMentee = (props) => {
       <div style={{ display: "flex", height: "42.5%" }}>
         <ImageUpload>
           <ImageShow>프로필 사진</ImageShow>
-          <Input
+          <input
             {...register("image")}
             type="file"
             accept="image/*"
+            style={{ display: "none" }}
+            ref={imageInput}
+          />
+          <Button
+            type="button"
             variant="contained"
             color="primary"
             sx={{
@@ -85,9 +90,12 @@ const StepSecondMentee = (props) => {
               fontFamily: "NotoSansLight",
               boxShadow: "0",
             }}
+            onClick={() => {
+              imageInput.current.click();
+            }}
           >
             첨부하기
-          </Input>
+          </Button>
         </ImageUpload>
         <InformationBox>
           <InformationBoxLine>

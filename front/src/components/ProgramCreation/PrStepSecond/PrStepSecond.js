@@ -36,9 +36,14 @@ const PrStepSecond = (props) => {
       url: "/api/v1/login",
       method: "post",
       data: {
-        email: `${data.email}`,
-        password: `${data.password}`,
-        user_gb: "MENTO",
+        act_place: `${data.act_place}`,
+        capacity: `${data.capacity}`,
+        detail: `${data.detail}`,
+        pro_finish_date: `${data.pro_finish_date}`,
+        pro_start_date: `${data.pro_start_date}`,
+        programWeeks: data.programWeeks,
+        recruit_finish_date: `${data.recruit_finish_date}`,
+        recruit_start_date: `${data.recruit_start_date}`,
       },
     })
       .then((response) => {
@@ -220,7 +225,7 @@ const PrStepSecond = (props) => {
           <div style={{ width: "30%" }}>
             <Controller
               control={control}
-              name="recruit_finish_dte"
+              name="recruit_finish_date"
               render={({ field }) => (
                 <InputDate
                   {...field}
@@ -254,7 +259,7 @@ const PrStepSecond = (props) => {
                     }}
                   >
                     <TextField
-                      {...register(`test.${index}`)}
+                      {...register(`programWeeks.${index}.detail`)}
                       multiline
                       rows={5}
                       sx={{
@@ -269,7 +274,7 @@ const PrStepSecond = (props) => {
             ))}
           </tbody>
         </table>
-        <button type="button" onClick={() => append(" ")}>
+        <button type="button" onClick={() => append({ detail: "" })}>
           추가
         </button>
       </LearningPlan>
