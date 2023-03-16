@@ -7,7 +7,7 @@ const PrStepThird = () => {
       프로젝트 생성이 완료되었습니다.
       <Button
         variant="contained"
-        color="mentorprimary"
+        color="primary"
         sx={{ height: "2.2rem", width: "11rem", marginTop: "1.2rem" }}
         onClick={() => {}}
       >
