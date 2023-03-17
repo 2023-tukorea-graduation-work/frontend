@@ -25,6 +25,16 @@ const PrStepSecond = (props) => {
     name: "test",
   });
   const teachingStyle = ["온라인", "오프라인", "온라인&오프라인 병행"];
+
+  function dateFormat(date) {
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    month = month >= 10 ? month : "0" + month;
+    day = day >= 10 ? day : "0" + day;
+
+    return date.getFullYear() + "-" + month + "-" + day;
+  }
+
   const onSubmit = (data) => {
     const formData = new FormData();
     formData.append(
@@ -32,19 +42,26 @@ const PrStepSecond = (props) => {
       new Blob([JSON.stringify(data)], { type: "application/json" })
     );
     console.log(data);
+    console.log(dateFormat(data.recruit_finish_date));
+    // 2023. 03. 23. -> 2
+
     axios({
-      url: "/api/v1/login",
+      url: "/api/v1/program",
       method: "post",
       data: {
-        act_place: `${data.act_place}`,
+        mento_no: 5,
+        subject: `${data.subject}`,
+        pro_place: `${data.act_place}`,
         capacity: `${data.capacity}`,
         detail: `${data.detail}`,
-        pro_finish_date: `${data.pro_finish_date}`,
-        pro_start_date: `${data.pro_start_date}`,
+        pro_finish_date: `${dateFormat(data.pro_finish_date)}`,
+        pro_start_date: `${dateFormat(data.pro_start_date)}`,
         programWeeks: data.programWeeks,
-        recruit_finish_date: `${data.recruit_finish_date}`,
-        recruit_start_date: `${data.recruit_start_date}`,
+        recruit_finish_date: `${dateFormat(data.recruit_finish_date)}`,
+        recruit_start_date: `${dateFormat(data.recruit_start_date)}`,
       },
+
+      // 2023-02-23
     })
       .then((response) => {
         console.log(response);
@@ -123,6 +140,7 @@ const PrStepSecond = (props) => {
             render={({ field }) => (
               <InputDate
                 {...field}
+                dateFormat="yyyy/MM/dd"
                 selected={field.value}
                 onChange={(date) => field.onChange(date)}
               />
@@ -134,6 +152,7 @@ const PrStepSecond = (props) => {
             render={({ field }) => (
               <InputDate
                 {...field}
+                dateFormat="yyyy/MM/dd"
                 selected={field.value}
                 onChange={(date) => field.onChange(date)}
               />
@@ -216,6 +235,7 @@ const PrStepSecond = (props) => {
               render={({ field }) => (
                 <InputDate
                   {...field}
+                  dateFormat="yyyy-MM-dd"
                   selected={field.value}
                   onChange={(date) => field.onChange(date)}
                 />
@@ -229,6 +249,7 @@ const PrStepSecond = (props) => {
               render={({ field }) => (
                 <InputDate
                   {...field}
+                  dateFormat="yyyy-MM-dd"
                   selected={field.value}
                   onChange={(date) => field.onChange(date)}
                 />
