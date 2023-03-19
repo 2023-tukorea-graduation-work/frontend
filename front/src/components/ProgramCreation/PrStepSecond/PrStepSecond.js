@@ -1,5 +1,7 @@
 import React, { useRef, useState } from "react";
 import styled from "@emotion/styled";
+import { ko } from "date-fns/esm/locale";
+// import { FaCalendarAlt } from "react-icons/fa";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {
@@ -31,9 +33,9 @@ const PrStepSecond = (props) => {
     let day = date.getDate();
     month = month >= 10 ? month : "0" + month;
     day = day >= 10 ? day : "0" + day;
-
     return date.getFullYear() + "-" + month + "-" + day;
   }
+
 
   const onSubmit = (data) => {
     const formData = new FormData();
@@ -73,6 +75,30 @@ const PrStepSecond = (props) => {
   const onError = (error) => {
     console.log(error);
   };
+  const StartCal = () => {
+    const [startDate, setStartDate] = useState(new Date());
+    return (
+      <DatePicker
+        dateFormat="yyyy년 MM월 dd일"
+        minDate={new Date()}
+        selected={startDate}
+        onChange={(date) => setStartDate(date)}
+        locale={ko}
+      />
+    );
+  };
+
+  const EndCal = () => {
+    const [endDate, setEndDate] = useState(new Date());
+    return (
+      <DatePicker
+        dateFormat="yyyy년 MM월 dd일"
+        selected={endDate}
+        onChange={(date) => setEndDate(date)}
+        locale={ko}
+      />
+    );
+  };
   return (
     <form
       onSubmit={handleSubmit(onSubmit, onError)}
@@ -90,16 +116,37 @@ const PrStepSecond = (props) => {
       }}
     >
       <InformationBox>
+      <p
+        style={{marginBottom:"0.9rem",
+                fontSize:"0.7rem",
+                color:"#777777",
+              }}
+      >선택한 카테고리 - 카테고리세부주제</p>
         <p>주제</p>
         <Input
           disableUnderline={true}
           sx={{
             width: "100%",
-            height: "13%",
+            height: "2.5em",
             borderRadius: "3px",
             border: "solid 1px #d6d6d6",
             boxShadow: "0",
             margin: "1rem 0 1rem 0",
+            fontSize: "0.8rem",
+          }}
+          placeholder=""
+        />
+        <p style={{ marginBottom: "1rem", display: "flex" }}>프로그램소개</p>
+        <TextField
+          multiline
+          rows={2}
+          disableUnderline={true}
+          style={{
+            width: "100%",
+            borderRadius: "3px",
+            border: "solid 1px #d6d6d6",
+            boxShadow: "0",
+            fontSize: "0.8rem",
           }}
           placeholder=""
           {...register("subject", {
@@ -108,9 +155,33 @@ const PrStepSecond = (props) => {
         />
         <p>프로그램 소개글</p>
         <InformationBoxLine>
-          <TextField
-            multiline
-            rows={5}
+          //<TextField
+           // multiline
+           // rows={5}
+          <p style={{ marginTop: "1rem" }}>활동가능기간</p>
+          <div
+            style={{
+              marginLeft: "1rem",
+              marginRight: "1rem",
+              marginTop: "1rem",
+            }}
+          >
+            <StartCal />
+          </div>
+          <p style={{ marginTop: "1rem" }}>~</p>
+          <div
+            style={{
+              marginLeft: "1rem",
+              marginRight: "1rem",
+              marginTop: "1rem",
+            }}
+          >
+            <EndCal />
+          </div>
+
+          {/* <FaCalendarAlt/> */}
+          {/* <Input
+            disableUnderline={true}
             sx={{
               width: "100%",
               border: "0",
@@ -166,9 +237,10 @@ const PrStepSecond = (props) => {
               justifyContent: "space-evenly",
               display: "flex",
               width: "55%",
-              height: "140%",
+              height: "70%",
               backgroundColor: "#f8f8f8",
               alignItems: "center",
+              marginLeft: "2.4rem",
             }}
           >
             {teachingStyle.map((value, index) => (
@@ -184,9 +256,14 @@ const PrStepSecond = (props) => {
               </div>
             ))}
           </div>
+          <CheckStyled>
+            <Checkbox style={{ color: "#83C2C5" }} />
+            프로젝트생성여부
+          </CheckStyled>
         </InformationBoxLine>
         <InformationBoxLine>
           모집인원
+
           <div style={{ width: "10%" }}>
             <FormControl>
               <Controller
@@ -199,12 +276,13 @@ const PrStepSecond = (props) => {
                     {...field}
                     disableUnderline={true}
                     sx={{
-                      height: "40px",
+                      height: "30px",
                       width: "150%",
                       border: "solid 1px #d6d6d6",
                       boxShadow: "0",
-                      marginLeft: "20%",
+                      marginLeft: "95%",
                       paddingLeft: "20%",
+                      fontSize: "0.8rem",
                     }}
                     displayEmpty
                     variant="standard"
@@ -218,10 +296,10 @@ const PrStepSecond = (props) => {
                     >
                       <em>인원</em>
                     </MenuItem>
-                    <MenuItem value={1}>1</MenuItem>
-                    <MenuItem value={2}>2</MenuItem>
-                    <MenuItem value={3}>3</MenuItem>
-                    <MenuItem value={4}>4</MenuItem>
+                    <MenuItem sx={{ fontSize: "0.8rem" }} value={1}>1</MenuItem>
+                    <MenuItem sx={{ fontSize: "0.8rem" }} value={2}>2</MenuItem>
+                    <MenuItem sx={{ fontSize: "0.8rem" }} value={3}>3</MenuItem>
+                    <MenuItem sx={{ fontSize: "0.8rem" }} value={4}>4</MenuItem>
                   </Select>
                 )}
               />
@@ -257,10 +335,11 @@ const PrStepSecond = (props) => {
             />
           </div>
         </InformationBoxLine>
+        학습 계획
       </InformationBox>
+
       <LearningPlan>
-        <p>학습 계획</p>
-        <table style={{ border: "solid 1px #d6d6d6" }}>
+        <table style={{ border: "solid 1px #d6d6d6",marginTop:"2.5rem"}}>
           <tbody>
             {fields.map((state, index) => (
               <>
@@ -269,7 +348,8 @@ const PrStepSecond = (props) => {
                     style={{
                       border: "solid 1px #d6d6d6",
                       textAlign: "center",
-                      verticalAlign: "middle",
+                      paddingTop: "5%",
+                      height: "3.5rem",
                     }}
                   >
                     {index}주차
@@ -287,6 +367,8 @@ const PrStepSecond = (props) => {
                         width: "100%",
                         border: "0",
                         boxShadow: "0",
+                        fontSize: "0.8rem",
+                        marginLeft: "0.5rem",
                       }}
                     />
                   </td>
@@ -295,7 +377,11 @@ const PrStepSecond = (props) => {
             ))}
           </tbody>
         </table>
-        <button type="button" onClick={() => append({ detail: "" })}>
+        <button
+        //type="button" onClick={() => append({ detail: "" })}
+          style={{ backgroundColor: "#E6F3F3", border: "solid 1px #d6d6d6" }}
+          onClick={addPlan}
+        >
           추가
         </button>
       </LearningPlan>
@@ -303,13 +389,14 @@ const PrStepSecond = (props) => {
         type="submit"
         disabled={isSubmitting}
         variant="contained"
-        color="primary"
+        color="mento"
         sx={{
-          width: "20%",
-          height: "4%",
-          fontSize: "100%",
+          height: "2.2rem", width: "11rem",
+          fontSize: "1rem",
           fontFamily: "NotoSansRegular",
           boxShadow: "0",
+          marginTop: "2%",
+          marginBottom: "2%",
         }}
       >
         작성 완료
@@ -317,15 +404,25 @@ const PrStepSecond = (props) => {
     </form>
   );
 };
-
+const BasicForm = styled.div`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+  font-family: "NotoSansRegular";
+  font-size: 1.2rem;
+  align-items: center;
+`;
 const InformationBox = styled.div`
   width: 92%;
-  height: 60%;
+  height: 24rem;
   display: flex;
   flex-direction: column;
   margin-left: 4%;
   margin-right: 4%;
-  margin-top: 5%;
+  margin-top: 3%;
+  font-size: 0.8rem;
 `;
 const InformationBoxLine = styled.div`
   width: 100%;
@@ -339,6 +436,13 @@ const LearningPlan = styled.div`
   width: 92%;
   display: flex;
   flex-direction: column;
+  font-size: 0.8rem;
+  overflow: auto;
+`;
+const CheckStyled = styled.div`
+  align-items: center;
+  font-family: NotoSansLight;
+  font-size: 0.8rem;
 `;
 const InputDate = styled(DatePicker)`
   height: 3rem;

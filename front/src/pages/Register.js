@@ -27,6 +27,7 @@ const Register = () => {
     <>
       <div
         style={{
+          
           width: "100%",
           height: "30vh",
           backgroundColor: "#FFB07A",
