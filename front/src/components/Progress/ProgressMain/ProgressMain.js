@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
+import Attendance from "../ProgressMain/Attendance";
 const ProgressMain = () => {
   return (
     <>
@@ -7,13 +8,13 @@ const ProgressMain = () => {
         <Box>
           <Title>프로젝트주제</Title>
           <Box2>
-            <Attendance></Attendance>
-            <Question></Question>
-            <Downloading></Downloading>
-            <Notice></Notice>
+            <Attendance />
+            <QuestionBox></QuestionBox>
+            <DownloadingBox></DownloadingBox>
+            <NoticeBox></NoticeBox>
           </Box2>
         </Box>
-        <Calander>2</Calander>
+        <CalanderBox>2</CalanderBox>
       </div>
     </>
   );
@@ -43,15 +44,8 @@ const Title = styled.div`
   display: flex;
   align-items: center;
 `;
-const Attendance = styled.div`
-  margin-right: 2%;
-  background-color: blue;
-  width: 49%;
-  height: 30%;
-  border-radius: 25px;
-`;
 
-const Question = styled.div`
+const QuestionBox = styled.div`
   margin-right: 2%;
   margin-top: 2%;
   background-color: orange;
@@ -60,21 +54,21 @@ const Question = styled.div`
   border-radius: 25px;
 `;
 
-const Downloading = styled.div`
+const DownloadingBox = styled.div`
   background-color: Purple;
   width: 49%;
   height: 40%;
   border-radius: 25px;
 `;
 
-const Notice = styled.div`
+const NoticeBox = styled.div`
   margin-top: 2%;
   background-color: yellow;
   width: 49%;
   height: 57.6%;
   border-radius: 25px;
 `;
-const Calander = styled.div`
+const CalanderBox = styled.div`
   background-color: blue;
   width: 30%;
   height: 83vh;

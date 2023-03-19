@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import axios from "axios";
 import styled from "@emotion/styled";
 import { Button, FormControl, Input, MenuItem, Select } from "@mui/material";
@@ -11,38 +11,7 @@ const StepSecond = (props) => {
     formState: { errors, isSubmitting },
     handleSubmit,
   } = useForm({ defaultValues: { act_place: "" } });
-  const [name, setName] = useState("");
-  const [age, setAge] = useState("");
-  const [email, setEmail] = useState("");
-  const [grade, setGrade] = useState("");
-  const [id, setId] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordComfirm, setpasswordComfirm] = useState("");
   const teachingStyle = ["온라인", "오프라인", "온라인&오프라인 병행"];
-  const nameHandleChange = (event) => {
-    setName(event.target.value);
-  };
-  const ageHandleChange = (event) => {
-    setAge(event.target.value);
-  };
-  const emailHandleChange = (event) => {
-    setEmail(event.target.value);
-  };
-  const directEmailHandleChange = (event) => {
-    setEmail(event.target.value);
-  };
-  const gradeHandleChange = (event) => {
-    setGrade(event.target.value);
-  };
-  const idHandleChange = (event) => {
-    setId(event.target.value);
-  };
-  const passwordHandleChange = (event) => {
-    setPassword(event.target.value);
-  };
-  const passwordComfirmHandleChange = (event) => {
-    setpasswordComfirm(event.target.value);
-  };
 
   const onSubmit = (data) => {
     const formData = new FormData();
@@ -90,7 +59,7 @@ const StepSecond = (props) => {
           backgroundColor: "skyblue",
           height: "10rem",
           fontFamily: "NotoSansRegular",
-          marginBottom:"1rem"
+          marginBottom: "1rem",
         }}
       >
         관심분야 선택
@@ -112,7 +81,7 @@ const StepSecond = (props) => {
               width: "80%",
               height: "13%",
               fontSize: "70%",
-              fontWeight:"bold",
+              fontWeight: "bold",
               fontFamily: "NotoSansLight",
               boxShadow: "0",
             }}
@@ -124,7 +93,6 @@ const StepSecond = (props) => {
           <InformationBoxLine>
             이름
             <Input
-              onChange={nameHandleChange}
               disableUnderline={true}
               placeholder="이름입력"
               sx={{
@@ -136,7 +104,7 @@ const StepSecond = (props) => {
                 borderRadius: "0",
                 borderBottom: "solid 2px",
                 borderBottomColor: "#d6d6d6",
-                marginLeft:"1rem",
+                marginLeft: "1rem",
               }}
               {...register("name", {
                 required: "이름은 필수입력입니다.",
@@ -158,7 +126,7 @@ const StepSecond = (props) => {
                       height: "100%",
                       border: "solid 1px #d6d6d6",
                       boxShadow: "0",
-                      fontSize:"0.9rem",
+                      fontSize: "0.9rem",
                     }}
                     displayEmpty
                     variant="standard"
@@ -214,8 +182,8 @@ const StepSecond = (props) => {
                 borderRadius: "4.2px",
                 border: "solid 0.8px #d6d6d6",
                 boxShadow: "0",
-                marginLeft:"1.5rem",
-                fontSize:"0.9rem",
+                marginLeft: "1.5rem",
+                fontSize: "0.9rem",
               }}
               placeholder="직접입력"
               {...register("college", {
@@ -231,7 +199,7 @@ const StepSecond = (props) => {
                 borderRadius: "4.2px",
                 border: "solid 0.8px #d6d6d6",
                 boxShadow: "0",
-                fontSize:"0.9rem",
+                fontSize: "0.9rem",
               }}
               placeholder="학교명 검색"
             />
@@ -246,9 +214,9 @@ const StepSecond = (props) => {
                 borderRadius: "4.2px",
                 border: "solid 0.8px #d6d6d6",
                 boxShadow: "0",
-                fontSize:"0.9rem",
-                marginLeft:"2.2rem",
-                marginRight:"0.8rem",
+                fontSize: "0.9rem",
+                marginLeft: "2.2rem",
+                marginRight: "0.8rem",
               }}
               placeholder="학과"
               {...register("major", {
@@ -271,8 +239,8 @@ const StepSecond = (props) => {
                       width: "120%",
                       border: "solid 1px #d6d6d6",
                       boxShadow: "0",
-                      fontSize:"0.8rem",
-                      marginLeft:"0.6rem",
+                      fontSize: "0.8rem",
+                      marginLeft: "0.6rem",
                     }}
                     displayEmpty
                     variant="standard"
@@ -303,11 +271,11 @@ const StepSecond = (props) => {
                 display: "flex",
                 width: "75%",
                 height: "100%",
-                paddingTop:"0.4rem",
-                paddingBottom:"0.4rem",
+                paddingTop: "0.4rem",
+                paddingBottom: "0.4rem",
                 backgroundColor: "#f8f8f8",
-                fontSize:"0.8rem",
-                marginRight:"7.7rem",
+                fontSize: "0.8rem",
+                marginRight: "7.7rem",
               }}
             >
               {teachingStyle.map((value, index) => (
@@ -350,7 +318,6 @@ const StepSecond = (props) => {
         <IdWithPasswordLine>
           비밀번호
           <Input
-            onChange={passwordHandleChange}
             disableUnderline={true}
             placeholder="비밀번호입력"
             sx={{
@@ -376,7 +343,6 @@ const StepSecond = (props) => {
         <IdWithPasswordLine>
           비밀번호 확인
           <Input
-            onChange={passwordComfirmHandleChange}
             disableUnderline={true}
             placeholder="비밀번호확인"
             sx={{
@@ -461,7 +427,7 @@ const InformationBox = styled.div`
   font-family: "NotoSansMedium";
   height: 100%;
   width: 100%;
-  font-size:0.8rem;
+  font-size: 0.8rem;
 `;
 const InformationBoxLine = styled.div`
   width: 100%;
@@ -477,7 +443,7 @@ const IdWithPasswordBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  font-size:0.8rem;
+  font-size: 0.8rem;
 `;
 const IdWithPasswordLine = styled.div`
   width: 35%;

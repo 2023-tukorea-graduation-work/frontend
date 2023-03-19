@@ -25,42 +25,40 @@ const Register = () => {
   `;
   return (
     <>
-
       <div
         style={{
           
           width: "100%",
           height: "30vh",
-          backgroundColor:"#FFB07A"
+          backgroundColor: "#FFB07A",
         }}
       >
-
-      <Grid container>
-        <Grid xs={1}></Grid>
-        <Grid xs={10} sx={{ display: "flex" }}>
-          <LeftProcess
-            countStep={countStep}
-            orderProcess={[
-              "01.멘토/멘티설정",
-              "02.기본정보입력",
-              "03.회원가입완료",
-            ]}
-          />
-          <WhiteBox>
-            {countStep === 0 && (
-              <StepFirst increaseStep={increaseStep} isMento={isMento} />
-            )}
-            {countStep === 1 && mento && (
-              <StepSecondMentor increaseStep={increaseStep} />
-            )}
-            {countStep === 1 && !mento && (
-              <StepSecondMentee increaseStep={increaseStep} />
-            )}
-            {countStep === 2 && <StepThird />}
-          </WhiteBox>
+        <Grid container>
+          <Grid xs={1}></Grid>
+          <Grid xs={10} sx={{ display: "flex" }}>
+            <LeftProcess
+              countStep={countStep}
+              orderProcess={[
+                "01.멘토/멘티설정",
+                "02.기본정보입력",
+                "03.회원가입완료",
+              ]}
+            />
+            <WhiteBox>
+              {countStep === 0 && (
+                <StepFirst increaseStep={increaseStep} isMento={isMento} />
+              )}
+              {countStep === 1 && mento && (
+                <StepSecondMentor increaseStep={increaseStep} />
+              )}
+              {countStep === 1 && !mento && (
+                <StepSecondMentee increaseStep={increaseStep} />
+              )}
+              {countStep === 2 && <StepThird />}
+            </WhiteBox>
+          </Grid>
+          <Grid xs={1}></Grid>
         </Grid>
-        <Grid xs={1}></Grid>
-      </Grid>
       </div>
     </>
   );
