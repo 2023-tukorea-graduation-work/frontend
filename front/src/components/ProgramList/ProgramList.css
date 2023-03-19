@@ -1,0 +1,11 @@
+.method {
+    background-color: #fff;
+    border: 1px solid #dbdee2;
+    color: #404a5c;
+    width:5%;
+    cursor: pointer;
+  }
+  .method.active {
+    background-color: #505bf0;
+    color: #fff;
+  }
