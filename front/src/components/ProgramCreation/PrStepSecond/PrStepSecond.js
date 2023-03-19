@@ -18,13 +18,12 @@ const PrStepSecond = (props) => {
   const {
     control,
     register,
-    getValues,
     formState: { errors, isSubmitting },
     handleSubmit,
   } = useForm();
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "test",
+    name: "programWeeks",
   });
   const teachingStyle = ["온라인", "오프라인", "온라인&오프라인 병행"];
 
@@ -36,17 +35,8 @@ const PrStepSecond = (props) => {
     return date.getFullYear() + "-" + month + "-" + day;
   }
 
-
   const onSubmit = (data) => {
-    const formData = new FormData();
-    formData.append(
-      "data",
-      new Blob([JSON.stringify(data)], { type: "application/json" })
-    );
     console.log(data);
-    console.log(dateFormat(data.recruit_finish_date));
-    // 2023. 03. 23. -> 2
-
     axios({
       url: "/api/v1/program",
       method: "post",
@@ -62,8 +52,6 @@ const PrStepSecond = (props) => {
         recruit_finish_date: `${dateFormat(data.recruit_finish_date)}`,
         recruit_start_date: `${dateFormat(data.recruit_start_date)}`,
       },
-
-      // 2023-02-23
     })
       .then((response) => {
         console.log(response);
@@ -75,30 +63,7 @@ const PrStepSecond = (props) => {
   const onError = (error) => {
     console.log(error);
   };
-  const StartCal = () => {
-    const [startDate, setStartDate] = useState(new Date());
-    return (
-      <DatePicker
-        dateFormat="yyyy년 MM월 dd일"
-        minDate={new Date()}
-        selected={startDate}
-        onChange={(date) => setStartDate(date)}
-        locale={ko}
-      />
-    );
-  };
 
-  const EndCal = () => {
-    const [endDate, setEndDate] = useState(new Date());
-    return (
-      <DatePicker
-        dateFormat="yyyy년 MM월 dd일"
-        selected={endDate}
-        onChange={(date) => setEndDate(date)}
-        locale={ko}
-      />
-    );
-  };
   return (
     <form
       onSubmit={handleSubmit(onSubmit, onError)}
@@ -116,12 +81,15 @@ const PrStepSecond = (props) => {
       }}
     >
       <InformationBox>
-      <p
-        style={{marginBottom:"0.9rem",
-                fontSize:"0.7rem",
-                color:"#777777",
-              }}
-      >선택한 카테고리 - 카테고리세부주제</p>
+        <p
+          style={{
+            marginBottom: "0.9rem",
+            fontSize: "0.7rem",
+            color: "#777777",
+          }}
+        >
+          선택한 카테고리 - 카테고리세부주제
+        </p>
         <p>주제</p>
         <Input
           disableUnderline={true}
@@ -136,108 +104,78 @@ const PrStepSecond = (props) => {
           }}
           placeholder=""
         />
-        <p style={{ marginBottom: "1rem", display: "flex" }}>프로그램소개</p>
-        <TextField
-          multiline
-          rows={2}
-          disableUnderline={true}
-          style={{
-            width: "100%",
-            borderRadius: "3px",
-            border: "solid 1px #d6d6d6",
-            boxShadow: "0",
-            fontSize: "0.8rem",
-          }}
-          placeholder=""
-          {...register("subject", {
-            required: "주제 필수입력입니다.",
-          })}
-        />
-        <p>프로그램 소개글</p>
+        <p style={{ marginBottom: "1rem " }}>프로그램소개</p>
         <InformationBoxLine>
-          //<TextField
-           // multiline
-           // rows={5}
-          <p style={{ marginTop: "1rem" }}>활동가능기간</p>
-          <div
-            style={{
-              marginLeft: "1rem",
-              marginRight: "1rem",
-              marginTop: "1rem",
-            }}
-          >
-            <StartCal />
-          </div>
-          <p style={{ marginTop: "1rem" }}>~</p>
-          <div
-            style={{
-              marginLeft: "1rem",
-              marginRight: "1rem",
-              marginTop: "1rem",
-            }}
-          >
-            <EndCal />
-          </div>
-
-          {/* <FaCalendarAlt/> */}
-          {/* <Input
-            disableUnderline={true}
+          <TextField
+            multiline
+            rows={2}
             sx={{
               width: "100%",
-              border: "0",
+              borderRadius: "3px",
+              border: "solid 1px #d6d6d6",
               boxShadow: "0",
+              fontSize: "0.8rem",
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: "white", // default
+                },
+                "&.Mui-focused fieldset": {
+                  border: "0px",
+                },
+                "&:hover fieldset": {
+                  border: "0px",
+                },
+              },
             }}
-            {...register("detail", {
-              required: "소개글 필수입력입니다.",
+            placeholder=""
+            {...register("subject", {
+              required: "주제 필수입력입니다.",
             })}
           />
         </InformationBoxLine>
         <InformationBoxLine>
-          <div style={{ width: "30%" }}>활동가능기간</div>
-          {/* <Controller
-            control={control}
-            name="date-input"
-            render={({ field }) => (
-              <DatePicker
-                placeholderText="Select date"
-                onChange={(date) => field.onChange(date)}
-                selected={field.value}
-              />
-            )}
-          /> */}
-          <Controller
-            control={control}
-            name="pro_start_date"
-            render={({ field }) => (
-              <InputDate
-                {...field}
-                dateFormat="yyyy/MM/dd"
-                selected={field.value}
-                onChange={(date) => field.onChange(date)}
-              />
-            )}
-          />
-          <Controller
-            control={control}
-            name="pro_finish_date"
-            render={({ field }) => (
-              <InputDate
-                {...field}
-                dateFormat="yyyy/MM/dd"
-                selected={field.value}
-                onChange={(date) => field.onChange(date)}
-              />
-            )}
-          />
+          <p style={{ width: "10%" }}>활동가능기간</p>
+          <div style={{ width: "8rem", marginRight: "1rem" }}>
+            <Controller
+              control={control}
+              name="pro_start_date"
+              render={({ field }) => (
+                <InputDate
+                  showIcon
+                  {...field}
+                  dateFormat="yyyy년 MM월 dd일"
+                  selected={field.value}
+                  onChange={(date) => field.onChange(date)}
+                  locale={ko}
+                />
+              )}
+            />
+          </div>
+          ~
+          <div style={{ width: "8rem", marginLeft: "1rem" }}>
+            <Controller
+              control={control}
+              name="pro_finish_date"
+              render={({ field }) => (
+                <InputDate
+                  {...field}
+                  dateFormat="yyyy년 MM월 dd일"
+                  selected={field.value}
+                  onChange={(date) => field.onChange(date)}
+                  locale={ko}
+                />
+              )}
+            />
+          </div>
         </InformationBoxLine>
         <InformationBoxLine>
           수업방식
           <div
             style={{
-              justifyContent: "space-evenly",
+              justifyContent: "space-between",
               display: "flex",
-              width: "55%",
-              height: "70%",
+              width: "%",
+              height: "150%",
               backgroundColor: "#f8f8f8",
               alignItems: "center",
               marginLeft: "2.4rem",
@@ -256,15 +194,10 @@ const PrStepSecond = (props) => {
               </div>
             ))}
           </div>
-          <CheckStyled>
-            <Checkbox style={{ color: "#83C2C5" }} />
-            프로젝트생성여부
-          </CheckStyled>
         </InformationBoxLine>
         <InformationBoxLine>
           모집인원
-
-          <div style={{ width: "10%" }}>
+          <div style={{ width: "5rem", marginLeft: "4.5%", marginRight: "1%" }}>
             <FormControl>
               <Controller
                 defaultValue=""
@@ -273,14 +206,13 @@ const PrStepSecond = (props) => {
                 rules={{ required: "인원은 필수선택입니다." }}
                 render={({ field }) => (
                   <Select
+                    disableUnderline
                     {...field}
-                    disableUnderline={true}
                     sx={{
                       height: "30px",
                       width: "150%",
                       border: "solid 1px #d6d6d6",
                       boxShadow: "0",
-                      marginLeft: "95%",
                       paddingLeft: "20%",
                       fontSize: "0.8rem",
                     }}
@@ -296,40 +228,51 @@ const PrStepSecond = (props) => {
                     >
                       <em>인원</em>
                     </MenuItem>
-                    <MenuItem sx={{ fontSize: "0.8rem" }} value={1}>1</MenuItem>
-                    <MenuItem sx={{ fontSize: "0.8rem" }} value={2}>2</MenuItem>
-                    <MenuItem sx={{ fontSize: "0.8rem" }} value={3}>3</MenuItem>
-                    <MenuItem sx={{ fontSize: "0.8rem" }} value={4}>4</MenuItem>
+                    <MenuItem sx={{ fontSize: "0.8rem" }} value={1}>
+                      1
+                    </MenuItem>
+                    <MenuItem sx={{ fontSize: "0.8rem" }} value={2}>
+                      2
+                    </MenuItem>
+                    <MenuItem sx={{ fontSize: "0.8rem" }} value={3}>
+                      3
+                    </MenuItem>
+                    <MenuItem sx={{ fontSize: "0.8rem" }} value={4}>
+                      4
+                    </MenuItem>
                   </Select>
                 )}
               />
             </FormControl>
           </div>
-          <div style={{ width: "12%" }}>활동가능기간</div>
-          <div style={{ width: "30%" }}>
+          <div style={{ width: "5rem" }}>활동가능기간</div>
+          <div style={{ width: "8rem", marginRight: "1rem" }}>
             <Controller
               control={control}
               name="recruit_start_date"
               render={({ field }) => (
                 <InputDate
                   {...field}
-                  dateFormat="yyyy-MM-dd"
+                  dateFormat="yyyy년 MM월 dd일"
                   selected={field.value}
                   onChange={(date) => field.onChange(date)}
+                  locale={ko}
                 />
               )}
             />
           </div>
-          <div style={{ width: "30%" }}>
+          ~
+          <div style={{ width: "8rem", marginLeft: "1rem" }}>
             <Controller
               control={control}
               name="recruit_finish_date"
               render={({ field }) => (
                 <InputDate
                   {...field}
-                  dateFormat="yyyy-MM-dd"
+                  dateFormat="yyyy년 MM월 dd일"
                   selected={field.value}
                   onChange={(date) => field.onChange(date)}
+                  locale={ko}
                 />
               )}
             />
@@ -339,17 +282,16 @@ const PrStepSecond = (props) => {
       </InformationBox>
 
       <LearningPlan>
-        <table style={{ border: "solid 1px #d6d6d6",marginTop:"2.5rem"}}>
+        <table style={{ border: "solid 1px #d6d6d6", marginTop: "2.5rem" }}>
           <tbody>
-            {fields.map((state, index) => (
+            {fields.map((field, index) => (
               <>
                 <tr>
                   <td
                     style={{
                       border: "solid 1px #d6d6d6",
                       textAlign: "center",
-                      paddingTop: "5%",
-                      height: "3.5rem",
+                      verticalAlign: "middle",
                     }}
                   >
                     {index}주차
@@ -360,15 +302,31 @@ const PrStepSecond = (props) => {
                     }}
                   >
                     <TextField
+                      key={field.id}
                       {...register(`programWeeks.${index}.detail`)}
                       multiline
                       rows={5}
                       sx={{
                         width: "100%",
+                        height: "100%",
                         border: "0",
                         boxShadow: "0",
                         fontSize: "0.8rem",
-                        marginLeft: "0.5rem",
+                        "&:hover": {
+                          borderColor: "blue",
+                          backgroundColor: "white",
+                        },
+                        "& .MuiOutlinedInput-root": {
+                          "& fieldset": {
+                            borderColor: "white", // default
+                          },
+                          "&.Mui-focused fieldset": {
+                            border: "0px",
+                          },
+                          "&:hover fieldset": {
+                            border: "0px",
+                          },
+                        },
                       }}
                     />
                   </td>
@@ -377,21 +335,22 @@ const PrStepSecond = (props) => {
             ))}
           </tbody>
         </table>
-        <button
-        //type="button" onClick={() => append({ detail: "" })}
-          style={{ backgroundColor: "#E6F3F3", border: "solid 1px #d6d6d6" }}
-          onClick={addPlan}
-        >
-          추가
-        </button>
       </LearningPlan>
+      <button
+        type="button"
+        onClick={() => append({ detail: "" })}
+        style={{ backgroundColor: "#E6F3F3", border: "solid 1px #d6d6d6" }}
+      >
+        학습계획 추가
+      </button>
       <Button
         type="submit"
         disabled={isSubmitting}
         variant="contained"
         color="mento"
         sx={{
-          height: "2.2rem", width: "11rem",
+          height: "2.2rem",
+          width: "11rem",
           fontSize: "1rem",
           fontFamily: "NotoSansRegular",
           boxShadow: "0",
@@ -404,16 +363,6 @@ const PrStepSecond = (props) => {
     </form>
   );
 };
-const BasicForm = styled.div`
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  text-align: start;
-  font-family: "NotoSansRegular";
-  font-size: 1.2rem;
-  align-items: center;
-`;
 const InformationBox = styled.div`
   width: 92%;
   height: 24rem;
@@ -439,14 +388,9 @@ const LearningPlan = styled.div`
   font-size: 0.8rem;
   overflow: auto;
 `;
-const CheckStyled = styled.div`
-  align-items: center;
-  font-family: NotoSansLight;
-  font-size: 0.8rem;
-`;
 const InputDate = styled(DatePicker)`
-  height: 3rem;
-  width: 70%;
+  height: 1.5rem;
+  width: 100%;
   border-radius: 4.2px;
   border: solid 0.8px #d6d6d6;
   boxshadow: 0;
