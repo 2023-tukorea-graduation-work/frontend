@@ -2,7 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import { Button } from "@mui/material";
 import Select from 'react-select';
-import {  StateOption, stateOptions,StudyOption,StudyOptions,HobbyOption,HobbyOptions ,MajorOption,MajorOptions} from './data';
+import {  StateOption, stateOptions,StudyOption,StudyOptions,HobbyOption,HobbyOptions ,MajorOption,MajorOptions} from '../../docs/data';
 import { FaBook ,FaRunning,FaStackOverflow} from "react-icons/fa";
 
 
