@@ -12,8 +12,10 @@ import MyPage from "./pages/MyPage";
 import ProgramCreation from "./pages/ProgramCreation";
 import ProjectProgress from "./pages/ProjectProgress";
 import ProgramListjs from "./pages/ProgramList.js";
+import ProgramListDetailjs from "./pages/ProgramListDetail";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
+import Mainpagejs from "./pages/Mainpage.";
 const theme = createTheme({
   palette: {
     primary: {
@@ -36,6 +38,7 @@ root.render(
         <Header />
         <BrowserRouter>
           <Routes>
+            <Route path="/Mainpagejs" element={<Mainpagejs />}></Route>
             <Route
               path="/projectProgress"
               element={<ProjectProgress />}
@@ -44,10 +47,11 @@ root.render(
               path="/programCreation"
               element={<ProgramCreation />}
             ></Route>
+            <Route path="/ProgramListjs" element={<ProgramListjs />} />
             <Route
-              path="/ProgramListjs"
-              element={<ProgramListjs/>}
-              />
+              path="/ProgramListDetailjs"
+              element={<ProgramListDetailjs />}
+            ></Route>
             <Route path="/register" element={<Register />}></Route>
             <Route path="/myPage" element={<MyPage />}></Route>
             <Route path="/" element={<Login />}></Route>
