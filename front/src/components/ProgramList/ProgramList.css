@@ -1,11 +1,242 @@
-.method {
-    background-color: #fff;
-    border: 1px solid #dbdee2;
-    color: #404a5c;
-    width:5%;
-    cursor: pointer;
-  }
-  .method.active {
-    background-color: #505bf0;
-    color: #fff;
-  }
+.place {
+  background-color: #fff;
+  border: 1px solid #dbdee2;
+  color: #404a5c;
+  width: 35%;
+  height: 45%;
+  cursor: pointer;
+  border-radius: 20px;
+  text-align: center;
+  line-height: 190%;
+  margin-right: 4%;
+  margin-bottom: 0.6rem;
+}
+.place.active {
+  background-color: #ff8e41;
+  color: #fff;
+}
+.place2 {
+  background-color: #fff;
+  border: 1px solid #dbdee2;
+  color: #404a5c;
+  width: 45%;
+  cursor: pointer;
+  text-align: center;
+  height: 45%;
+  line-height: 190%;
+  border-radius: 20px;
+}
+.place2.active {
+  background-color: #ff8e41;
+  color: #fff;
+}
+.place3 {
+  background-color: #fff;
+  border: 1px solid #dbdee2;
+  color: #404a5c;
+  width: 90%;
+  cursor: pointer;
+  text-align: center;
+  height: 45%;
+  line-height: 190%;
+  border-radius: 20px;
+}
+.place3.active {
+  background-color: #ff8e41;
+  color: #fff;
+}
+/* kindbox css */
+.kind {
+  background-color: #fff;
+  border: 1px solid #dbdee2;
+  color: #404a5c;
+  width: 35%;
+  height: 45%;
+  cursor: pointer;
+  border-radius: 20px;
+  text-align: center;
+  line-height: 190%;
+  margin-right: 4%;
+  margin-bottom: 0.6rem;
+}
+.kind.active {
+  background-color: #ff8e41;
+  color: #fff;
+}
+.kind2 {
+  background-color: #fff;
+  border: 1px solid #dbdee2;
+  color: #404a5c;
+  width: 35%;
+  cursor: pointer;
+  text-align: center;
+  height: 45%;
+  line-height: 190%;
+  border-radius: 20px;
+}
+.kind2.active {
+  background-color: #ff8e41;
+  color: #fff;
+}
+.kind3 {
+  background-color: #fff;
+  border: 1px solid #dbdee2;
+  color: #404a5c;
+  width: 45%;
+  cursor: pointer;
+  text-align: center;
+  height: 45%;
+  line-height: 190%;
+  border-radius: 20px;
+}
+.kind3.active {
+  background-color: #ff8e41;
+  color: #fff;
+}
+
+/* fieldbox.css */
+
+.field {
+  background-color: #fff;
+  border: 1px solid #dbdee2;
+  color: #404a5c;
+  width: 16.5%;
+  height: 45%;
+  cursor: pointer;
+  border-radius: 20px;
+  text-align: center;
+  line-height: 190%;
+  margin-bottom: 0.6rem;
+  margin-right: 2%;
+}
+.field.active {
+  background-color: #ff8e41;
+  color: #fff;
+}
+.field2 {
+  background-color: #fff;
+  border: 1px solid #dbdee2;
+  color: #404a5c;
+  width: 16.5%;
+  cursor: pointer;
+  text-align: center;
+  height: 45%;
+  line-height: 190%;
+  border-radius: 20px;
+  margin-right: 2%;
+}
+.field2.active {
+  background-color: #ff8e41;
+  color: #fff;
+}
+.field3 {
+  background-color: #fff;
+  border: 1px solid #dbdee2;
+  color: #404a5c;
+  width: 16.5%;
+  cursor: pointer;
+  text-align: center;
+  height: 45%;
+  line-height: 190%;
+  border-radius: 20px;
+  margin-right: 2%;
+}
+.field3.active {
+  background-color: #ff8e41;
+  color: #fff;
+}
+.field4 {
+  background-color: #fff;
+  border: 1px solid #dbdee2;
+  color: #404a5c;
+  width: 16.5%;
+  height: 45%;
+  cursor: pointer;
+  border-radius: 20px;
+  text-align: center;
+  line-height: 190%;
+  margin-bottom: 0.6rem;
+  margin-right: 2%;
+}
+.field4.active {
+  background-color: #ff8e41;
+  color: #fff;
+}
+.field5 {
+  background-color: #fff;
+  border: 1px solid #dbdee2;
+  color: #404a5c;
+  width: 16.5%;
+  cursor: pointer;
+  text-align: center;
+  height: 45%;
+  line-height: 190%;
+  border-radius: 20px;
+}
+.field5.active {
+  background-color: #ff8e41;
+  color: #fff;
+}
+.field6 {
+  background-color: #fff;
+  border: 1px solid #dbdee2;
+  color: #404a5c;
+  width: 16.5%;
+  cursor: pointer;
+  text-align: center;
+  height: 45%;
+  line-height: 190%;
+  border-radius: 20px;
+  margin-right: 2%;
+}
+.field6.active {
+  background-color: #ff8e41;
+  color: #fff;
+}
+.field7 {
+  background-color: #fff;
+  border: 1px solid #dbdee2;
+  color: #404a5c;
+  width: 16.5%;
+  cursor: pointer;
+  text-align: center;
+  height: 45%;
+  line-height: 190%;
+  border-radius: 20px;
+  margin-right: 2%;
+}
+.field7.active {
+  background-color: #ff8e41;
+  color: #fff;
+}
+.field8 {
+  background-color: #fff;
+  border: 1px solid #dbdee2;
+  color: #404a5c;
+  width: 16.5%;
+  cursor: pointer;
+  text-align: center;
+  height: 45%;
+  line-height: 190%;
+  border-radius: 20px;
+  margin-right: 2%;
+}
+.field8.active {
+  background-color: #ff8e41;
+  color: #fff;
+}
+.field9 {
+  background-color: #fff;
+  border: 1px solid #dbdee2;
+  color: #404a5c;
+  width: 16.5%;
+  cursor: pointer;
+  text-align: center;
+  height: 45%;
+  line-height: 190%;
+  border-radius: 20px;
+}
+.field9.active {
+  background-color: #ff8e41;
+  color: #fff;
+}
