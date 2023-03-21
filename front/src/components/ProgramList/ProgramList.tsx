@@ -9,167 +9,28 @@ import {
   FaRegEnvelope,
   FaSearch,
 } from "react-icons/fa";
-import "./ProgramList.css";
+import Pagination from "react-js-pagination";
+import ItemBox from "./ItemBox";
+import dummy from "../../dummyData/ProList.json";
+import FilterButton from "./FilterButton";
 
 const ProgramList = () => {
-  const [tab, setTab] = useState<string>("curr");
-  const [kindtab, setkindTab] = useState<string>("to");
-  const [fieldtab, setfieldTab] = useState<string>("");
+  const [page, setPage] = useState<number>(1);
+  const handlePageChange = (page: number) => {
+    setPage(page);
+  };
+  const handlePageUp = () => {
+    if (page < Math.trunc(dummy.data.length / 5))
+      setPage((state) => (state = state + 1));
+  };
+  const handlePageDown = () => {
+    if (page !== 1) setPage((state) => (state = state - 1));
+  };
   return (
     <ListForm>
       {/* 필터링해주는 칸 ------------------------------------------------------------------------ */}
-
-      <Tagbox>
-        <TagFrom>
-          <p
-            style={{ fontSize: "2rem", marginTop: "6rem", marginLeft: "8rem" }}
-          >
-            보고싶은 모집글만
-          </p>
-          <p
-            style={{
-              fontSize: "2rem",
-              marginLeft: "8rem",
-              marginTop: "0.8rem",
-            }}
-          >
-            골라보기
-          </p>
-        </TagFrom>
-        <PlaceForm>
-          <p
-            style={{
-              marginBottom: "2rem",
-              fontSize: "1.3rem",
-              fontWeight: "bold",
-            }}
-          >
-            수업방식
-          </p>
-          <Placebox>
-            <div
-              className={`place ${tab === "curr" ? "active" : ""}`}
-              onClick={() => setTab("curr")}
-            >
-              온라인
-            </div>
-            <div
-              className={`place2 ${tab === "prev" ? "active" : ""}`}
-              onClick={() => setTab("prev")}
-            >
-              오프라인
-            </div>
-            <div
-              className={`place3 ${tab === "th" ? "active" : ""}`}
-              onClick={() => setTab("th")}
-            >
-              온라인 & 오프라인 병행
-            </div>
-          </Placebox>
-        </PlaceForm>
-        <KindForm>
-          <p
-            style={{
-              marginBottom: "2rem",
-              fontSize: "1.3rem",
-              fontWeight: "bold",
-            }}
-          >
-            종류
-          </p>
-          <Kindbox>
-            <div
-              className={`kind ${kindtab === "to" ? "active" : ""}`}
-              onClick={() => setkindTab("to")}
-            >
-              전체
-            </div>
-            <div
-              className={`kind2 ${kindtab === "te" ? "active" : ""}`}
-              onClick={() => setkindTab("te")}
-            >
-              과외
-            </div>
-            <div
-              className={`kind3 ${kindtab === "men" ? "active" : ""}`}
-              onClick={() => setkindTab("men")}
-            >
-              멘토 & 멘티
-            </div>
-          </Kindbox>
-        </KindForm>
-        <FieldForm>
-          <p
-            style={{
-              marginBottom: "2rem",
-              fontSize: "1.3rem",
-              fontWeight: "bold",
-            }}
-          >
-            관심분야
-          </p>
-          <Fieldbox>
-            <div
-              className={`field ${fieldtab === "to" ? "active" : ""}`}
-              onClick={() => setfieldTab("to")}
-            >
-              전체
-            </div>
-            <div
-              className={`field2 ${fieldtab === "st" ? "active" : ""}`}
-              onClick={() => setfieldTab("st")}
-            >
-              학습
-            </div>
-
-            <div
-              className={`field3 ${fieldtab === "ho" ? "active" : ""}`}
-              onClick={() => setfieldTab("ho")}
-            >
-              취미
-            </div>
-            <div
-              className={`field4 ${fieldtab === "ma" ? "active" : ""}`}
-              onClick={() => setfieldTab("ma")}
-            >
-              전공
-            </div>
-            <div
-              className={`field5 ${fieldtab === "pa" ? "active" : ""}`}
-              onClick={() => setfieldTab("pa")}
-            >
-              진로
-            </div>
-            <div
-              className={`field6 ${fieldtab === "intro" ? "active" : ""}`}
-              onClick={() => setfieldTab("intro")}
-            >
-              자소서
-            </div>
-            <div
-              className={`field7 ${fieldtab === "ac" ? "active" : ""}`}
-              onClick={() => setfieldTab("ac")}
-            >
-              대학진학
-            </div>
-            <div
-              className={`field8 ${fieldtab === "it" ? "active" : ""}`}
-              onClick={() => setfieldTab("it")}
-            >
-              창업
-            </div>
-            <div
-              className={`field9 ${fieldtab === "ti" ? "active" : ""}`}
-              onClick={() => setfieldTab("ti")}
-            >
-              자격증
-            </div>
-          </Fieldbox>
-        </FieldForm>
-      </Tagbox>
-
+      <FilterButton />
       {/* 검색칸----------------------------------------------------- */}
-
       <SearchForm>
         <TextField
           sx={{
@@ -182,112 +43,42 @@ const ProgramList = () => {
           style={{ width: "5%", marginTop: "0.8rem", marginLeft: "0.8rem" }}
           size="40%"
         ></FaSearch>
-        .
       </SearchForm>
-
       {/* 프로그램나열칸 ------------------------------------------------------------------------ */}
       <ListTotalBox>
         <FaChevronLeft
-          style={{ width: "2%", marginRight: "2rem" }}
+          style={{ width: "2%", marginRight: "2rem", cursor: "pointer" }}
           size="4%"
           color="#dddddd"
+          onClick={handlePageDown}
         ></FaChevronLeft>
-
         <ListItem>
-          <ItemBox>
-            <ItemFirst>
-              <ItemImage>
-                <img
-                  src="/images/mentee.png"
-                  style={{ width: "100%", height: "100%", objectFit: "fill" }}
-                />
-              </ItemImage>
-              <ItemInfo>
-                <p>멘토 이름/학과</p>
-                <p>서울 특별시 전체~</p>
-                <p>2021/02/16~ 2021/03/31</p>
-              </ItemInfo>
-            </ItemFirst>
-
-            <ItemName>
-              <p
-                style={{
-                  fontSize: "1.2rem",
-                  marginBottom: "1.2rem",
-                  fontWeight: "bold",
-                }}
-              >
-                프로그램주제이름
-              </p>
-              <p style={{ fontSize: "0.9rem", marginBottom: "0.6rem" }}>
-                프로그램 카테고리
-              </p>
-
-              <div
-                style={{
-                  fontSize: "0.7rem",
-                  lineHeight: "0.9rem",
-                  color: "#777777",
-                }}
-              >
-                <p>그룹 종류: 과외 or 프로젝트</p>
-                <p>모집인원: 2명</p>
-                <p>현재 모집된 구성원: 2명</p>
-              </div>
-            </ItemName>
-            <hr
-              style={{
-                marginTop: "10.5%",
-                border: "0",
-                height: "1px",
-                width: "90.5%",
-                background: "#dddddd",
-              }}
-            ></hr>
-            <ItemDday>
-              <p
-                style={{
-                  fontWeight: "bold",
-                  fontSize: "1rem",
-                  color: "#FF8E41",
-                  marginRight: "10rem",
-                }}
-              >
-                D-31
-              </p>
-
-              <FaEye size="5%" style={{ marginTop: "0.1rem" }}></FaEye>
-              <p
-                style={{
-                  fontSize: "0.7rem",
-                  marginRight: "0.6rem",
-                  marginTop: "0.1rem",
-                }}
-              >
-                701
-              </p>
-              <FaRegEnvelope
-                size="5%"
-                style={{ marginRight: "1rem", marginTop: "0.1rem" }}
-              ></FaRegEnvelope>
-              <FaRegBookmark size="5%"></FaRegBookmark>
-            </ItemDday>
-          </ItemBox>
-
-          <ItemBox></ItemBox>
-          <ItemBox></ItemBox>
-          <ItemBox></ItemBox>
-          <ItemBox></ItemBox>
-          <ItemBox></ItemBox>
-          <ItemBox></ItemBox>
-          <ItemBox></ItemBox>
+          {dummy.data.length !== 0 ? (
+            <>
+              {dummy.data.slice((page - 1) * 8, 8 * page).map(({ post_id }) => {
+                return <ItemBox key={post_id} post_id={post_id}></ItemBox>;
+              })}
+            </>
+          ) : (
+            <></>
+          )}
         </ListItem>
         <FaChevronRight
-          style={{ width: "2%", marginLeft: "2rem" }}
+          style={{ width: "2%", marginLeft: "2rem", cursor: "pointer" }}
           size="4%"
           color="#dddddd"
+          onClick={handlePageUp}
         ></FaChevronRight>
       </ListTotalBox>
+      <PaginationBox>
+        <Pagination
+          activePage={page}
+          itemsCountPerPage={8}
+          totalItemsCount={dummy.data.length}
+          pageRangeDisplayed={5}
+          onChange={handlePageChange}
+        />
+      </PaginationBox>
     </ListForm>
   );
 };
@@ -307,18 +98,7 @@ const ListForm = styled.div`
   font-size: 1.2rem;
   align-items: center;
 `;
-const TagFrom = styled.div`
-  width: 35%;
-  margin-right: 2rem;
-`;
-const Tagbox = styled.div`
-  height: 35vh;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.15);
-  background-color: #fff;
-`;
+
 const SearchForm = styled.div`
   width: 32%;
   height: 3.4%;
@@ -329,96 +109,53 @@ const SearchForm = styled.div`
 `;
 const ListItem = styled.div`
   display: flex;
-  justify-content: space-between;
-  flex-direction: row;
   flex-wrap: wrap;
-  align-content: space-between;
+  align-content: start;
   height: 75vh;
   width: 100%;
   margin-bottom: 4%;
 `;
-const ItemBox = styled.div`
-  width: 23.5%;
-  height: 48%;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-`;
-const ItemFirst = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-top: 5%;
-  margin-left: 5%;
-`;
-const ItemImage = styled.div`
-  width: 30%;
-  height: 10vh;
-  border: 3px solid #d9d9d9;
-  object-fit: fill;
-`;
-const ItemInfo = styled.div`
-  margin-left: 1.5vh;
-  margin-top: 1.5vh;
-  width: 50%;
-  height: 7vh;
-  font-size: 0.7rem;
-  line-height: 1.3rem;
-`;
-const ItemName = styled.div`
-  width: 70%;
-  height: 12vh;
-  margin-left: 5%;
-  margin-top: 7%;
-`;
-const ItemDday = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-left: 5%;
-  margin-top: 4.5%;
-`;
-const PlaceForm = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 14%;
-  height: 60%;
-  margin-top: 6rem;
-  margin-right: 1.8rem;
-`;
-const Placebox = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  width: 100%;
-  font-size: 0.9rem;
-  font-weight: bold;
-`;
-const KindForm = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 14%;
-  height: 60%;
-  margin-top: 6rem;
-`;
-const Kindbox = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  font-size: 0.9rem;
-  font-weight: bold;
-`;
-const FieldForm = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 30%;
-  height: 60%;
-  margin-top: 6rem;
-  margin-left: 0.2rem;
-`;
-const Fieldbox = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  font-size: 0.9rem;
-  font-weight: bold;
+
+const PaginationBox = styled.div`
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  ul.pagination li {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #e2e2e2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+  }
+  ul.pagination li:first-child {
+    border-radius: 5px 0 0 5px;
+  }
+  ul.pagination li:last-child {
+    border-radius: 0 5px 5px 0;
+  }
+  ul.pagination li a {
+    text-decoration: none;
+    color: #337ab7;
+    font-size: 1rem;
+  }
+  ul.pagination li.active a {
+    color: white;
+  }
+  ul.pagination li.active {
+    background-color: #337ab7;
+  }
+  ul.pagination li a:hover,
+  ul.pagination li a.active {
+    color: blue;
+  }
 `;
 export default ProgramList;
