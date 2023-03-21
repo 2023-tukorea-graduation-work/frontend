@@ -10,9 +10,23 @@ import {
   FaSearch,
 } from "react-icons/fa";
 import "./ProgramList.css";
-
+import axios from "axios";
 const ProgramList = () => {
   const [tab, setTab] = useState<string>("curr");
+  useEffect(() => {
+    const search = null;
+    axios({
+      method: "get",
+      url: "/api/v1/program?",
+      params: { keyword: "" },
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  });
   const [kindtab, setkindTab] = useState<string>("to");
   const [fieldtab, setfieldTab] = useState<string>("");
   return (
@@ -273,7 +287,6 @@ const ProgramList = () => {
               <FaRegBookmark size="5%"></FaRegBookmark>
             </ItemDday>
           </ItemBox>
-
           <ItemBox></ItemBox>
           <ItemBox></ItemBox>
           <ItemBox></ItemBox>
