@@ -1,10 +1,26 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
 import "./ProgramList.css";
+import { useAppDispatch, useAppSelector } from "../../app/hook";
+import {
+  interestSelect,
+  placeSelect,
+  teachTypeSelect,
+} from "../../features/ProgramListSlice/programListSlice";
 const FilterButton = () => {
   const [tab, setTab] = useState<string>("curr");
   const [kindtab, setkindTab] = useState<string>("to");
   const [fieldtab, setfieldTab] = useState<string>("");
+  const placeSelected = useAppSelector(
+    (state) => state.programList.placeSelected
+  );
+  const teachTypeSelected = useAppSelector(
+    (state) => state.programList.teachTypeSelected
+  );
+  const interestSelected = useAppSelector(
+    (state) => state.programList.interestSelected
+  );
+  const dispatch = useAppDispatch();
   const place = [
     ["온라인", "online"],
     ["오프라인", "offline"],
@@ -52,8 +68,10 @@ const FilterButton = () => {
               return (
                 <div
                   key={index}
-                  className={`${value[1]} ${tab === value[1] ? "active" : ""}`}
-                  onClick={() => setTab(`${value[1]}`)}
+                  className={`${value[1]} ${
+                    placeSelected === value[1] ? "active" : ""
+                  }`}
+                  onClick={() => dispatch(placeSelect(`${value[1]}`))}
                 >
                   {`${value[0]}`}
                 </div>
@@ -69,9 +87,9 @@ const FilterButton = () => {
                 <div
                   key={index}
                   className={`${value[1]} ${
-                    kindtab === value[1] ? "active" : ""
+                    teachTypeSelected === value[1] ? "active" : ""
                   }`}
-                  onClick={() => setkindTab(`${value[1]}`)}
+                  onClick={() => dispatch(teachTypeSelect(`${value[1]}`))}
                 >
                   {`${value[0]}`}
                 </div>
@@ -87,9 +105,9 @@ const FilterButton = () => {
                 <div
                   key={index}
                   className={`${value[1]} ${
-                    fieldtab === value[1] ? "active" : ""
+                    interestSelected === value[1] ? "active" : ""
                   }`}
-                  onClick={() => setfieldTab(`${value[1]}`)}
+                  onClick={() => dispatch(interestSelect(`${value[1]}`))}
                 >
                   {`${value[0]}`}
                 </div>
