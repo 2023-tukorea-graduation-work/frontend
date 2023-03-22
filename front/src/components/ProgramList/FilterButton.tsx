@@ -8,18 +8,7 @@ import {
   teachTypeSelect,
 } from "../../features/ProgramListSlice/programListSlice";
 const FilterButton = () => {
-  const [tab, setTab] = useState<string>("curr");
-  const [kindtab, setkindTab] = useState<string>("to");
-  const [fieldtab, setfieldTab] = useState<string>("");
-  const placeSelected = useAppSelector(
-    (state) => state.programList.placeSelected
-  );
-  const teachTypeSelected = useAppSelector(
-    (state) => state.programList.teachTypeSelected
-  );
-  const interestSelected = useAppSelector(
-    (state) => state.programList.interestSelected
-  );
+  const filterAll = useAppSelector((state) => state.programList.filterAll);
   const dispatch = useAppDispatch();
   const place = [
     ["온라인", "online"],
@@ -69,7 +58,7 @@ const FilterButton = () => {
                 <div
                   key={index}
                   className={`${value[1]} ${
-                    placeSelected === value[1] ? "active" : ""
+                    filterAll.place === value[1] ? "active" : ""
                   }`}
                   onClick={() => dispatch(placeSelect(`${value[1]}`))}
                 >
@@ -87,7 +76,7 @@ const FilterButton = () => {
                 <div
                   key={index}
                   className={`${value[1]} ${
-                    teachTypeSelected === value[1] ? "active" : ""
+                    filterAll.teach === value[1] ? "active" : ""
                   }`}
                   onClick={() => dispatch(teachTypeSelect(`${value[1]}`))}
                 >
@@ -105,7 +94,7 @@ const FilterButton = () => {
                 <div
                   key={index}
                   className={`${value[1]} ${
-                    interestSelected === value[1] ? "active" : ""
+                    filterAll.interest === value[1] ? "active" : ""
                   }`}
                   onClick={() => dispatch(interestSelect(`${value[1]}`))}
                 >

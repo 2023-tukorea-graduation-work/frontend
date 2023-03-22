@@ -18,17 +18,24 @@ interface itemBox {
   ROW_NUM: number;
   SUBJECT: string;
 }
+interface filterList {
+  place: string;
+  teach: string;
+  interest: string;
+}
 interface totalState {
   post: itemBox[];
-  placeSelected: string;
-  teachTypeSelected: string;
-  interestSelected: string;
+  postData: itemBox[];
+  filterAll: filterList;
 }
 const initialState: totalState = {
   post: [],
-  placeSelected: "",
-  teachTypeSelected: "",
-  interestSelected: "",
+  postData: [],
+  filterAll: {
+    place: "onlineWithOffline",
+    teach: "typeAll",
+    interest: "interestAll",
+  },
 };
 export const loadItemListAsync = createAsyncThunk<itemBox[], string>(
   "loadItemList",
@@ -50,21 +57,22 @@ export const programListSlice = createSlice({
   initialState,
   reducers: {
     placeSelect: (state, action: PayloadAction<string>) => {
-      state.placeSelected = action.payload;
-      console.log(state.placeSelected);
+      state.filterAll.place = action.payload;
+      console.log(state.filterAll.place);
+      console.log(state.filterAll.teach);
+      console.log(state.filterAll.interest);
     },
     teachTypeSelect: (state, action: PayloadAction<string>) => {
-      state.teachTypeSelected = action.payload;
-      console.log(state.teachTypeSelected);
+      state.filterAll.teach = action.payload;
     },
     interestSelect: (state, action: PayloadAction<string>) => {
-      state.interestSelected = action.payload;
-      console.log(state.interestSelected);
+      state.filterAll.interest = action.payload;
     },
   },
   extraReducers: (builder) => {
     builder.addCase(loadItemListAsync.fulfilled, (state, { payload }) => {
       state.post = payload;
+      state.postData = payload;
       console.log(state.post);
     });
   },

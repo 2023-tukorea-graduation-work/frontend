@@ -18,7 +18,7 @@ import { loadItemListAsync } from "../../features/ProgramListSlice/programListSl
 
 const ProgramList = () => {
   const dispatch = useAppDispatch();
-  const post = useAppSelector((state) => state.programList.post);
+  const postList = useAppSelector((state) => state.programList.post);
   const [page, setPage] = useState<number>(1);
   const handlePageChange = (page: number) => {
     setPage(page);
@@ -60,9 +60,9 @@ const ProgramList = () => {
           onClick={handlePageDown}
         ></FaChevronLeft>
         <ListItem>
-          {post.length !== 0 ? (
+          {/* {postList.length !== 0 ? (
             <>
-              {post.slice((page - 1) * 8, 8 * page).map((value) => {
+              {postList.slice((page - 1) * 8, 8 * page).map((value) => {
                 return (
                   <ItemBox
                     key={value.PROGRAM_NO}
@@ -85,8 +85,8 @@ const ProgramList = () => {
             </>
           ) : (
             <></>
-          )}
-          {/* {dummy.data.length !== 0 ? (
+          )} */}
+          {dummy.data.length !== 0 ? (
             <>
               {dummy.data.slice((page - 1) * 8, 8 * page).map((value) => {
                 return (
@@ -111,7 +111,7 @@ const ProgramList = () => {
             </>
           ) : (
             <></>
-          )} */}
+          )}
         </ListItem>
         <FaChevronRight
           style={{ width: "2%", marginLeft: "2rem", cursor: "pointer" }}
@@ -124,7 +124,7 @@ const ProgramList = () => {
         <Pagination
           activePage={page}
           itemsCountPerPage={8}
-          totalItemsCount={post.length}
+          totalItemsCount={postList.length}
           pageRangeDisplayed={5}
           onChange={handlePageChange}
         />
