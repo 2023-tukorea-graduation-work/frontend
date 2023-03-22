@@ -1,6 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+interface IndexState {
+  indexNumber: number;
+}
+const initialState: IndexState = {
   indexNumber: 0,
 };
 export const leftbarSlice = createSlice({

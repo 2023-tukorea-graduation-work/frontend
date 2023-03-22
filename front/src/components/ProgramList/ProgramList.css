@@ -1,4 +1,4 @@
-.place {
+.online {
   background-color: #fff;
   border: 1px solid #dbdee2;
   color: #404a5c;
@@ -10,12 +10,13 @@
   line-height: 190%;
   margin-right: 4%;
   margin-bottom: 0.6rem;
+  font-family: "NotoSansRegular";
 }
-.place.active {
+.online.active {
   background-color: #ff8e41;
   color: #fff;
 }
-.place2 {
+.offline {
   background-color: #fff;
   border: 1px solid #dbdee2;
   color: #404a5c;
@@ -26,11 +27,11 @@
   line-height: 190%;
   border-radius: 20px;
 }
-.place2.active {
+.offline.active {
   background-color: #ff8e41;
   color: #fff;
 }
-.place3 {
+.onlineWithOffline {
   background-color: #fff;
   border: 1px solid #dbdee2;
   color: #404a5c;
@@ -41,12 +42,12 @@
   line-height: 190%;
   border-radius: 20px;
 }
-.place3.active {
+.onlineWithOffline.active {
   background-color: #ff8e41;
   color: #fff;
 }
 /* kindbox css */
-.kind {
+.typeAll {
   background-color: #fff;
   border: 1px solid #dbdee2;
   color: #404a5c;
@@ -59,11 +60,11 @@
   margin-right: 4%;
   margin-bottom: 0.6rem;
 }
-.kind.active {
+.typeAll.active {
   background-color: #ff8e41;
   color: #fff;
 }
-.kind2 {
+.tutoring {
   background-color: #fff;
   border: 1px solid #dbdee2;
   color: #404a5c;
@@ -74,11 +75,11 @@
   line-height: 190%;
   border-radius: 20px;
 }
-.kind2.active {
+.tutoring.active {
   background-color: #ff8e41;
   color: #fff;
 }
-.kind3 {
+.mentoWithMentee {
   background-color: #fff;
   border: 1px solid #dbdee2;
   color: #404a5c;
@@ -89,14 +90,14 @@
   line-height: 190%;
   border-radius: 20px;
 }
-.kind3.active {
+.mentoWithMentee.active {
   background-color: #ff8e41;
   color: #fff;
 }
 
 /* fieldbox.css */
 
-.field {
+.interestAll {
   background-color: #fff;
   border: 1px solid #dbdee2;
   color: #404a5c;
@@ -109,11 +110,11 @@
   margin-bottom: 0.6rem;
   margin-right: 2%;
 }
-.field.active {
+.interestAll.active {
   background-color: #ff8e41;
   color: #fff;
 }
-.field2 {
+.learning {
   background-color: #fff;
   border: 1px solid #dbdee2;
   color: #404a5c;
@@ -125,11 +126,11 @@
   border-radius: 20px;
   margin-right: 2%;
 }
-.field2.active {
+.learning.active {
   background-color: #ff8e41;
   color: #fff;
 }
-.field3 {
+.hobby {
   background-color: #fff;
   border: 1px solid #dbdee2;
   color: #404a5c;
@@ -141,11 +142,11 @@
   border-radius: 20px;
   margin-right: 2%;
 }
-.field3.active {
+.hobby.active {
   background-color: #ff8e41;
   color: #fff;
 }
-.field4 {
+.major {
   background-color: #fff;
   border: 1px solid #dbdee2;
   color: #404a5c;
@@ -158,11 +159,11 @@
   margin-bottom: 0.6rem;
   margin-right: 2%;
 }
-.field4.active {
+.major.active {
   background-color: #ff8e41;
   color: #fff;
 }
-.field5 {
+.career {
   background-color: #fff;
   border: 1px solid #dbdee2;
   color: #404a5c;
@@ -173,27 +174,11 @@
   line-height: 190%;
   border-radius: 20px;
 }
-.field5.active {
+.career.active {
   background-color: #ff8e41;
   color: #fff;
 }
-.field6 {
-  background-color: #fff;
-  border: 1px solid #dbdee2;
-  color: #404a5c;
-  width: 16.5%;
-  cursor: pointer;
-  text-align: center;
-  height: 45%;
-  line-height: 190%;
-  border-radius: 20px;
-  margin-right: 2%;
-}
-.field6.active {
-  background-color: #ff8e41;
-  color: #fff;
-}
-.field7 {
+.introduction {
   background-color: #fff;
   border: 1px solid #dbdee2;
   color: #404a5c;
@@ -205,11 +190,11 @@
   border-radius: 20px;
   margin-right: 2%;
 }
-.field7.active {
+.introduction.active {
   background-color: #ff8e41;
   color: #fff;
 }
-.field8 {
+.advanceUniversity {
   background-color: #fff;
   border: 1px solid #dbdee2;
   color: #404a5c;
@@ -221,11 +206,27 @@
   border-radius: 20px;
   margin-right: 2%;
 }
-.field8.active {
+.advanceUniversity.active {
   background-color: #ff8e41;
   color: #fff;
 }
-.field9 {
+.startups {
+  background-color: #fff;
+  border: 1px solid #dbdee2;
+  color: #404a5c;
+  width: 16.5%;
+  cursor: pointer;
+  text-align: center;
+  height: 45%;
+  line-height: 190%;
+  border-radius: 20px;
+  margin-right: 2%;
+}
+.startups.active {
+  background-color: #ff8e41;
+  color: #fff;
+}
+.certificate {
   background-color: #fff;
   border: 1px solid #dbdee2;
   color: #404a5c;
@@ -236,7 +237,7 @@
   line-height: 190%;
   border-radius: 20px;
 }
-.field9.active {
+.certificate.active {
   background-color: #ff8e41;
   color: #fff;
 }
