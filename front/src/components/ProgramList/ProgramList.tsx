@@ -13,8 +13,12 @@ import Pagination from "react-js-pagination";
 import ItemBox from "./ItemBox";
 import dummy from "../../dummyData/ProList.json";
 import FilterButton from "./FilterButton";
+import { useAppDispatch, useAppSelector } from "../../app/hook";
+import { loadItemListAsync } from "../../features/ProgramListSlice/programListSlice";
 
 const ProgramList = () => {
+  const dispatch = useAppDispatch();
+  const post = useAppSelector((state) => state.programList.post);
   const [page, setPage] = useState<number>(1);
   const handlePageChange = (page: number) => {
     setPage(page);
@@ -26,6 +30,9 @@ const ProgramList = () => {
   const handlePageDown = () => {
     if (page !== 1) setPage((state) => (state = state - 1));
   };
+  useEffect(() => {
+    dispatch(loadItemListAsync(""));
+  }, []);
   return (
     <ListForm>
       {/* 필터링해주는 칸 ------------------------------------------------------------------------ */}
@@ -53,15 +60,58 @@ const ProgramList = () => {
           onClick={handlePageDown}
         ></FaChevronLeft>
         <ListItem>
-          {dummy.data.length !== 0 ? (
+          {post.length !== 0 ? (
             <>
-              {dummy.data.slice((page - 1) * 8, 8 * page).map(({ post_id }) => {
-                return <ItemBox key={post_id} post_id={post_id}></ItemBox>;
+              {post.slice((page - 1) * 8, 8 * page).map((value) => {
+                return (
+                  <ItemBox
+                    key={value.PROGRAM_NO}
+                    PROGRAM_NO={value.PROGRAM_NO}
+                    ACT_PLACE={value.ACT_PLACE}
+                    CAPACITY={value.CAPACITY}
+                    COLLEGE={value.COLLEGE}
+                    DEADLINE={value.DEADLINE}
+                    DETAIL={value.DETAIL}
+                    MAJOR={value.MAJOR}
+                    NAME={value.NAME}
+                    PARTICIPANT={value.PARTICIPANT}
+                    PRO_FINISH_DATE={value.PRO_FINISH_DATE}
+                    PRO_START_DATE={value.PRO_START_DATE}
+                    ROW_NUM={value.ROW_NUM}
+                    SUBJECT={value.SUBJECT}
+                  ></ItemBox>
+                );
               })}
             </>
           ) : (
             <></>
           )}
+          {/* {dummy.data.length !== 0 ? (
+            <>
+              {dummy.data.slice((page - 1) * 8, 8 * page).map((value) => {
+                return (
+                  <ItemBox
+                    key={value.PROGRAM_NO}
+                    PROGRAM_NO={value.PROGRAM_NO}
+                    ACT_PLACE={value.ACT_PLACE}
+                    CAPACITY={value.CAPACITY}
+                    COLLEGE={value.COLLEGE}
+                    DEADLINE={value.DEADLINE}
+                    DETAIL={value.DETAIL}
+                    MAJOR={value.MAJOR}
+                    NAME={value.NAME}
+                    PARTICIPANT={value.PARTICIPANT}
+                    PRO_FINISH_DATE={value.PRO_FINISH_DATE}
+                    PRO_START_DATE={value.PRO_START_DATE}
+                    ROW_NUM={value.ROW_NUM}
+                    SUBJECT={value.SUBJECT}
+                  ></ItemBox>
+                );
+              })}
+            </>
+          ) : (
+            <></>
+          )} */}
         </ListItem>
         <FaChevronRight
           style={{ width: "2%", marginLeft: "2rem", cursor: "pointer" }}
@@ -74,7 +124,7 @@ const ProgramList = () => {
         <Pagination
           activePage={page}
           itemsCountPerPage={8}
-          totalItemsCount={dummy.data.length}
+          totalItemsCount={post.length}
           pageRangeDisplayed={5}
           onChange={handlePageChange}
         />

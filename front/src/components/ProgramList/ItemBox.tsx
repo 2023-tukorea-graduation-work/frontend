@@ -9,9 +9,35 @@ import {
   FaSearch,
 } from "react-icons/fa";
 type Props = {
-  post_id: number;
+  PROGRAM_NO: number;
+  ACT_PLACE: string;
+  CAPACITY: number;
+  COLLEGE: string;
+  DEADLINE: number;
+  DETAIL: string;
+  MAJOR: string;
+  NAME: string;
+  PARTICIPANT: number;
+  PRO_FINISH_DATE: string;
+  PRO_START_DATE: string;
+  ROW_NUM: number;
+  SUBJECT: string;
 };
-const ItemBox = ({ post_id }: Props) => {
+const ItemBox = ({
+  PROGRAM_NO,
+  ACT_PLACE,
+  CAPACITY,
+  COLLEGE,
+  DEADLINE,
+  DETAIL,
+  MAJOR,
+  NAME,
+  PARTICIPANT,
+  PRO_FINISH_DATE,
+  PRO_START_DATE,
+  ROW_NUM,
+  SUBJECT,
+}: Props) => {
   return (
     <Box>
       <ItemFirst>
@@ -23,9 +49,14 @@ const ItemBox = ({ post_id }: Props) => {
           />
         </ItemImage>
         <ItemInfo>
-          <p>{`${post_id}`}멘토 이름/학과</p>
-          <p>서울 특별시 전체~</p>
-          <p>2021/02/16~ 2021/03/31</p>
+          <p>
+            {`${PROGRAM_NO}`}
+            {`${NAME}`}/{`${COLLEGE}`}/{`${MAJOR}`}
+          </p>
+          <p>{`${ACT_PLACE}`}</p>
+          <p>
+            {`${PRO_START_DATE}`}~ {`${PRO_FINISH_DATE}`}
+          </p>
         </ItemInfo>
       </ItemFirst>
 
@@ -37,10 +68,10 @@ const ItemBox = ({ post_id }: Props) => {
             fontWeight: "bold",
           }}
         >
-          프로그램주제이름
+          {`${SUBJECT}`}
         </p>
         <p style={{ fontSize: "0.9rem", marginBottom: "0.6rem" }}>
-          프로그램 카테고리
+          프로그램 카테고리(추가필요)
         </p>
 
         <div
@@ -50,9 +81,9 @@ const ItemBox = ({ post_id }: Props) => {
             color: "#777777",
           }}
         >
-          <p>그룹 종류: 과외 or 프로젝트</p>
-          <p>모집인원: 2명</p>
-          <p>현재 모집된 구성원: 2명</p>
+          <p>그룹 종류: 과외 or 프로젝트-추가필요</p>
+          <p>모집인원: {`${CAPACITY}`}명</p>
+          <p>현재 모집된 구성원: {`${PARTICIPANT}`}명</p>
         </div>
       </ItemName>
       <hr
@@ -73,7 +104,7 @@ const ItemBox = ({ post_id }: Props) => {
             marginRight: "10rem",
           }}
         >
-          D-31
+          D{DEADLINE}
         </p>
 
         <FaEye size="5%" style={{ marginTop: "0.1rem" }}></FaEye>
