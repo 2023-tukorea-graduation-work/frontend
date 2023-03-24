@@ -30,7 +30,7 @@ const LeftBar = () => {
 };
 const Box = styled.div`
   height: 83vh;
-  width: 13%;
+  width: 17%;
   border-radius: 25px;
   background-color: #f5f5f5;
   text-align: left;
@@ -46,7 +46,7 @@ const Tab = styled.div`
   justify-content: center;
   border-top-left-radius: 25px;
   border-bottom-left-radius: 25px;
-  margin-top: 10%;
+  margin-top: 6%;
   cursor: pointer;
 `;
 const SelectedTab = styled.div`
@@ -59,7 +59,7 @@ const SelectedTab = styled.div`
   justify-content: center;
   border-top-left-radius: 25px;
   border-bottom-left-radius: 25px;
-  margin-top: 10%;
+  margin-top: 6%;
   font-family: "NotoSansBold";
   cursor: pointer;
 `;

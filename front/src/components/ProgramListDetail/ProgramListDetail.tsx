@@ -2,15 +2,13 @@ import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import { Button } from "@mui/material";
 import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import { FaHome, FaEye, FaRegBookmark, FaRegEnvelope } from "react-icons/fa";
 
 const ProgramListDetail = () => {
+  const [open, setOpen] = React.useState(false);
   return (
     <DetailForm>
       <Detailbox>
@@ -123,21 +121,23 @@ const ProgramListDetail = () => {
         </TableContainer>
       </ProgramPlan>
 
-      <Button
-        variant="contained"
-        color="primary"
-        sx={{
-          height: "2.4rem",
-          width: "11rem",
-          fontSize: "1rem",
-          fontFamily: "NotoSansRegular",
-          boxShadow: "0",
-          marginTop: "2rem",
-          marginBottom: "2rem",
-        }}
-      >
-        프로그램신청하기
-      </Button>
+      <div>
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{
+            height: "2.4rem",
+            width: "11rem",
+            fontSize: "1rem",
+            fontFamily: "NotoSansRegular",
+            boxShadow: "0",
+            marginTop: "2rem",
+            marginBottom: "2rem",
+          }}
+        >
+          프로그램신청하기
+        </Button>
+      </div>
     </DetailForm>
   );
 };
