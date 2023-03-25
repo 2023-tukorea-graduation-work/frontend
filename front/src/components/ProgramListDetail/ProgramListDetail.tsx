@@ -9,8 +9,19 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { FaHome, FaEye, FaRegBookmark, FaRegEnvelope } from "react-icons/fa";
-
+import { useAppDispatch, useAppSelector } from "../../app/hook";
+import { loadItemDetailAsync } from "../../features/ProgramListDetailSlice/programListDetailSlice";
+import { useParams } from "react-router-dom";
+interface WEEK {
+  DETAIL: string;
+}
 const ProgramListDetail = () => {
+  const { PROGRAM_NO } = useParams() as any;
+  const dispatch = useAppDispatch();
+  const programDetail = useAppSelector((state) => state.programDetail.detail);
+  useEffect(() => {
+    dispatch(loadItemDetailAsync(PROGRAM_NO));
+  }, []);
   return (
     <DetailForm>
       <Detailbox>
@@ -35,13 +46,17 @@ const ProgramListDetail = () => {
         </Detailca>
 
         <DetailIntro>
-          <p style={{ width: "6%" }}>박서영</p>
-          <p style={{ width: "15%" }}>한국공학대학교</p>
-          <p style={{ width: "74%" }}>it경영학과</p>
-          <p style={{ width: "50%" }}>모집인원 : 3</p>
-          <p style={{ width: "50%" }}>활동기간 : 2022.03.21 ~ 2022.03.21</p>
-          <p style={{ width: "50%" }}>모집기간 : 2022.03.21 ~ 2022.03.21</p>
-          <p style={{ width: "50%" }}>수업방식 : 온라인</p>
+          <p style={{ width: "6%" }}>{programDetail.NAME}</p>
+          <p style={{ width: "15%" }}>{programDetail.COLLEGE}</p>
+          <p style={{ width: "74%" }}>{programDetail.MAJOR}</p>
+          <p style={{ width: "50%" }}>모집인원 : {programDetail.CAPACITY}</p>
+          <p style={{ width: "50%" }}>활동기간 : 추가필요 ~ 추가필요</p>
+          <p style={{ width: "50%" }}>
+            모집기간 : {programDetail.RECRUIT_START_DATE} ~{" "}
+            {programDetail.RECRUIT_FINISH_DATE}
+          </p>
+          <p style={{ width: "50%" }}>수업방식 : {programDetail.ACT_PLACE}</p>
+          {/* {programDetail.PRO_PLACE}이거랑 둘중 어떤건지 골라야할거같아  */}
         </DetailIntro>
 
         <DetailIcon>
@@ -51,9 +66,10 @@ const ProgramListDetail = () => {
               fontSize: "1.2rem",
               color: "#FF8E41",
               marginRight: "11rem",
+              width: "100%",
             }}
           >
-            D-31
+            D-{programDetail.DEADLINE}
           </p>
 
           <FaEye size="10%" color="#8E8E8E"></FaEye>
@@ -78,47 +94,22 @@ const ProgramListDetail = () => {
       </Detailbox>
 
       <Programintro>
-        <p>
-          안녕하세요. 저는 현재 2개의 회사를 운영하고 있는 강유나입니다.
-          어린나이부터 사업만 운영하며, 지금까지 20대를 보내왔습니다. 이번에는
-          더욱더 큰 꿈을 꾸며 30대를 맞이한 여행관련 스타트업을 기획중에
-          있습니다. 이런식으로 주제에 관한 내용이 들어가는 칸
-        </p>
+        <p>{programDetail.INTRODUCTION}</p>
       </Programintro>
 
       <ProgramPlan>
         <TableContainer>
           <Table aria-label="a dense table">
-            <TableRow sx={{ height: "10vh" }}>
-              <TableCell align="center" width="10%">
-                1주차
-              </TableCell>
-              <TableCell align="left">상세내용</TableCell>
-            </TableRow>
-            <TableRow sx={{ height: "10vh" }}>
-              <TableCell align="center" width="10%">
-                1주차
-              </TableCell>
-              <TableCell align="left">상세내용</TableCell>
-            </TableRow>
-            <TableRow sx={{ height: "10vh" }}>
-              <TableCell align="center" width="10%">
-                1주차
-              </TableCell>
-              <TableCell align="left">상세내용</TableCell>
-            </TableRow>
-            <TableRow sx={{ height: "10vh" }}>
-              <TableCell align="center" width="10%">
-                1주차
-              </TableCell>
-              <TableCell align="left">상세내용</TableCell>
-            </TableRow>
-            <TableRow sx={{ height: "10vh" }}>
-              <TableCell align="center" width="10%">
-                1주차
-              </TableCell>
-              <TableCell align="left">상세내용</TableCell>
-            </TableRow>
+            {programDetail.WEEKS.map((value: WEEK, index: number) => {
+              return (
+                <TableRow sx={{ height: "10vh" }}>
+                  <TableCell align="center" width="10%">
+                    {index}주차
+                  </TableCell>
+                  <TableCell align="left">{value.DETAIL}</TableCell>
+                </TableRow>
+              );
+            })}
           </Table>
         </TableContainer>
       </ProgramPlan>

@@ -60,7 +60,7 @@ const ProgramList = () => {
           onClick={handlePageDown}
         ></FaChevronLeft>
         <ListItem>
-          {/* {postList.length !== 0 ? (
+          {postList.length !== 0 ? (
             <>
               {postList.slice((page - 1) * 8, 8 * page).map((value) => {
                 return (
@@ -85,8 +85,8 @@ const ProgramList = () => {
             </>
           ) : (
             <></>
-          )} */}
-          {dummy.data.length !== 0 ? (
+          )}
+          {/* {dummy.data.length !== 0 ? (
             <>
               {dummy.data.slice((page - 1) * 8, 8 * page).map((value) => {
                 return (
@@ -111,7 +111,7 @@ const ProgramList = () => {
             </>
           ) : (
             <></>
-          )}
+          )} */}
         </ListItem>
         <FaChevronRight
           style={{ width: "2%", marginLeft: "2rem", cursor: "pointer" }}
