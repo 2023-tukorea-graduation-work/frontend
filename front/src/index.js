@@ -49,7 +49,7 @@ root.render(
             ></Route>
             <Route path="/ProgramListjs" element={<ProgramListjs />} />
             <Route
-              path="/ProgramListDetailjs"
+              path="/ProgramListDetailjs/:PROGRAM_NO"
               element={<ProgramListDetailjs />}
             ></Route>
             <Route path="/register" element={<Register />}></Route>

@@ -8,6 +8,7 @@ import {
   FaRegEnvelope,
   FaSearch,
 } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 type Props = {
   PROGRAM_NO: number;
   ACT_PLACE: string;
@@ -38,8 +39,13 @@ const ItemBox = ({
   ROW_NUM,
   SUBJECT,
 }: Props) => {
+  const navigate = useNavigate();
   return (
-    <Box>
+    <Box
+      onClick={() => {
+        navigate("/ProgramListDetailjs/" + PROGRAM_NO);
+      }}
+    >
       <ItemFirst>
         <ItemImage>
           <img
@@ -127,6 +133,7 @@ const ItemBox = ({
   );
 };
 const Box = styled.div`
+  cursor: pointer;
   width: 25%;
   height: 48%;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
