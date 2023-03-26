@@ -8,7 +8,10 @@ import { Button, Checkbox } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import "./LoginForm.css";
 import axios from "axios";
+import { useAppDispatch } from "../../../app/hook";
+import { loginAsync } from "../../../features/LoginSlice/loginSlice";
 const LoginForm = () => {
+  const dispatch = useAppDispatch();
   const {
     control,
     register,
@@ -16,26 +19,12 @@ const LoginForm = () => {
     formState: { errors, isSubmitting },
     handleSubmit,
   } = useForm();
-  const onSubmit = (data) => {
+  const onSubmit = (data: any) => {
     data.user_gb = "MENTO";
     console.log(data);
-    axios({
-      url: "/api/v1/login",
-      method: "post",
-      data: {
-        email: `${data.email}`,
-        password: `${data.password}`,
-        user_gb: "MENTO",
-      },
-    })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    dispatch(loginAsync(data));
   };
-  const onError = (error) => {
+  const onError = (error: any) => {
     console.log(error);
   };
   return (
@@ -80,11 +69,10 @@ const LoginForm = () => {
           </CheckStyled>
 
           <MentorCheckStyled>
-          <Checkbox color="primary" />
-          멘토로그인
-          <p className="menteee">**해제시 멘티로 자동선택됩니다.</p>
+            <Checkbox color="primary" />
+            멘토로그인
+            <p className="menteee">**해제시 멘티로 자동선택됩니다.</p>
           </MentorCheckStyled>
-
 
           <Button
             type="submit"
@@ -103,13 +91,13 @@ const LoginForm = () => {
 };
 
 const MentorCheckStyled = styled.div`
-margin-top:-1rem;
-justify-content: start;
-display: flex;
-align-items: center;
-font-family: NotoSansLight;
-color: #777;
-font-size:0.7rem;
+  margin-top: -1rem;
+  justify-content: start;
+  display: flex;
+  align-items: center;
+  font-family: NotoSansLight;
+  color: #777;
+  font-size: 0.7rem;
 `;
 
 const FormStyled = styled.div`
@@ -128,7 +116,7 @@ const CheckStyled = styled.div`
   align-items: center;
   font-family: NotoSansLight;
   color: #777;
-  font-size:0.7rem;
+  font-size: 0.7rem;
 `;
 const LogoStyled = styled.div`
   display: flex;
