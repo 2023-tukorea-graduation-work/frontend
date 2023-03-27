@@ -25,7 +25,7 @@ export const loginAsync = createAsyncThunk<loginSuccess, loginInfo>(
         data: {
           email: `${loginData.email}`,
           password: `${loginData.password}`,
-          user_gb: "MENTO",
+          user_gb: `${loginData.user_gb}`,
         },
       });
       return data;

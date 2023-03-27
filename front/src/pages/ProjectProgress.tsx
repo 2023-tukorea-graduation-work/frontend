@@ -2,13 +2,13 @@ import React from "react";
 import Grid from "@mui/material/Unstable_Grid2";
 import styled from "@emotion/styled";
 import LeftBar from "../components/Progress/LeftBar/LeftBar";
-import { useDispatch, useSelector } from "react-redux";
 import { indexChange } from "../features/leftBarSlice/leftBarSlice";
 import ProgressMain from "../components/Progress/ProgressMain/ProgressMain";
 import Attendencedetail from "../components/Progress/ProgressDetail/Attendancedetail";
 import Calenderdetail from "../components/Progress/ProgressDetail/Calenderdetail";
+import { useAppSelector } from "../app/hook";
 const ProjectProgress = () => {
-  const selectIndex = useSelector((state) => state.leftBar.indexNumber);
+  const selectIndex = useAppSelector((state) => state.leftBar.indexNumber);
   const barArray = [
     { title: <div>0</div>, content: <ProgressMain /> },
     { title: <div>출석</div>, content: <Attendencedetail /> },
