@@ -10,10 +10,10 @@ import "./LoginForm.css";
 import { useAppDispatch } from "../../../app/hook";
 import { loginAsync } from "../../../features/LoginSlice/loginSlice";
 const LoginForm = () => {
-  const [toggleValue, setToggleValue] = useState<string>("Mentee");
+  const [toggleValue, setToggleValue] = useState<string>("MENTEE");
   const toggleOnChange = () => {
     setToggleValue((state) =>
-      state === "Mentee" ? (state = "Mento") : (state = "Mentee")
+      state === "MENTEE" ? (state = "MENTO") : (state = "MENTEE")
     );
   };
   const dispatch = useAppDispatch();
@@ -48,7 +48,7 @@ const LoginForm = () => {
               fontSize: "0.7rem",
             }}
             control={<Switch onChange={toggleOnChange} defaultChecked />}
-            label={toggleValue === "Mentee" ? "Mentee" : "Mento"}
+            label={toggleValue === "MENTEE" ? "MENTEE" : "MENTO"}
           />
           <Input
             id="email"
