@@ -10,7 +10,7 @@ const StepSecond = (props) => {
     getValues,
     formState: { errors, isSubmitting },
     handleSubmit,
-  } = useForm({ defaultValues: { act_place: "" } });
+  } = useForm();
   const teachingStyle = ["온라인", "오프라인", "온라인&오프라인 병행"];
 
   const onSubmit = (data) => {
