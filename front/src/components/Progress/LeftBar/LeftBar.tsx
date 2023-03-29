@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { useDispatch, useSelector } from "react-redux";
 import { indexChange } from "../../../features/leftBarSlice/leftBarSlice";
+import { useAppDispatch, useAppSelector } from "../../../app/hook";
 const LeftBar = () => {
-  const dispatch = useDispatch();
-  const selectIndex = useSelector((state) => state.leftBar.indexNumber);
+  const dispatch = useAppDispatch();
+  const selectIndex = useAppSelector((state) => state.leftBar.indexNumber);
   const barArray = ["전체게시판", "출석", "질문", "자료", "공지", "일정"];
   return (
     <Box>

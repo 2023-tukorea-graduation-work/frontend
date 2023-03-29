@@ -14,7 +14,10 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
-const PrStepSecond = (props) => {
+interface ButtonProps {
+  increaseStep: () => void;
+}
+const PrStepSecond = (props: ButtonProps) => {
   const {
     control,
     register,
@@ -27,7 +30,7 @@ const PrStepSecond = (props) => {
   });
   const teachingStyle = ["온라인", "오프라인", "온라인&오프라인 병행"];
 
-  function dateFormat(date) {
+  function dateFormat(date: any) {
     let month = date.getMonth() + 1;
     let day = date.getDate();
     month = month >= 10 ? month : "0" + month;
@@ -35,7 +38,7 @@ const PrStepSecond = (props) => {
     return date.getFullYear() + "-" + month + "-" + day;
   }
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: any) => {
     console.log(data);
     axios({
       url: "/api/v1/program",
@@ -60,7 +63,7 @@ const PrStepSecond = (props) => {
         console.error(error);
       });
   };
-  const onError = (error) => {
+  const onError = (error: any) => {
     console.log(error);
   };
 
@@ -141,11 +144,10 @@ const PrStepSecond = (props) => {
               name="pro_start_date"
               render={({ field }) => (
                 <InputDate
-                  showIcon
                   {...field}
                   dateFormat="yyyy년 MM월 dd일"
                   selected={field.value}
-                  onChange={(date) => field.onChange(date)}
+                  onChange={(date: any) => field.onChange(date)}
                   locale={ko}
                 />
               )}
@@ -161,7 +163,7 @@ const PrStepSecond = (props) => {
                   {...field}
                   dateFormat="yyyy년 MM월 dd일"
                   selected={field.value}
-                  onChange={(date) => field.onChange(date)}
+                  onChange={(date: any) => field.onChange(date)}
                   locale={ko}
                 />
               )}
@@ -255,7 +257,7 @@ const PrStepSecond = (props) => {
                   {...field}
                   dateFormat="yyyy년 MM월 dd일"
                   selected={field.value}
-                  onChange={(date) => field.onChange(date)}
+                  onChange={(date: any) => field.onChange(date)}
                   locale={ko}
                 />
               )}
@@ -271,7 +273,7 @@ const PrStepSecond = (props) => {
                   {...field}
                   dateFormat="yyyy년 MM월 dd일"
                   selected={field.value}
-                  onChange={(date) => field.onChange(date)}
+                  onChange={(date: any) => field.onChange(date)}
                   locale={ko}
                 />
               )}
@@ -347,7 +349,7 @@ const PrStepSecond = (props) => {
         type="submit"
         disabled={isSubmitting}
         variant="contained"
-        color="mento"
+        color="secondary"
         sx={{
           height: "2.2rem",
           width: "11rem",

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import Attendance from "../ProgressMain/Attendance";
+import Attendance from "./Attendance";
 const ProgressMain = () => {
   return (
     <>
@@ -49,23 +49,23 @@ const QuestionBox = styled.div`
   margin-right: 2%;
   margin-top: 2%;
   background-color: orange;
-  width: 49%;
-  height: 67.6%;
+  width: 45%;
+  height: 50.6%;
   border-radius: 25px;
 `;
 
 const DownloadingBox = styled.div`
   background-color: Purple;
-  width: 49%;
-  height: 40%;
+  width: 45%;
+  height: 35%;
   border-radius: 25px;
 `;
 
 const NoticeBox = styled.div`
   margin-top: 2%;
   background-color: yellow;
-  width: 49%;
-  height: 57.6%;
+  width: 45%;
+  height: 50.6%;
   border-radius: 25px;
 `;
 const CalanderBox = styled.div`

@@ -1,37 +1,35 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import axios from "axios";
 import styled from "@emotion/styled";
 import { Button, FormControl, Input, MenuItem, Select } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
-const StepSecondMentee = (props) => {
+const StepSecondMentee = (props: any) => {
+  const [preImg, setPreImg]: any = useState(null);
   const {
     control,
     register,
     getValues,
     formState: { errors, isSubmitting },
     handleSubmit,
-  } = useForm({ defaultValues: { act_place: "" } });
+  } = useForm();
   const teachingStyle = ["온라인", "오프라인", "온라인&오프라인 병행"];
-  const imageInput = useRef();
-  const onSubmit = (data) => {
+  const imageInput = useRef<HTMLInputElement>(null);
+  const onSubmit = (data: any) => {
+    console.log(data);
     const formData = new FormData();
-    formData.append("file", data.image[0]);
+    if (imageInput.current?.files != null) {
+      formData.append("file", imageInput.current?.files[0]);
+    }
     delete data.image;
     delete data.password2;
+    console.log(formData);
     formData.append(
       "data",
       new Blob([JSON.stringify(data)], { type: "application/json" })
     );
     console.log(data);
-    // for (let key of formData.keys()) {
-    //   console.log(key);
-    // }
-    // for (let value of formData.values()) {
-    //   console.log(value);
-    //   value.text().then((x) => console.log(x));
-    // }
     axios({
-      url: "/api/v1/menti",
+      url: "/api/v1/mentee",
       method: "post",
       data: formData,
     })
@@ -43,8 +41,21 @@ const StepSecondMentee = (props) => {
       });
   };
 
-  const onError = (error) => {
+  const onError = (error: any) => {
     console.log(error);
+  };
+  const preShowImg = () => {
+    if (
+      imageInput.current?.files?.length !== 0 &&
+      imageInput.current?.files != null
+    ) {
+      const imgFile = imageInput.current.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(imgFile);
+      reader.onload = () => {
+        setPreImg(reader.result);
+      };
+    }
   };
 
   return (
@@ -69,12 +80,13 @@ const StepSecondMentee = (props) => {
 
       <div style={{ display: "flex", height: "42.5%" }}>
         <ImageUpload>
-          <ImageShow>프로필 사진</ImageShow>
+          <ImageShow src={preImg}></ImageShow>
           <input
             {...register("image")}
             type="file"
             accept="image/*"
             style={{ display: "none" }}
+            onChange={preShowImg}
             ref={imageInput}
           />
           <Button
@@ -91,7 +103,7 @@ const StepSecondMentee = (props) => {
               boxShadow: "0",
             }}
             onClick={() => {
-              imageInput.current.click();
+              imageInput.current?.click();
             }}
           >
             첨부하기
@@ -413,9 +425,7 @@ const ImageUpload = styled.div`
   justify-content: center;
   align-items: center;
 `;
-const ImageShow = styled.div`
-  width: 100%;
-  height: 80%;
+const ImageShow = styled.img`
   background-color: #ececec;
   display: flex;
   align-items: center;
@@ -428,6 +438,9 @@ const ImageShow = styled.div`
   text-align: center;
   color: #afafaf;
   font-family: "NotoSansLight";
+  object-fit: contain;
+  width: 100%;
+  height: 80%;
 `;
 const InformationBox = styled.div`
   margin-top: 3%;

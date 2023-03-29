@@ -10,37 +10,31 @@ const ProgramCreation = () => {
   const [countStep, setCountStep] = useState(0);
   const increaseStep = () => {
     setCountStep((state) => state + 1);
-    console.log(countStep);
-    //test
   };
   return (
     <>
-
-<div
+      <div
         style={{
           width: "100%",
           height: "30vh",
-          backgroundColor:"#83C2C5"
+          backgroundColor: "#83C2C5",
         }}
       >
-
-
-
-      <Grid container>
-        <Grid xs={1}></Grid>
-        <Grid xs={10} sx={{ display: "flex" }}>
-          <LeftProcess
-            countStep={countStep}
-            orderProcess={["01.분야 설정", "02.상세정보입력", "03.생성완료"]}
-          />
-          <WhiteBox>
-            {countStep === 0 && <PrStepFirst increaseStep={increaseStep} />}
-            {countStep === 1 && <PrStepSecond increaseStep={increaseStep} />}
-            {countStep === 2 && <PrStepThird />}
-          </WhiteBox>
+        <Grid container>
+          <Grid xs={1}></Grid>
+          <Grid xs={10} sx={{ display: "flex" }}>
+            <LeftProcess
+              countStep={countStep}
+              orderProcess={["01.분야 설정", "02.상세정보입력", "03.생성완료"]}
+            />
+            <WhiteBox>
+              {countStep === 0 && <PrStepFirst increaseStep={increaseStep} />}
+              {countStep === 1 && <PrStepSecond increaseStep={increaseStep} />}
+              {countStep === 2 && <PrStepThird />}
+            </WhiteBox>
+          </Grid>
+          <Grid xs={1}></Grid>
         </Grid>
-        <Grid xs={1}></Grid>
-      </Grid>
       </div>
     </>
   );
@@ -52,7 +46,5 @@ const WhiteBox = styled.div`
   background-color: #fff;
   border-top-right-radius: 4rem;
 `;
-
-
 
 export default ProgramCreation;
