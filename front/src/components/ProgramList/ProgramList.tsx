@@ -24,7 +24,11 @@ const ProgramList = () => {
     setPage(page);
   };
   const handlePageUp = () => {
-    if (page < Math.trunc(dummy.data.length / 5))
+    console.log(Boolean(page < Math.trunc(dummy.data.length / 5)));
+    console.log(page);
+    console.log(Math.trunc(dummy.data.length / 5));
+    console.log(dummy.data.length);
+    if (page < Math.trunc(postList.length / 5))
       setPage((state) => (state = state + 1));
   };
   const handlePageDown = () => {

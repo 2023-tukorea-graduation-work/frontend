@@ -14,9 +14,11 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
+import { useAppSelector } from "../../../app/hook";
 interface ButtonProps {
   increaseStep: () => void;
 }
+
 const PrStepSecond = (props: ButtonProps) => {
   const {
     control,
@@ -29,7 +31,7 @@ const PrStepSecond = (props: ButtonProps) => {
     name: "programWeeks",
   });
   const teachingStyle = ["온라인", "오프라인", "온라인&오프라인 병행"];
-
+  const mento_no = useAppSelector((state) => state.login.user_nb);
   function dateFormat(date: any) {
     let month = date.getMonth() + 1;
     let day = date.getDate();
@@ -40,11 +42,13 @@ const PrStepSecond = (props: ButtonProps) => {
 
   const onSubmit = (data: any) => {
     console.log(data);
+    console.log(typeof mento_no);
+    console.log(mento_no);
     axios({
       url: "/api/v1/program",
       method: "post",
       data: {
-        mento_no: 5,
+        mento_no: mento_no,
         subject: `${data.subject}`,
         pro_place: `${data.act_place}`,
         capacity: `${data.capacity}`,
