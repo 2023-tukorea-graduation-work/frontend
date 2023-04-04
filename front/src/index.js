@@ -16,6 +16,10 @@ import ProgramListDetailjs from "./pages/ProgramListDetail";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
 import Mainpagejs from "./pages/Mainpage.";
+import { registerLicense } from "@syncfusion/ej2-base";
+registerLicense(
+  "MTU4MjQ5NUAzMjMxMmUzMTJlMzMzNWgxT3YyTWg4cCtETG8yQTdnci9vaU9FNmR3K2ZQdkxMRXNTczhsbXZRUHM9;Mgo+DSMBaFt+QHFqVkNrWE5MaV1CX2BZfFlzQ2lYfk4QCV5EYF5SRHJfQ1xnTHhSd01qXX4=;Mgo+DSMBMAY9C3t2VFhhQlJBfVtdVXxLflF1VWFTelh6dVRWACFaRnZdQV1nSX9SckBlWH5XcHxU;Mgo+DSMBPh8sVXJ1S0d+X1RPckBKQmFJfFBmR2lceVRxdUUmHVdTRHRcQlljSH9Xc0NiWHZccnU=;MTU4MjQ5OUAzMjMxMmUzMTJlMzMzNUo1TlA0b2pHQWtBaTl0WllLR1N4SWt0Q1lUN0NMVlpTSit6K0xlbWRrSjA9;NRAiBiAaIQQuGjN/V0d+XU9Hc1RGQmtWfFN0RnNbdVt2flRHcDwsT3RfQF5jTX5Sd0FmX35feXFTRw==;ORg4AjUWIQA/Gnt2VFhhQlJBfVtdVXxLflF1VWFTelh6dVRWACFaRnZdQV1nSX9SckBlWH5Xd3VU;MTU4MjUwMkAzMjMxMmUzMTJlMzMzNWc1Tms1RHJxM2dJbU9JZlN3eUttU25CejhBUWNvVDE0VWhBM0dQQkZJK2M9;MTU4MjUwM0AzMjMxMmUzMTJlMzMzNU8vdCtoWlFLejBpUytaYmhwVk1OWnlRdFZ2NzRjNnpMT0YzNEk1Lyt6SUk9;MTU4MjUwNEAzMjMxMmUzMTJlMzMzNWZRL2szeElScTBVZ1BSZ2hicjAvWW1kUGovQmtjRlRjTndrTUNRSTVnV3c9;MTU4MjUwNUAzMjMxMmUzMTJlMzMzNUVNekZOSU1HUG1sK0lZMDZyTlZvWDhBTnhRVmpVbVp4WE1KbnJBakZ4NjQ9;MTU4MjUwNkAzMjMxMmUzMTJlMzMzNWgxT3YyTWg4cCtETG8yQTdnci9vaU9FNmR3K2ZQdkxMRXNTczhsbXZRUHM9"
+);
 const theme = createTheme({
   palette: {
     primary: {

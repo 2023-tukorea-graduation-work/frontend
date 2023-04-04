@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import leftbarReducer from "../features/leftBarSlice/leftBarSlice";
-import programListReducer from "../features/ProgramListSlice/programListSlice";
+import programListReducer from "../features/ProgramListSlice/ProgramListSlice";
 export const store = configureStore({
   reducer: {
     leftBar: leftbarReducer,
