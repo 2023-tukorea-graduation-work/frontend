@@ -1,198 +1,366 @@
-import "/node_modules/@syncfusion/ej2-base/styles/material.css";
-import "/node_modules/@syncfusion/ej2-buttons/styles/material.css";
-import "/node_modules/@syncfusion/ej2-calendars/styles/material.css";
-import "/node_modules/@syncfusion/ej2-dropdowns/styles/material.css";
-import "/node_modules/@syncfusion/ej2-inputs/styles/material.css";
-import "/node_modules/@syncfusion/ej2-lists/styles/material.css";
-import "/node_modules/@syncfusion/ej2-navigations/styles/material.css";
-import "/node_modules/@syncfusion/ej2-popups/styles/material.css";
-import "/node_modules/@syncfusion/ej2-splitbuttons/styles/material.css";
-import "/node_modules/@syncfusion/ej2-react-schedule/styles/material.css";
-import React, { useEffect, useState } from "react";
-import {
-  Inject,
-  ScheduleComponent,
-  Day,
-  Week,
-  Month,
-  WorkWeek,
-  MonthAgenda,
-  TimelineMonth,
-  EventSettingsModel,
-  ViewDirective,
-  ViewsDirective,
-  Agenda,
-} from "@syncfusion/ej2-react-schedule";
-import { DataManager, WebApiAdaptor } from "@syncfusion/ej2-data";
-import "./cal.css";
+import { Calendar, momentLocalizer, Event } from "react-big-calendar";
+import moment from "moment";
+import "react-big-calendar/lib/css/react-big-calendar.css";
+import React, { useState } from "react";
+import { Button, Input } from "@mui/material";
 
-class Cal extends React.Component {
-  private localData: EventSettingsModel = {
-    dataSource: [
-      {
-        Id: 1,
-        Subject: "Metting",
-        EndTime: new Date(2023, 0, 11, 6, 30),
-        StartTime: new Date(2023, 0, 11, 4, 0),
-      },
-    ],
-  };
-  // private remoteData = new DataManager({
-  //   url: "https://js.syncfusion.com/demos/ejservices/api/Schedule/LoadData",
-  //   adaptor: new WebApiAdaptor(),
-  //   crossDomain: true,
-  // });
-
-  render() {
-    return (
-      <ScheduleComponent
-        height="73vh"
-        currentView="Week"
-        // eventSettings={{ dataSource: this.remoteData }}
-        selectedDate={new Date(2023, 5, 5)}
-      >
-        <ViewsDirective>
-          <ViewDirective option="Week"></ViewDirective>
-          <ViewDirective
-            option="Month"
-            isSelected={true}
-            showWeekNumber={true}
-            showWeekend={false}
-          ></ViewDirective>
-          <ViewDirective option="MonthAgenda"></ViewDirective>
-          <ViewDirective option="TimelineMonth"></ViewDirective>
-        </ViewsDirective>
-        <Inject
-          services={[Day, Week, WorkWeek, Month, MonthAgenda, TimelineMonth]}
-        />
-      </ScheduleComponent>
-    );
-  }
+const localizer = momentLocalizer(moment);
+interface MyEvent extends Event {
+  title: string;
+  start: Date;
+  end: Date;
 }
 
+const myEvent: MyEvent = {
+  title: "",
+  start: new Date(),
+  end: new Date(),
+};
+const handleSelectEvent = (event: MyEvent) => {
+  console.log("selected event", event);
+};
+interface EventFormProps {
+  onSubmit: (event: MyEvent) => void;
+}
+
+const EventForm: React.FC<EventFormProps> = ({ onSubmit }) => {
+  const [event, setEvent] = useState<MyEvent>({ ...myEvent });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setEvent((prevState) => ({ ...prevState, [name]: value }));
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    onSubmit(event);
+    setEvent({ ...myEvent });
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <Input
+        type="text"
+        name="title"
+        placeholder="일정이름"
+        value={event.title}
+        onChange={handleChange}
+      />
+      <Input
+        type="datetime-local"
+        name="start"
+        value={moment(event.start).format("YYYY-MM-DDTHH:mm")}
+        onChange={handleChange}
+      />
+      <Input
+        type="datetime-local"
+        name="end"
+        value={moment(event.end).format("YYYY-MM-DDTHH:mm")}
+        onChange={handleChange}
+      />
+      <Button type="submit">추가하기</Button>
+    </form>
+  );
+};
+const Cal = () => {
+  const [events, setEvents] = useState<MyEvent[]>([]);
+
+  const addEvent = (event: MyEvent) => {
+    setEvents([...events, event]);
+  };
+
+  return (
+    <>
+      <EventForm onSubmit={addEvent} />
+
+      <Calendar
+        localizer={localizer}
+        events={events}
+        startAccessor="start"
+        endAccessor="end"
+        onSelectEvent={handleSelectEvent}
+        style={{ height: 500 }}
+        selectable
+      />
+    </>
+  );
+};
 export default Cal;
 
-// interface EventData {
-//   Id: number;
-//   Subject: string;
-//   StartTime: Date;
-//   EndTime: Date;
+// import React from "react";
+// import { useState } from "react";
+// import { Calendar, momentLocalizer, Event } from "react-big-calendar";
+// import moment from "moment";
+
+// import "react-big-calendar/lib/css/react-big-calendar.css";
+
+// const localizer = momentLocalizer(moment);
+// interface MyEvent extends Event {
+//   myProp: string;
 // }
 
-// class Cal extends React.Component<{}, {}> {
-// private data: Object[] = [
-//   {
-//     Id: 1,
-//     Subject: "Metting",
-//     StartTime: new Date(2023, 4, 4, 10, 0),
-//     EndTime: new Date(2023, 4, 4, 10, 1),
-//   },
-//   {
-//     Id: 2,
-//     Subject: "Test",
-//     StartTime: new Date(2023, 4, 5, 10, 0),
-//     EndTime: new Date(2023, 4, 5, 10, 1),
-//   },
-// ];
-
-// constructor(props: any) {
-//   super(props);
-
-//   setDataSource([]);
-
-// this.state = {
-//   dataSource: [
-//     {
-//       Id: 1,
-//       Subject: "Metting",
-//       StartTime: new Date(2023, 4, 4, 10, 0),
-//       EndTime: new Date(2023, 4, 4, 10, 1),
-//     },
-//     {
-//       Id: 2,
-//       Subject: "Test",
-//       StartTime: new Date(2023, 4, 5, 10, 0),
-//       EndTime: new Date(2023, 4, 5, 10, 1),
-//     },
-//   ],
+// const myEvent: MyEvent = {
+//   title: "My Event",
+//   start: new Date(),
+//   end: new Date(),
+//   myProp: "some value",
 // };
-// }
 
-//   render() {
-//     return (
-//       <ScheduleComponent
-//         height="73vh"
-//         currentView="Week"
-//         selectedDate={new Date(2023, 4, 2)}
-//         eventSettings={{ dataSource: this.state.dataSource }}
-//       >
-//         <ViewsDirective>
-//           <ViewDirective option="Week"></ViewDirective>
-//           <ViewDirective
-//             option="Month"
-//             isSelected={true}
-//             showWeekNumber={true}
-//             showWeekend={false}
-//           ></ViewDirective>
-//           <ViewDirective option="MonthAgenda"></ViewDirective>
-//           <ViewDirective option="TimelineMonth"></ViewDirective>
-//         </ViewsDirective>
-//         <Inject
-//           services={[Day, Week, WorkWeek, Month, MonthAgenda, TimelineMonth]}
-//         />
-//       </ScheduleComponent>
-//     );
-//   }
-// }
+// const Cal = () => {
+//   const [events, setEvents] = useState<MyEvent[]>([myEvent]);
 
-// class Cal extends React.Component {
-//   private localData: EventSettingsModel = {
-//     dataSource: [
-//       {
-//         Id: 1,
-//         End: new Date(2023, 0, 11, 6, 30),
-//         Start: new Date(2023, 0, 11, 4, 0),
-//         Summary: "",
-//         IsAllDay: true,
-//         RecurrenceRule: "FREQ=DAILY;INTERVAL=1;COUNT=10",
-//         IsBlock: true,
-//       },
-//     ],
-//     fields: {
-//       subject: { name: "Summary", default: "No title is provided." },
-//       startTime: { name: "Start" },
-//       endTime: { name: "End" },
-//     },
+//   const addEvent = (event: MyEvent) => {
+//     setEvents([...events, event]);
 //   };
 
-//   private remoteData = new DataManager({
-//     url: "https://js.syncfusion.com/demos/djservices/api/Schedule/LoadData",
-//     adaptor: new WebApiAdaptor(),
-//     crossDomain: true,
-//   });
-//     return (
-//       <ScheduleComponent
-//         height="73vh"
-//         currentView="Week"
-//         selectedDate={new Date(2023, 0, 11)}
-//         eventSettings={{ dataSource: data }}
-//         onDataBinding={{handleDataBinding}}
-//       >
-//         <ViewsDirective>
-//           <ViewDirective option="Week"></ViewDirective>
-//           <ViewDirective
-//             option="Month"
-//             isSelected={true}
-//             showWeekNumber={true}
-//             showWeekend={false}
-//           ></ViewDirective>
-//           <ViewDirective option="MonthAgenda"></ViewDirective>
-//           <ViewDirective option="TimelineMonth"></ViewDirective>
-//         </ViewsDirective>
-//         <Inject
-//           services={[Day, Week, WorkWeek, Month, MonthAgenda, TimelineMonth]}
-//         />
-//       </ScheduleComponent>
-//     );
-//   }
+//   const handleSelectEvent = (event: MyEvent) => {
+//     console.log("selected event", event);
+//   };
+
+//   return (
+//     <Calendar
+//       localizer={localizer}
+//       events={events}
+//       startAccessor="start"
+//       endAccessor="end"
+//       style={{ height: 500 }}
+//       selectable
+//       onSelectEvent={handleSelectEvent}
+//       onSelectSlot={(slotInfo) =>
+//         addEvent({
+//           start: slotInfo.start,
+//           end: slotInfo.end,
+//           title: "New Event",
+//           myProp: "some value",
+//         })
+//       }
+//     />
+//   );
+// };
+
+// export default Cal;
+
+// ------------------------------------1번째 방법 ------------------------------------------------------------------
+// // import { useState } from "react";
+// // import { Calendar, momentLocalizer } from "react-big-calendar";
+// // import moment from "moment";
+// // import "react-big-calendar/lib/css/react-big-calendar.css";
+// // import React from "react";
+
+// // interface MyEvent {
+// //   id: number;
+// //   title: string;
+// //   start: Date;
+// //   end: Date;
+// // }
+
+// // const localizer = momentLocalizer(moment);
+
+// // const Cal = () => {
+// //   const [events, setEvents] = useState<MyEvent[]>([]);
+// //   const [showEventModal, setShowEventModal] = useState(false);
+// //   const [newEvent, setNewEvent] = useState<MyEvent>({
+// //     id: 0,
+// //     title: "",
+// //     start: new Date(),
+// //     end: new Date(),
+// //   });
+
+// //   const handleSelectSlot = ({ start, end }: { start: Date; end: Date }) => {
+// //     setShowEventModal(true);
+// //     setNewEvent({
+// //       id: events.length + 1,
+// //       title: "",
+// //       start,
+// //       end,
+// //     });
+// //   };
+
+// //   const handleEventModalClose = () => {
+// //     setShowEventModal(false);
+// //   };
+
+// //   const handleEventSave = () => {
+// //     setEvents([...events, newEvent]);
+// //     setShowEventModal(false);
+// //   };
+
+// //   const handleEventTitleChange = (
+// //     event: React.ChangeEvent<HTMLInputElement>
+// //   ) => {
+// //     setNewEvent({ ...newEvent, title: event.target.value });
+// //   };
+
+// //   const handleEventStartChange = (start: Date) => {
+// //     setNewEvent({ ...newEvent, start });
+// //   };
+
+// //   const handleEventEndChange = (end: Date) => {
+// //     setNewEvent({ ...newEvent, end });
+// //   };
+
+// //   return (
+// //     <>
+// //       <Calendar
+// //         localizer={localizer}
+// //         events={events}
+// //         selectable
+// //         onSelectSlot={handleSelectSlot}
+// //         startAccessor="start"
+// //         endAccessor="end"
+// //         style={{ height: 500 }}
+// //       />
+// //       {showEventModal && (
+// //         <div>
+// //           <h3>New Event</h3>
+// //           <label>
+// //             Title:
+// //             <input
+// //               type="text"
+// //               value={newEvent.title}
+// //               onChange={handleEventTitleChange}
+// //             />
+// //           </label>
+// //           <br />
+// //           <label>
+// //             Start:
+// //             <input
+// //               type="datetime-local"
+// //               value={newEvent.start.toISOString().slice(0, -8)}
+// //               onChange={(e) => handleEventStartChange(new Date(e.target.value))}
+// //             />
+// //           </label>
+// //           <br />
+// //           <label>
+// //             End:
+// //             <input
+// //               type="datetime-local"
+// //               value={newEvent.end.toISOString().slice(0, -8)}
+// //               onChange={(e) => handleEventEndChange(new Date(e.target.value))}
+// //             />
+// //           </label>
+// //           <br />
+// //           <button onClick={handleEventSave}>Save</button>
+// //           <button onClick={handleEventModalClose}>Cancel</button>
+// //         </div>
+// //       )}
+// //     </>
+// //   );
+// // };
+
+// // export default Cal;
+
+// import React from "react";
+// import { useState } from "react";
+// import { Calendar, Event, momentLocalizer } from "react-big-calendar";
+// import "react-big-calendar/lib/css/react-big-calendar.css";
+// import moment from "moment";
+// interface MyEvent extends Event {
+//   id: number;
+//   title: string;
+//   start: Date;
+//   end: Date;
 // }
+
+// ------------------------------------2번째 방법 ------------------------------------------------------------------
+// const Cal = () => {
+//   const [events, setEvents] = useState<MyEvent[]>([]);
+//   const [showPopup, setShowPopup] = useState(false);
+//   const [newEvent, setNewEvent] = useState<MyEvent>({
+//     id: 0,
+//     title: "",
+//     start: new Date(),
+//     end: new Date(),
+//   });
+
+//   const handleEventSelect = (event: MyEvent) => {
+//     console.log(event);
+//   };
+
+//   const handleDateSelect = ({ start, end }: { start: Date; end: Date }) => {
+//     setNewEvent({
+//       id: events.length + 1,
+//       title: "",
+//       start,
+//       end,
+//     });
+//     setShowPopup(true);
+//   };
+
+//   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+//     const { name, value } = event.target;
+//     setNewEvent((prevState) => ({
+//       ...prevState,
+//       [name]: value,
+//     }));
+//   };
+
+//   const handleSaveEvent = () => {
+//     setEvents((prevState) => [...prevState, newEvent]);
+//     setShowPopup(false);
+//   };
+
+//   // const handleEventStartChange = (start: Date) => {
+//   //   setNewEvent({ ...newEvent, start });
+//   // };
+//   // const handleEventEndChange = (end: Date) => {
+//   //   setNewEvent({ ...newEvent, end });
+//   // };
+//   // const handleEventModalClose = () => {
+//   //   setShowPopup(false);
+//   // };
+
+//   const localizer = momentLocalizer(moment);
+//   return (
+//     <>
+//       <Calendar
+//         localizer={localizer}
+//         selectable
+//         popup
+//         events={events}
+//         onSelectEvent={handleEventSelect}
+//         onSelectSlot={handleDateSelect}
+//         startAccessor="start"
+//         endAccessor="end"
+//         style={{ height: 500 }}
+//       />
+//       {showPopup && (
+//         <div className="event-popup">
+//           <h3>일정 추가하기</h3>
+//           <label>
+//             제목:
+//             <input
+//               type="text"
+//               name="title"
+//               value={newEvent.title?.toString()}
+//               onChange={handleInputChange}
+//             />
+//           </label>
+//           <br />
+//           {/* <label>
+//             Start:
+//             <input
+//               type="datetime-local"
+//               value={newEvent.start.toISOString().slice(0, -8)}
+//               onChange={(e) => handleEventStartChange(new Date(e.target.value))}
+//             />
+//           </label>
+//           <br />
+//           <label>
+//             End:
+//             <input
+//               type="datetime-local"
+//               value={newEvent.end.toISOString().slice(0, -8)}
+//               onChange={(e) => handleEventEndChange(new Date(e.target.value))}
+//             />
+//           </label>
+//           <br /> */}
+//           <button onClick={handleSaveEvent}>저장하기</button>
+//           {/* <button onClick={handleEventModalClose}>Cancel</button> */}
+//         </div>
+//       )}
+//     </>
+//   );
+// };
+
+// export default Cal;

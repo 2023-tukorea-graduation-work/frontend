@@ -12,7 +12,9 @@
     "noImplicitThis": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "typeRoots": ["./node_modules/@types", "./typings"],
+    "types": ["node", "lodash", "react", "react-dom"]
   },
   "include": ["./src"],
   "exclude": ["node_modules", "build"]
