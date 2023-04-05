@@ -14,7 +14,7 @@ import ItemBox from "./ItemBox";
 import dummy from "../../dummyData/ProList.json";
 import FilterButton from "./FilterButton";
 import { useAppDispatch, useAppSelector } from "../../app/hook";
-import { loadItemListAsync } from "../../features/ProgramListSlice/programListSlice";
+import { loadItemListAsync } from "../../features/programListSlice/programListSlice";
 
 const ProgramList = () => {
   const dispatch = useAppDispatch();

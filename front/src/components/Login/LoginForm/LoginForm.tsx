@@ -7,8 +7,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Button, Checkbox, FormControlLabel, Switch } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import "./LoginForm.css";
-import { useAppDispatch } from "../../../app/hook";
-import { loginAsync } from "../../../features/LoginSlice/loginSlice";
+import { useAppDispatch, useAppSelector } from "../../../app/hook";
+import { loginAsync } from "../../../features/loginSlice/loginSlice";
 const LoginForm = () => {
   const [toggleValue, setToggleValue] = useState<string>("MENTEE");
   const toggleOnChange = () => {
@@ -17,6 +17,7 @@ const LoginForm = () => {
     );
   };
   const dispatch = useAppDispatch();
+  const loginState = useAppSelector((state) => state.login.status);
   const {
     control,
     register,
@@ -34,7 +35,7 @@ const LoginForm = () => {
   return (
     <>
       <LogoStyled>
-        <Logo>Logo</Logo>
+        <Logo>{loginState}</Logo>
       </LogoStyled>
 
       <FormStyled>

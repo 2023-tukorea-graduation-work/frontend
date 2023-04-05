@@ -7,7 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import { FaHome, FaEye, FaRegBookmark, FaRegEnvelope } from "react-icons/fa";
 import { useAppDispatch, useAppSelector } from "../../app/hook";
-import { loadItemDetailAsync } from "../../features/ProgramListDetailSlice/programListDetailSlice";
+import { loadItemDetailAsync } from "../../features/programListDetailSlice/programListDetailSlice";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 interface WEEK {

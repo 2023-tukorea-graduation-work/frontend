@@ -31,7 +31,7 @@ const PrStepSecond = (props: ButtonProps) => {
     name: "programWeeks",
   });
   const teachingStyle = ["온라인", "오프라인", "온라인&오프라인 병행"];
-  const mento_no = useAppSelector((state) => state.login.user_nb);
+  const mento_no = useAppSelector((state) => state.login.object.USER_NO);
   function dateFormat(date: any) {
     let month = date.getMonth() + 1;
     let day = date.getDate();
