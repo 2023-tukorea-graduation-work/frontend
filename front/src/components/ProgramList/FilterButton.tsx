@@ -6,7 +6,7 @@ import {
   interestSelect,
   placeSelect,
   teachTypeSelect,
-} from "../../features/ProgramListSlice/programListSlice";
+} from "../../features/ProgramListSlice/ProgramListSlice";
 const FilterButton = () => {
   const filterAll = useAppSelector((state) => state.programList.filterAll);
   const dispatch = useAppDispatch();
