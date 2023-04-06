@@ -1,17 +1,19 @@
 import { Calendar, momentLocalizer, Event } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Button, Input } from "@mui/material";
 
 const localizer = momentLocalizer(moment);
 interface MyEvent extends Event {
+  id: number;
   title: string;
   start: Date;
   end: Date;
 }
 
 const myEvent: MyEvent = {
+  id: 0,
   title: "",
   start: new Date(),
   end: new Date(),
@@ -25,7 +27,6 @@ interface EventFormProps {
 
 const EventForm: React.FC<EventFormProps> = ({ onSubmit }) => {
   const [event, setEvent] = useState<MyEvent>({ ...myEvent });
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setEvent((prevState) => ({ ...prevState, [name]: value }));
@@ -66,13 +67,13 @@ const Cal = () => {
   const [events, setEvents] = useState<MyEvent[]>([]);
 
   const addEvent = (event: MyEvent) => {
-    setEvents([...events, event]);
+    event.id = events.length;
+    setEvents((state) => [...state, event]);
   };
 
   return (
     <>
       <EventForm onSubmit={addEvent} />
-
       <Calendar
         localizer={localizer}
         events={events}

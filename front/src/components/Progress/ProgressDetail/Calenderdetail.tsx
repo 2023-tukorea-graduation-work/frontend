@@ -35,7 +35,7 @@ const Calenderbox = styled.div`
 
 const Tablebox = styled.div`
   width: 100%;
-  background-color: yellow;
+  background-color: skyblue;
 `;
 
 export default Calenderdetail;
