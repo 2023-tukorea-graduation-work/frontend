@@ -3,6 +3,7 @@ import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import React, { useState, useRef } from "react";
 import { Button, Input } from "@mui/material";
+import { eventNames } from "process";
 
 const localizer = momentLocalizer(moment);
 interface MyEvent extends Event {
@@ -26,6 +27,8 @@ interface EventFormProps {
 }
 
 const EventForm: React.FC<EventFormProps> = ({ onSubmit }) => {
+  const startDate = new Date();
+  const endDate = new Date();
   const [event, setEvent] = useState<MyEvent>({ ...myEvent });
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -67,6 +70,12 @@ const Cal = () => {
   const [events, setEvents] = useState<MyEvent[]>([]);
 
   const addEvent = (event: MyEvent) => {
+    //추가하기직전 moment형식을 Date로 변환
+    const startDate = new Date(event.start);
+    const endDate = new Date(event.end);
+    event.start = startDate;
+    event.end = endDate;
+    //추가하기 직전 ID값 변경
     event.id = events.length;
     setEvents((state) => [...state, event]);
   };
