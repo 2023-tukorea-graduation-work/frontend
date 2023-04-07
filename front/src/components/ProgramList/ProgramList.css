@@ -16,6 +16,10 @@
   background-color: #ff8e41;
   color: #fff;
 }
+.online.active2 {
+  background-color: #07858c;
+  color: #fff;
+}
 .offline {
   background-color: #fff;
   border: 1px solid #dbdee2;
@@ -31,6 +35,10 @@
   background-color: #ff8e41;
   color: #fff;
 }
+.offline.active2 {
+  background-color: #07858c;
+  color: #fff;
+}
 .onlineWithOffline {
   background-color: #fff;
   border: 1px solid #dbdee2;
@@ -44,6 +52,10 @@
 }
 .onlineWithOffline.active {
   background-color: #ff8e41;
+  color: #fff;
+}
+.onlineWithOffline.active2 {
+  background-color: #07858c;
   color: #fff;
 }
 /* kindbox css */
@@ -64,6 +76,10 @@
   background-color: #ff8e41;
   color: #fff;
 }
+.typeAll.active2 {
+  background-color: #07858c;
+  color: #fff;
+}
 .tutoring {
   background-color: #fff;
   border: 1px solid #dbdee2;
@@ -79,6 +95,10 @@
   background-color: #ff8e41;
   color: #fff;
 }
+.tutoring.active2 {
+  background-color: #07858c;
+  color: #fff;
+}
 .mentoWithMentee {
   background-color: #fff;
   border: 1px solid #dbdee2;
@@ -92,6 +112,10 @@
 }
 .mentoWithMentee.active {
   background-color: #ff8e41;
+  color: #fff;
+}
+.mentoWithMentee.active2 {
+  background-color: #07858c;
   color: #fff;
 }
 
@@ -114,6 +138,10 @@
   background-color: #ff8e41;
   color: #fff;
 }
+.interestAll.active2 {
+  background-color: #07858c;
+  color: #fff;
+}
 .learning {
   background-color: #fff;
   border: 1px solid #dbdee2;
@@ -130,6 +158,10 @@
   background-color: #ff8e41;
   color: #fff;
 }
+.learning.active2 {
+  background-color: #07858c;
+  color: #fff;
+}
 .hobby {
   background-color: #fff;
   border: 1px solid #dbdee2;
@@ -144,6 +176,10 @@
 }
 .hobby.active {
   background-color: #ff8e41;
+  color: #fff;
+}
+.hobby.active2 {
+  background-color: #07858c;
   color: #fff;
 }
 .major {
@@ -163,6 +199,10 @@
   background-color: #ff8e41;
   color: #fff;
 }
+.major.active2 {
+  background-color: #07858c;
+  color: #fff;
+}
 .career {
   background-color: #fff;
   border: 1px solid #dbdee2;
@@ -176,6 +216,10 @@
 }
 .career.active {
   background-color: #ff8e41;
+  color: #fff;
+}
+.career.active2 {
+  background-color: #07858c;
   color: #fff;
 }
 .introduction {
@@ -194,6 +238,10 @@
   background-color: #ff8e41;
   color: #fff;
 }
+.introduction.active2 {
+  background-color: #07858c;
+  color: #fff;
+}
 .advanceUniversity {
   background-color: #fff;
   border: 1px solid #dbdee2;
@@ -208,6 +256,10 @@
 }
 .advanceUniversity.active {
   background-color: #ff8e41;
+  color: #fff;
+}
+.advanceUniversity.active2 {
+  background-color: #07858c;
   color: #fff;
 }
 .startups {
@@ -226,6 +278,10 @@
   background-color: #ff8e41;
   color: #fff;
 }
+.startups.active2 {
+  background-color: #07858c;
+  color: #fff;
+}
 .certificate {
   background-color: #fff;
   border: 1px solid #dbdee2;
@@ -239,5 +295,9 @@
 }
 .certificate.active {
   background-color: #ff8e41;
+  color: #fff;
+}
+.certificate.active2 {
+  background-color: #07858c;
   color: #fff;
 }
