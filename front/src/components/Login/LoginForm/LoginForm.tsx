@@ -8,7 +8,7 @@ import { Button, Checkbox, FormControlLabel, Switch } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import "./LoginForm.css";
 import { useAppDispatch } from "../../../app/hook";
-import { loginAsync } from "../../../features/LoginSlice/loginSlice";
+import { loginAsync } from "../../../features/loginSlice/loginSlice";
 const LoginForm = () => {
   const [toggleValue, setToggleValue] = useState<string>("MENTEE");
   const toggleOnChange = () => {
