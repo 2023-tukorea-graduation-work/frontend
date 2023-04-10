@@ -1,14 +1,31 @@
 import { Calendar, momentLocalizer, Event } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import React, { useState, useRef } from "react";
-import { Button, Input } from "@mui/material";
-import { eventNames } from "process";
+import React, { useState, useRef, useEffect } from "react";
+import { Controller, useForm } from "react-hook-form";
+import axios from "axios";
+import { Button, Input, Switch, FormControlLabel } from "@mui/material";
+import { eventNames, title } from "process";
+import styled from "@emotion/styled";
+import { loginAsync } from "../../../features/loginSlice/loginSlice";
+import LoginForm from "../../Login/LoginForm/LoginForm";
+// interface Props {
+//   toggleValue: string;
+//   handleToggle: () => void;
+// }
+
+// --------------------------------------------------------다른사람 일정 가져오는거-----------
+const fetchEvents = async (): Promise<any[]> => {
+  const response = await axios.get("/api/events");
+  return response.data;
+};
+// --------------------------------------------------------
 
 const localizer = momentLocalizer(moment);
 interface MyEvent extends Event {
   id: number;
   title: string;
+  titleDetail: string;
   start: Date;
   end: Date;
 }
@@ -16,17 +33,21 @@ interface MyEvent extends Event {
 const myEvent: MyEvent = {
   id: 0,
   title: "",
+  titleDetail: "",
   start: new Date(),
   end: new Date(),
-};
-const handleSelectEvent = (event: MyEvent) => {
-  console.log("selected event", event);
 };
 interface EventFormProps {
   onSubmit: (event: MyEvent) => void;
 }
 
 const EventForm: React.FC<EventFormProps> = ({ onSubmit }) => {
+  const [toggleValue, setToggleValue] = useState<string>("ToDoList");
+  const toggleOnChange = () => {
+    setToggleValue((state) =>
+      state === "ToDoList" ? (state = "수업일정") : (state = "ToDoList")
+    );
+  };
   const startDate = new Date();
   const endDate = new Date();
   const [event, setEvent] = useState<MyEvent>({ ...myEvent });
@@ -34,41 +55,136 @@ const EventForm: React.FC<EventFormProps> = ({ onSubmit }) => {
     const { name, value } = e.target;
     setEvent((prevState) => ({ ...prevState, [name]: value }));
   };
-
+  const {
+    control,
+    register,
+    formState: { errors, isSubmitting },
+  } = useForm();
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    axios({
+      method: "POST",
+      url: "/api/v1/projectProgress",
+      data: {
+        id: `${event.id}`,
+        title: `${event.title}`,
+        titleDetail: `${event.titleDetail}`,
+        start: `${event.start}`,
+        end: `${event.end}`,
+        toggleValue,
+      },
+    })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
     onSubmit(event);
     setEvent({ ...myEvent });
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <Input
-        type="text"
-        name="title"
-        placeholder="일정이름"
-        value={event.title}
-        onChange={handleChange}
-      />
-      <Input
-        type="datetime-local"
-        name="start"
-        value={moment(event.start).format("YYYY-MM-DDTHH:mm")}
-        onChange={handleChange}
-      />
-      <Input
-        type="datetime-local"
-        name="end"
-        value={moment(event.end).format("YYYY-MM-DDTHH:mm")}
-        onChange={handleChange}
-      />
-      <Button type="submit">추가하기</Button>
+    <form style={{ backgroundColor: "skyblue" }} onSubmit={handleSubmit}>
+      <Calbutton>
+        <Input
+          type="text"
+          placeholder=""
+          {...register("title", { required: "일정이름" })}
+          value={event.title}
+          onChange={handleChange}
+          style={{
+            backgroundColor: "white",
+            width: "7rem",
+            height: "2.5rem",
+            marginRight: "1rem",
+          }}
+        />
+        <Input
+          type="text"
+          placeholder=""
+          {...register("titleDetail", {
+            required: "상세내용",
+          })}
+          value={event.titleDetail}
+          onChange={handleChange}
+          style={{
+            backgroundColor: "white",
+            width: "20rem",
+            height: "2.5rem",
+            marginRight: "1rem",
+          }}
+        />
+        <Input
+          type="datetime-local"
+          value={moment(event.start).format("YYYY-MM-DDTHH:mm")}
+          {...register("start")}
+          onChange={handleChange}
+          style={{
+            backgroundColor: "white",
+            width: "14rem",
+            height: "2.5rem",
+            marginRight: "1rem",
+          }}
+        />
+        <p>~</p>
+        <Input
+          type="datetime-local"
+          value={moment(event.end).format("YYYY-MM-DDTHH:mm")}
+          {...register("end")}
+          onChange={handleChange}
+          style={{
+            backgroundColor: "white",
+            width: "14rem",
+            height: "2.5rem",
+            marginRight: "1rem",
+          }}
+        />
+        <FormControlLabel
+          sx={{
+            fontFamily: "NotoSansLight",
+            fontSize: "0.7rem",
+          }}
+          control={<Switch onChange={toggleOnChange} defaultChecked />}
+          label={toggleValue === "ToDoList" ? "ToDoList" : "수업일정"}
+        />
+        <Button type="submit" disabled={isSubmitting}>
+          추가하기
+        </Button>
+      </Calbutton>
     </form>
   );
 };
-const Cal = () => {
+const Cal = (/**props: Props**/) => {
+  // const [data, setData] = useState<string>("");
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const response = await axios.get(
+  //       `https://example.com/api/${props.toggleValue}`
+  //     );
+  //     setData(response.data);
+  //   }
+  //   fetchData();
+  // }, [props.toggleValue]);
+
+  // useEffect(() => {
+  //   async function sendData() {
+  //     const response = await axios.post("https://example.com/api", {
+  //       toggleValue: props.toggleValue,
+  //     });
+  //     setData(response.data);
+  //   }
+  //   sendData();
+  // }, [props.toggleValue]);
+  const [selectedEvent, setSelectedEvent] = useState<MyEvent | null>(null);
   const [events, setEvents] = useState<MyEvent[]>([]);
 
+  const handleSelect = (event: MyEvent) => {
+    setSelectedEvent(event);
+
+    console.log("selected event", event);
+  };
   const addEvent = (event: MyEvent) => {
     //추가하기직전 moment형식을 Date로 변환
     const startDate = new Date(event.start);
@@ -79,298 +195,69 @@ const Cal = () => {
     event.id = events.length;
     setEvents((state) => [...state, event]);
   };
+  // ------------------------------------ 입력된 다른 사람 데이터 가져온거 뿌리는거 ----------------
+  useEffect(() => {
+    fetchEvents().then((data) => {
+      const events = data.map((event: any) => ({
+        start: moment(event.start).toDate(),
+        end: moment(event.end).toDate(),
+        title: event.title,
+        titleDetail: event.titleDetail,
+        id: event.id,
+      }));
+      setEvents(events);
+    });
+  }, []);
 
+  const eventStyleGetter = (event: Event) => {
+    const backgroundColor = event.title === "John" ? "#3174ad" : "#009688";
+    return {
+      style: {
+        backgroundColor,
+      },
+    };
+  };
+
+  // -------------------------------------------------------------------------------------
   return (
     <>
+      {/* <button onClick={props.handleToggle}>
+        {props.toggleValue === "MENTEE" ? "MENTEE" : "MENTO"} 
+      </button>  */}
       <EventForm onSubmit={addEvent} />
       <Calendar
         localizer={localizer}
         events={events}
         startAccessor="start"
         endAccessor="end"
-        onSelectEvent={handleSelectEvent}
-        style={{ height: 500 }}
+        onSelectEvent={handleSelect}
+        eventPropGetter={eventStyleGetter}
+        style={{ height: 500, backgroundColor: "white", marginTop: "3rem" }}
         selectable
       />
+
+      <Confirmbox>
+        {selectedEvent && (
+          <div>
+            <h3>{selectedEvent.title}</h3>
+            <p>{selectedEvent.titleDetail}</p>
+            <p>{selectedEvent.start.toLocaleString()}</p>
+            <p>{selectedEvent.end.toLocaleString()}</p>
+            {/* <p>{data}</p> */}
+          </div>
+        )}
+      </Confirmbox>
     </>
   );
 };
 export default Cal;
 
-// import React from "react";
-// import { useState } from "react";
-// import { Calendar, momentLocalizer, Event } from "react-big-calendar";
-// import moment from "moment";
-
-// import "react-big-calendar/lib/css/react-big-calendar.css";
-
-// const localizer = momentLocalizer(moment);
-// interface MyEvent extends Event {
-//   myProp: string;
-// }
-
-// const myEvent: MyEvent = {
-//   title: "My Event",
-//   start: new Date(),
-//   end: new Date(),
-//   myProp: "some value",
-// };
-
-// const Cal = () => {
-//   const [events, setEvents] = useState<MyEvent[]>([myEvent]);
-
-//   const addEvent = (event: MyEvent) => {
-//     setEvents([...events, event]);
-//   };
-
-//   const handleSelectEvent = (event: MyEvent) => {
-//     console.log("selected event", event);
-//   };
-
-//   return (
-//     <Calendar
-//       localizer={localizer}
-//       events={events}
-//       startAccessor="start"
-//       endAccessor="end"
-//       style={{ height: 500 }}
-//       selectable
-//       onSelectEvent={handleSelectEvent}
-//       onSelectSlot={(slotInfo) =>
-//         addEvent({
-//           start: slotInfo.start,
-//           end: slotInfo.end,
-//           title: "New Event",
-//           myProp: "some value",
-//         })
-//       }
-//     />
-//   );
-// };
-
-// export default Cal;
-
-// ------------------------------------1번째 방법 ------------------------------------------------------------------
-// // import { useState } from "react";
-// // import { Calendar, momentLocalizer } from "react-big-calendar";
-// // import moment from "moment";
-// // import "react-big-calendar/lib/css/react-big-calendar.css";
-// // import React from "react";
-
-// // interface MyEvent {
-// //   id: number;
-// //   title: string;
-// //   start: Date;
-// //   end: Date;
-// // }
-
-// // const localizer = momentLocalizer(moment);
-
-// // const Cal = () => {
-// //   const [events, setEvents] = useState<MyEvent[]>([]);
-// //   const [showEventModal, setShowEventModal] = useState(false);
-// //   const [newEvent, setNewEvent] = useState<MyEvent>({
-// //     id: 0,
-// //     title: "",
-// //     start: new Date(),
-// //     end: new Date(),
-// //   });
-
-// //   const handleSelectSlot = ({ start, end }: { start: Date; end: Date }) => {
-// //     setShowEventModal(true);
-// //     setNewEvent({
-// //       id: events.length + 1,
-// //       title: "",
-// //       start,
-// //       end,
-// //     });
-// //   };
-
-// //   const handleEventModalClose = () => {
-// //     setShowEventModal(false);
-// //   };
-
-// //   const handleEventSave = () => {
-// //     setEvents([...events, newEvent]);
-// //     setShowEventModal(false);
-// //   };
-
-// //   const handleEventTitleChange = (
-// //     event: React.ChangeEvent<HTMLInputElement>
-// //   ) => {
-// //     setNewEvent({ ...newEvent, title: event.target.value });
-// //   };
-
-// //   const handleEventStartChange = (start: Date) => {
-// //     setNewEvent({ ...newEvent, start });
-// //   };
-
-// //   const handleEventEndChange = (end: Date) => {
-// //     setNewEvent({ ...newEvent, end });
-// //   };
-
-// //   return (
-// //     <>
-// //       <Calendar
-// //         localizer={localizer}
-// //         events={events}
-// //         selectable
-// //         onSelectSlot={handleSelectSlot}
-// //         startAccessor="start"
-// //         endAccessor="end"
-// //         style={{ height: 500 }}
-// //       />
-// //       {showEventModal && (
-// //         <div>
-// //           <h3>New Event</h3>
-// //           <label>
-// //             Title:
-// //             <input
-// //               type="text"
-// //               value={newEvent.title}
-// //               onChange={handleEventTitleChange}
-// //             />
-// //           </label>
-// //           <br />
-// //           <label>
-// //             Start:
-// //             <input
-// //               type="datetime-local"
-// //               value={newEvent.start.toISOString().slice(0, -8)}
-// //               onChange={(e) => handleEventStartChange(new Date(e.target.value))}
-// //             />
-// //           </label>
-// //           <br />
-// //           <label>
-// //             End:
-// //             <input
-// //               type="datetime-local"
-// //               value={newEvent.end.toISOString().slice(0, -8)}
-// //               onChange={(e) => handleEventEndChange(new Date(e.target.value))}
-// //             />
-// //           </label>
-// //           <br />
-// //           <button onClick={handleEventSave}>Save</button>
-// //           <button onClick={handleEventModalClose}>Cancel</button>
-// //         </div>
-// //       )}
-// //     </>
-// //   );
-// // };
-
-// // export default Cal;
-
-// import React from "react";
-// import { useState } from "react";
-// import { Calendar, Event, momentLocalizer } from "react-big-calendar";
-// import "react-big-calendar/lib/css/react-big-calendar.css";
-// import moment from "moment";
-// interface MyEvent extends Event {
-//   id: number;
-//   title: string;
-//   start: Date;
-//   end: Date;
-// }
-
-// ------------------------------------2번째 방법 ------------------------------------------------------------------
-// const Cal = () => {
-//   const [events, setEvents] = useState<MyEvent[]>([]);
-//   const [showPopup, setShowPopup] = useState(false);
-//   const [newEvent, setNewEvent] = useState<MyEvent>({
-//     id: 0,
-//     title: "",
-//     start: new Date(),
-//     end: new Date(),
-//   });
-
-//   const handleEventSelect = (event: MyEvent) => {
-//     console.log(event);
-//   };
-
-//   const handleDateSelect = ({ start, end }: { start: Date; end: Date }) => {
-//     setNewEvent({
-//       id: events.length + 1,
-//       title: "",
-//       start,
-//       end,
-//     });
-//     setShowPopup(true);
-//   };
-
-//   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-//     const { name, value } = event.target;
-//     setNewEvent((prevState) => ({
-//       ...prevState,
-//       [name]: value,
-//     }));
-//   };
-
-//   const handleSaveEvent = () => {
-//     setEvents((prevState) => [...prevState, newEvent]);
-//     setShowPopup(false);
-//   };
-
-//   // const handleEventStartChange = (start: Date) => {
-//   //   setNewEvent({ ...newEvent, start });
-//   // };
-//   // const handleEventEndChange = (end: Date) => {
-//   //   setNewEvent({ ...newEvent, end });
-//   // };
-//   // const handleEventModalClose = () => {
-//   //   setShowPopup(false);
-//   // };
-
-//   const localizer = momentLocalizer(moment);
-//   return (
-//     <>
-//       <Calendar
-//         localizer={localizer}
-//         selectable
-//         popup
-//         events={events}
-//         onSelectEvent={handleEventSelect}
-//         onSelectSlot={handleDateSelect}
-//         startAccessor="start"
-//         endAccessor="end"
-//         style={{ height: 500 }}
-//       />
-//       {showPopup && (
-//         <div className="event-popup">
-//           <h3>일정 추가하기</h3>
-//           <label>
-//             제목:
-//             <input
-//               type="text"
-//               name="title"
-//               value={newEvent.title?.toString()}
-//               onChange={handleInputChange}
-//             />
-//           </label>
-//           <br />
-//           {/* <label>
-//             Start:
-//             <input
-//               type="datetime-local"
-//               value={newEvent.start.toISOString().slice(0, -8)}
-//               onChange={(e) => handleEventStartChange(new Date(e.target.value))}
-//             />
-//           </label>
-//           <br />
-//           <label>
-//             End:
-//             <input
-//               type="datetime-local"
-//               value={newEvent.end.toISOString().slice(0, -8)}
-//               onChange={(e) => handleEventEndChange(new Date(e.target.value))}
-//             />
-//           </label>
-//           <br /> */}
-//           <button onClick={handleSaveEvent}>저장하기</button>
-//           {/* <button onClick={handleEventModalClose}>Cancel</button> */}
-//         </div>
-//       )}
-//     </>
-//   );
-// };
-
-// export default Cal;
+const Calbutton = styled.div`
+  display: flex;
+`;
+const Confirmbox = styled.div`
+  width: 100%;
+  height: 10vh;
+  background-color: yellow;
+`;
+const Selecteddate = styled.div``;
