@@ -5,41 +5,57 @@ import React, { useState, useRef, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import axios from "axios";
 import { Button, Input, Switch, FormControlLabel } from "@mui/material";
-import { eventNames, title } from "process";
 import styled from "@emotion/styled";
-import { loginAsync } from "../../../features/loginSlice/loginSlice";
-import LoginForm from "../../Login/LoginForm/LoginForm";
-// interface Props {
-//   toggleValue: string;
-//   handleToggle: () => void;
-// }
+
+
+interface ProgramProps {
+  programNo: number;
+}
+
 
 // --------------------------------------------------------다른사람 일정 가져오는거-----------
-const fetchEvents = async (): Promise<any[]> => {
-  const response = await axios.get("/api/events");
-  return response.data;
-};
+// const fetchEvents = async (): Promise<any[]> => {
+//   const response = await axios.get("/api/events");
+//   return response.data;
+// };
 // --------------------------------------------------------
 
 const localizer = momentLocalizer(moment);
 interface MyEvent extends Event {
-  id: number;
-  title: string;
-  titleDetail: string;
-  start: Date;
-  end: Date;
+  program_week_no : number,
+  content: string,
+  mento_no: number | null,
+  mentee_no: number | null,
+  user_gb: string,
+  schedule_gb: string,
+  schedule_start_datetime: Date;
+  schedule_finish_datetime: Date;
 }
 
 const myEvent: MyEvent = {
-  id: 0,
-  title: "",
-  titleDetail: "",
-  start: new Date(),
-  end: new Date(),
+  program_week_no : 0,
+  content: "",
+  mento_no: null,
+  mentee_no: null,
+  user_gb: "",
+  schedule_gb: "",
+  schedule_start_datetime: new Date(),
+  schedule_finish_datetime: new Date(),
 };
+
 interface EventFormProps {
   onSubmit: (event: MyEvent) => void;
 }
+
+function dateFormat(date: any) {
+  let month = date.getMonth() + 1;
+  let day = date.getDate();
+  let hour = date.getHours();
+  month = month >= 10 ? month : "0" + month;
+  day = day >= 10 ? day : "0" + day;
+  return date.getFullYear() + "-" + month + "-" + day + " " + hour + ":00:00";
+}
+
 
 const EventForm: React.FC<EventFormProps> = ({ onSubmit }) => {
   const [toggleValue, setToggleValue] = useState<string>("ToDoList");
@@ -60,18 +76,27 @@ const EventForm: React.FC<EventFormProps> = ({ onSubmit }) => {
     register,
     formState: { errors, isSubmitting },
   } = useForm();
+  
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // session Storage 로 부터 로그인한 유저정보 가져옴.
+    const user = JSON.parse(String(sessionStorage.getItem('user')));
+
+    console.log(event.content)
+
     axios({
       method: "POST",
-      url: "/api/v1/projectProgress",
+      url: "/api/v1/schedule",
       data: {
-        id: `${event.id}`,
-        title: `${event.title}`,
-        titleDetail: `${event.titleDetail}`,
-        start: `${event.start}`,
-        end: `${event.end}`,
-        toggleValue,
+        program_week_no : 5,
+        content: `${event.content}`,
+        mento_no: (user.user_gb === "MENTO") ? user.user_no : null,
+        mentee_no: (user.user_gb === "MENTEE") ? user.user_no : null,
+        user_gb: user.user_gb,
+        schedule_gb: toggleValue,
+        schedule_start_datetime: `${dateFormat(event.schedule_start_datetime)}`,
+        schedule_finish_datetime: `${dateFormat(event.schedule_finish_datetime)}`,
       },
     })
       .then((response) => {
@@ -90,9 +115,9 @@ const EventForm: React.FC<EventFormProps> = ({ onSubmit }) => {
       <Calbutton>
         <Input
           type="text"
-          placeholder=""
-          {...register("title", { required: "일정이름" })}
-          value={event.title}
+          placeholder="일정"
+          {...register("content", { required: "일정" })}
+          value={event.content}
           onChange={handleChange}
           style={{
             backgroundColor: "white",
@@ -102,24 +127,9 @@ const EventForm: React.FC<EventFormProps> = ({ onSubmit }) => {
           }}
         />
         <Input
-          type="text"
-          placeholder=""
-          {...register("titleDetail", {
-            required: "상세내용",
-          })}
-          value={event.titleDetail}
-          onChange={handleChange}
-          style={{
-            backgroundColor: "white",
-            width: "20rem",
-            height: "2.5rem",
-            marginRight: "1rem",
-          }}
-        />
-        <Input
           type="datetime-local"
-          value={moment(event.start).format("YYYY-MM-DDTHH:mm")}
-          {...register("start")}
+          value={moment(event.schedule_start_datetime).format("YYYY-MM-DDTHH:mm")}
+          {...register("schedule_start_datetime")}
           onChange={handleChange}
           style={{
             backgroundColor: "white",
@@ -131,8 +141,8 @@ const EventForm: React.FC<EventFormProps> = ({ onSubmit }) => {
         <p>~</p>
         <Input
           type="datetime-local"
-          value={moment(event.end).format("YYYY-MM-DDTHH:mm")}
-          {...register("end")}
+          value={moment(event.schedule_finish_datetime).format("YYYY-MM-DDTHH:mm")}
+          {...register("schedule_finish_datetime")}
           onChange={handleChange}
           style={{
             backgroundColor: "white",
@@ -156,27 +166,9 @@ const EventForm: React.FC<EventFormProps> = ({ onSubmit }) => {
     </form>
   );
 };
-const Cal = (/**props: Props**/) => {
-  // const [data, setData] = useState<string>("");
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const response = await axios.get(
-  //       `https://example.com/api/${props.toggleValue}`
-  //     );
-  //     setData(response.data);
-  //   }
-  //   fetchData();
-  // }, [props.toggleValue]);
 
-  // useEffect(() => {
-  //   async function sendData() {
-  //     const response = await axios.post("https://example.com/api", {
-  //       toggleValue: props.toggleValue,
-  //     });
-  //     setData(response.data);
-  //   }
-  //   sendData();
-  // }, [props.toggleValue]);
+const Cal = (props: ProgramProps) => {
+
   const [selectedEvent, setSelectedEvent] = useState<MyEvent | null>(null);
   const [events, setEvents] = useState<MyEvent[]>([]);
 
@@ -187,27 +179,29 @@ const Cal = (/**props: Props**/) => {
   };
   const addEvent = (event: MyEvent) => {
     //추가하기직전 moment형식을 Date로 변환
-    const startDate = new Date(event.start);
-    const endDate = new Date(event.end);
-    event.start = startDate;
-    event.end = endDate;
-    //추가하기 직전 ID값 변경
-    event.id = events.length;
+    const startDate = new Date(event.schedule_start_datetime);
+    const endDate = new Date(event.schedule_finish_datetime);
+    event.schedule_start_datetime = startDate;
+    event.schedule_finish_datetime = endDate;
     setEvents((state) => [...state, event]);
   };
+  
   // ------------------------------------ 입력된 다른 사람 데이터 가져온거 뿌리는거 ----------------
-  useEffect(() => {
-    fetchEvents().then((data) => {
-      const events = data.map((event: any) => ({
-        start: moment(event.start).toDate(),
-        end: moment(event.end).toDate(),
-        title: event.title,
-        titleDetail: event.titleDetail,
-        id: event.id,
-      }));
-      setEvents(events);
-    });
-  }, []);
+  // useEffect(() => {
+  //   fetchEvents().then((data) => {
+  //     const events = data.map((event: any) => ({
+  //       schedule_start_datetime: moment(event.schedule_start_datetime).toDate(),
+  //       schedule_finish_datetime: moment(event.schedule_finish_datetime).toDate(),
+  //       content: event.content,
+  //       program_week_no : 0,
+  //       mento_no: 0,
+  //       mentee_no: 0,
+  //       user_gb: "",
+  //       schedule_gb: "", 
+  //     }));
+  //     setEvents(events);
+  //   });
+  // }, []);
 
   const eventStyleGetter = (event: Event) => {
     const backgroundColor = event.title === "John" ? "#3174ad" : "#009688";
@@ -239,11 +233,11 @@ const Cal = (/**props: Props**/) => {
       <Confirmbox>
         {selectedEvent && (
           <div>
-            <h3>{selectedEvent.title}</h3>
+            {/* <h3>{selectedEvent.title}</h3>
             <p>{selectedEvent.titleDetail}</p>
             <p>{selectedEvent.start.toLocaleString()}</p>
             <p>{selectedEvent.end.toLocaleString()}</p>
-            {/* <p>{data}</p> */}
+            <p>{data}</p> */}
           </div>
         )}
       </Confirmbox>

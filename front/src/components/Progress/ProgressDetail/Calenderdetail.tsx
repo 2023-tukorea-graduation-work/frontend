@@ -2,7 +2,27 @@ import React from "react";
 import styled from "@emotion/styled";
 import Cal from "../ProgressDetail/cal";
 
-const Calenderdetail = () => {
+interface ProgramProps {
+  programNo: number;
+}
+
+const Calenderdetail = ({programNo} : ProgramProps) => {
+  console.log(programNo);
+
+  // axios({
+  //   url: "/api/v1/mentee",
+  //   method: "post",
+  //   data: formData,
+  // })
+  //   .then((response) => {
+  //     console.log(response);
+  //   })
+  //   .catch((error) => {
+  //     console.error(error);
+  //   });
+
+  
+
   return (
     <CalenderForm>
       <Calenderbox>
@@ -18,7 +38,7 @@ const Calenderdetail = () => {
           일정
         </p>
         <Tablebox>
-          <Cal></Cal>
+          <Cal programNo={programNo}></Cal>
         </Tablebox>
       </Calenderbox>
     </CalenderForm>

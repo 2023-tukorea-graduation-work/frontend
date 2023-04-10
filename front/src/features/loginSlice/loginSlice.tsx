@@ -43,9 +43,10 @@ export const loginSlice = createSlice({
       state.message = payload.message;
       state.object = payload.object;
       state.status = payload.status;
-      console.log(state.message);
-      console.log(state.object);
-      console.log(state.status);
+
+      sessionStorage.setItem('user', JSON.stringify(state.object));
+      const user = JSON.parse(String(sessionStorage.getItem('user')));
+      console.log(user)
     });
   },
 });

@@ -2,7 +2,12 @@ import React from "react";
 import styled from "@emotion/styled";
 import { indexChange } from "../../../features/leftBarSlice/leftBarSlice";
 import { useAppDispatch, useAppSelector } from "../../../app/hook";
-const LeftBar = () => {
+
+interface ProgramProps {
+  programNo: number;
+}
+
+const LeftBar = ({programNo}: ProgramProps) => {
   const dispatch = useAppDispatch();
   const selectIndex = useAppSelector((state) => state.leftBar.indexNumber);
   const barArray = ["전체게시판", "출석", "질문", "자료", "공지", "일정"];
