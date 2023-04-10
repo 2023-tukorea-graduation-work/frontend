@@ -9,6 +9,7 @@ import { FaHome, FaEye, FaRegBookmark, FaRegEnvelope } from "react-icons/fa";
 import { useAppDispatch, useAppSelector } from "../../app/hook";
 import { loadItemDetailAsync } from "../../features/programListDetailSlice/programListDetailSlice";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 interface WEEK {
   DETAIL: string;
 }
@@ -16,9 +17,26 @@ const ProgramListDetail = () => {
   const { PROGRAM_NO } = useParams() as any;
   const dispatch = useAppDispatch();
   const programDetail = useAppSelector((state) => state.programDetail.detail);
+  const mentee_no = useAppSelector((state) => state.login.object.USER_NO);
   useEffect(() => {
     dispatch(loadItemDetailAsync(PROGRAM_NO));
   }, []);
+  const Submit = () => {
+    axios({
+      url: "/api/v1/program/parti",
+      method: "post",
+      data: {
+        program_no: PROGRAM_NO,
+        mentee_no: mentee_no,
+      },
+    })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
   return (
     <DetailForm>
       <Detailbox>
@@ -124,6 +142,7 @@ const ProgramListDetail = () => {
             marginTop: "2rem",
             marginBottom: "2rem",
           }}
+          onClick={Submit}
         >
           프로그램신청하기
         </Button>
