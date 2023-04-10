@@ -2,17 +2,19 @@ import React from "react";
 import styled from "@emotion/styled";
 import Grid from "@mui/material/Unstable_Grid2";
 import "./Header.css";
+import { useAppSelector } from "../../app/hook";
 
 const Header = () => {
+  const userNo = useAppSelector((state) => state.login.object.USER_NO);
+  const userGb = useAppSelector((state) => state.login.object.user_gb);
+  const HeaderColor = styled.div`
+    width: 100%;
+    height: 10vh;
+    background-color: ${userGb === "MENTO" ? "#399DA3" : "#ffb07a"};
+  `;
   return (
     <>
-      <div
-        style={{
-          width: "100%",
-          height: "10vh",
-          backgroundColor: "#FFB07A",
-        }}
-      >
+      <HeaderColor>
         <Grid container>
           <Grid xs={1}></Grid>
           <Grid xs={10} sx={{ height: "10vh" }}>
@@ -23,15 +25,23 @@ const Header = () => {
                 <div>S E A R C H</div>
                 <div>C L A S S</div>
               </NavStyle>
-              <ImageStyle>Login</ImageStyle>
+              <ImageStyle>
+                Login
+                {/* <img
+                src="/images/Man.jpg"
+                alt="logo"
+                style={{ width: "4.5rem", height: "4.5rem", objectFit: "fill" }}
+              /> */}
+              </ImageStyle>
             </HeaderStyle>
           </Grid>
           <Grid xs={1}></Grid>
         </Grid>
-      </div>
+      </HeaderColor>
     </>
   );
 };
+
 const HeaderStyle = styled.div`
   width: 100%;
   height: 100%;

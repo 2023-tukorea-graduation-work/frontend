@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import Input from "@mui/material/Input";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -7,9 +7,11 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Button, Checkbox, FormControlLabel, Switch } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import "./LoginForm.css";
-import { useAppDispatch } from "../../../app/hook";
+import { useAppDispatch, useAppSelector } from "../../../app/hook";
 import { loginAsync } from "../../../features/loginSlice/loginSlice";
+import { useNavigate } from "react-router-dom";
 const LoginForm = () => {
+  const navigate = useNavigate();
   const [toggleValue, setToggleValue] = useState<string>("MENTEE");
   const toggleOnChange = () => {
     setToggleValue((state) =>
@@ -17,6 +19,12 @@ const LoginForm = () => {
     );
   };
   const dispatch = useAppDispatch();
+  const loginState = useAppSelector((state) => state.login.status);
+  useEffect(() => {
+    if (loginState === "SUCCESS") {
+      navigate("/ProgramListjs");
+    }
+  }, [loginState]);
   const {
     control,
     register,
@@ -34,7 +42,7 @@ const LoginForm = () => {
   return (
     <>
       <LogoStyled>
-        <Logo>Logo</Logo>
+        <Logo>{loginState}</Logo>
       </LogoStyled>
 
       <FormStyled>

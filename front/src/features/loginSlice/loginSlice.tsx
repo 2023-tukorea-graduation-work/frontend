@@ -1,8 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
+interface userObject {
+  USER_NO: number | null;
+  user_gb: string;
+}
 interface loginSuccess {
   message: string;
-  object: object | null;
+  object: userObject;
   status: string;
 }
 interface loginInfo {
@@ -12,7 +16,7 @@ interface loginInfo {
 }
 const initialState: loginSuccess = {
   message: "",
-  object: null,
+  object: { USER_NO: null, user_gb: "" },
   status: "",
 };
 export const loginAsync = createAsyncThunk<loginSuccess, loginInfo>(
@@ -41,10 +45,10 @@ export const loginSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(loginAsync.fulfilled, (state, { payload }) => {
       state.message = payload.message;
-      state.object = payload.object;
       state.status = payload.status;
-      console.log(state.message);
-      console.log(state.object);
+      state.object.USER_NO = payload.object.USER_NO;
+      state.object.user_gb = payload.object.user_gb;
+      console.log(state.status);
       console.log(state.status);
     });
   },

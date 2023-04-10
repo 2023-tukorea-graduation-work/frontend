@@ -8,6 +8,7 @@ import {
   teachTypeSelect,
 } from "../../features/programListSlice/programListSlice";
 const FilterButton = () => {
+  const userGb = useAppSelector((state) => state.login.object.user_gb);
   const filterAll = useAppSelector((state) => state.programList.filterAll);
   const dispatch = useAppDispatch();
   const place = [
@@ -58,7 +59,11 @@ const FilterButton = () => {
                 <div
                   key={index}
                   className={`${value[1]} ${
-                    filterAll.place === value[1] ? "active" : ""
+                    filterAll.place === value[1]
+                      ? userGb === "MENTO"
+                        ? "active2"
+                        : "active"
+                      : ""
                   }`}
                   onClick={() => dispatch(placeSelect(`${value[1]}`))}
                 >
@@ -76,7 +81,11 @@ const FilterButton = () => {
                 <div
                   key={index}
                   className={`${value[1]} ${
-                    filterAll.teach === value[1] ? "active" : ""
+                    filterAll.teach === value[1]
+                      ? userGb === "MENTO"
+                        ? "active2"
+                        : "active"
+                      : ""
                   }`}
                   onClick={() => dispatch(teachTypeSelect(`${value[1]}`))}
                 >
@@ -94,7 +103,11 @@ const FilterButton = () => {
                 <div
                   key={index}
                   className={`${value[1]} ${
-                    filterAll.interest === value[1] ? "active" : ""
+                    filterAll.interest === value[1]
+                      ? userGb === "MENTO"
+                        ? "active2"
+                        : "active"
+                      : ""
                   }`}
                   onClick={() => dispatch(interestSelect(`${value[1]}`))}
                 >

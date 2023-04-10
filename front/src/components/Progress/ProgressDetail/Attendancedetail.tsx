@@ -1,8 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "@emotion/styled";
 import { FaRegCheckCircle } from "react-icons/fa";
+import axios from "axios";
+import { Button } from "@mui/material";
+
+const Attend = {
+  mento_no: null,
+};
 
 const Attendencedetail = () => {
+  useEffect(() => {
+    // axios({
+    //   url: "/api/v1/program",
+    //   method: "post",
+    //   data: {
+    //     mento_no: 5,
+    //   },
+    // })
+    //   .then((response) => {
+    //     console.log(response);
+    //   })
+    //   .catch((error) => {
+    //     console.error(error);
+    //   });
+  }, []);
   return (
     <AttendForm>
       <p
@@ -10,7 +31,6 @@ const Attendencedetail = () => {
           marginTop: "2.5rem",
           fontSize: "1.2rem",
           fontWeight: "bold",
-          marginLeft: "1rem",
         }}
       >
         출석
@@ -112,6 +132,23 @@ const Attendencedetail = () => {
           </StudentAttendCheck>
         </Studentbox>
       </Attendbox>
+      <div style={{ display: "inlineBlock", float: "right" }}>
+        <Button
+          variant="contained"
+          color="primary"
+          fullWidth={true}
+          sx={{
+            fontSize: "1rem",
+            fontFamily: "NotoSansMedium",
+            width: "1rem",
+            height: "2rem",
+            borderRadius: "20px",
+            float: "right",
+          }}
+        >
+          적용
+        </Button>
+      </div>
     </AttendForm>
   );
 };
@@ -124,7 +161,7 @@ const AttendForm = styled.div`
 const Studentlist = styled.div`
   display: flex;
   flex-direction: row;
-  width: 20%;
+  width: 30%;
   justify-content: space-between;
   margin: 2% 34% 2% 2%;
   font-size: 0.8rem;
@@ -158,7 +195,7 @@ const Checklist = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 50%;
+  width: 40rem;
   margin-top: 3.5%;
   margin-bottom: 2%;
 `;
@@ -166,8 +203,7 @@ const Checklist = styled.div`
 const Attendbox = styled.div`
   display: flex;
   flex-direction: column;
-  width: 95.5%;
+  width: 100%;
   margin-top: 1.7rem;
-  margin-left: 1rem;
 `;
 export default Attendencedetail;
