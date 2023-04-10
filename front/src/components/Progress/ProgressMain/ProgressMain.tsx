@@ -1,7 +1,10 @@
 import React from "react";
 import styled from "@emotion/styled";
 import Attendance from "./Attendance";
+
 const ProgressMain = () => {
+  const program_no = 6;
+  
   return (
     <>
       <div style={{ display: "flex" }}>

@@ -1,6 +1,6 @@
 import React from "react";
 
-const Calander = () => {
+const Calander = (props: any) => {
   return <div></div>;
 };
 

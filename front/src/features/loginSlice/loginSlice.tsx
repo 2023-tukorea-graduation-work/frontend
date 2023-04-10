@@ -46,10 +46,9 @@ export const loginSlice = createSlice({
     builder.addCase(loginAsync.fulfilled, (state, { payload }) => {
       state.message = payload.message;
       state.status = payload.status;
-      state.object.USER_NO = payload.object.USER_NO;
-      state.object.user_gb = payload.object.user_gb;
-      console.log(state.status);
-      console.log(state.status);
+      sessionStorage.setItem('user', JSON.stringify(state.object));
+      const user = JSON.parse(String(sessionStorage.getItem('user')));
+      console.log(user)
     });
   },
 });
