@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 interface loginSuccess {
   message: string;
-  object: number | null;
+  object: object | null;
   status: string;
 }
 interface loginInfo {
