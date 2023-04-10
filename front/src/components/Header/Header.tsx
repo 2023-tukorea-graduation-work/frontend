@@ -23,14 +23,7 @@ const Header = () => {
                 <div>S E A R C H</div>
                 <div>C L A S S</div>
               </NavStyle>
-              <ImageStyle>
-                Login
-                {/* <img
-                src="/images/Man.jpg"
-                alt="logo"
-                style={{ width: "4.5rem", height: "4.5rem", objectFit: "fill" }}
-              /> */}
-              </ImageStyle>
+              <ImageStyle>Login</ImageStyle>
             </HeaderStyle>
           </Grid>
           <Grid xs={1}></Grid>
