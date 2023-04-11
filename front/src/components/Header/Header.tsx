@@ -2,11 +2,15 @@ import React from "react";
 import styled from "@emotion/styled";
 import Grid from "@mui/material/Unstable_Grid2";
 import "./Header.css";
-import { useAppSelector } from "../../app/hook";
+import { useAppDispatch, useAppSelector } from "../../app/hook";
+import { logOut } from "../../features/loginSlice/loginSlice";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const dispatch = useAppDispatch();
   const userNo = useAppSelector((state) => state.login.object.USER_NO);
   const userGb = useAppSelector((state) => state.login.object.user_gb);
+  const navigate = useNavigate();
   const HeaderColor = styled.div`
     width: 100%;
     height: 10vh;
@@ -25,14 +29,19 @@ const Header = () => {
                 <div>S E A R C H</div>
                 <div>C L A S S</div>
               </NavStyle>
-              <ImageStyle>
-                Login
-                {/* <img
-                src="/images/Man.jpg"
-                alt="logo"
-                style={{ width: "4.5rem", height: "4.5rem", objectFit: "fill" }}
-              /> */}
-              </ImageStyle>
+              {userNo === null ? (
+                <ImageStyle
+                  onClick={() => {
+                    navigate("/");
+                  }}
+                >
+                  Login
+                </ImageStyle>
+              ) : (
+                <ImageStyle onClick={() => dispatch(logOut())}>
+                  {userNo}
+                </ImageStyle>
+              )}
             </HeaderStyle>
           </Grid>
           <Grid xs={1}></Grid>
@@ -63,6 +72,7 @@ const NavStyle = styled.div`
   justify-content: space-between;
 `;
 const ImageStyle = styled.div`
+  cursor: pointer;
   height: 2.5rem;
   width: 2.5rem;
   border: 3px solid #d9d9d9;

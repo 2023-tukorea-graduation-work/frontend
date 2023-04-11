@@ -13,6 +13,7 @@ import {
   REHYDRATE,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import storageSession from "redux-persist/lib/storage/session";
 
 const reducers = combineReducers({
   leftBar: leftbarReducer,
@@ -24,7 +25,7 @@ const reducers = combineReducers({
 const persistConfig = {
   key: "root",
   version: 1,
-  storage: storage,
+  storage: storageSession,
   whitelist: ["login"],
 };
 
