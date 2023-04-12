@@ -6,12 +6,11 @@ import { Controller, useForm } from "react-hook-form";
 import axios from "axios";
 import { Button, Input, Switch, FormControlLabel } from "@mui/material";
 import styled from "@emotion/styled";
-
+import { useAppSelector } from "../../../app/hook";
 
 interface ProgramProps {
   programNo: number;
 }
-
 
 // --------------------------------------------------------다른사람 일정 가져오는거-----------
 // const fetchEvents = async (): Promise<any[]> => {
@@ -22,18 +21,18 @@ interface ProgramProps {
 
 const localizer = momentLocalizer(moment);
 interface MyEvent extends Event {
-  program_week_no : number,
-  content: string,
-  mento_no: number | null,
-  mentee_no: number | null,
-  user_gb: string,
-  schedule_gb: string,
+  program_week_no: number;
+  content: string;
+  mento_no: number | null;
+  mentee_no: number | null;
+  user_gb: string;
+  schedule_gb: string;
   schedule_start_datetime: Date;
   schedule_finish_datetime: Date;
 }
 
 const myEvent: MyEvent = {
-  program_week_no : 0,
+  program_week_no: 0,
   content: "",
   mento_no: null,
   mentee_no: null,
@@ -56,9 +55,9 @@ function dateFormat(date: any) {
   return date.getFullYear() + "-" + month + "-" + day + " " + hour + ":00:00";
 }
 
-
 const EventForm: React.FC<EventFormProps> = ({ onSubmit }) => {
   const [toggleValue, setToggleValue] = useState<string>("ToDoList");
+  const user = useAppSelector((state) => state.login.object);
   const toggleOnChange = () => {
     setToggleValue((state) =>
       state === "ToDoList" ? (state = "수업일정") : (state = "ToDoList")
@@ -76,27 +75,28 @@ const EventForm: React.FC<EventFormProps> = ({ onSubmit }) => {
     register,
     formState: { errors, isSubmitting },
   } = useForm();
-  
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // session Storage 로 부터 로그인한 유저정보 가져옴.
-    const user = JSON.parse(String(sessionStorage.getItem('user')));
 
-    console.log(event.content)
+    console.log(event.content);
 
     axios({
       method: "POST",
       url: "/api/v1/schedule",
       data: {
-        program_week_no : 5,
+        program_week_no: 5,
         content: `${event.content}`,
-        mento_no: (user.user_gb === "MENTO") ? user.user_no : null,
-        mentee_no: (user.user_gb === "MENTEE") ? user.user_no : null,
+        mento_no: user.user_gb === "MENTO" ? user.USER_NO : null,
+        mentee_no: user.user_gb === "MENTEE" ? user.USER_NO : null,
         user_gb: user.user_gb,
         schedule_gb: toggleValue,
         schedule_start_datetime: `${dateFormat(event.schedule_start_datetime)}`,
-        schedule_finish_datetime: `${dateFormat(event.schedule_finish_datetime)}`,
+        schedule_finish_datetime: `${dateFormat(
+          event.schedule_finish_datetime
+        )}`,
       },
     })
       .then((response) => {
@@ -128,7 +128,9 @@ const EventForm: React.FC<EventFormProps> = ({ onSubmit }) => {
         />
         <Input
           type="datetime-local"
-          value={moment(event.schedule_start_datetime).format("YYYY-MM-DDTHH:mm")}
+          value={moment(event.schedule_start_datetime).format(
+            "YYYY-MM-DDTHH:mm"
+          )}
           {...register("schedule_start_datetime")}
           onChange={handleChange}
           style={{
@@ -141,7 +143,9 @@ const EventForm: React.FC<EventFormProps> = ({ onSubmit }) => {
         <p>~</p>
         <Input
           type="datetime-local"
-          value={moment(event.schedule_finish_datetime).format("YYYY-MM-DDTHH:mm")}
+          value={moment(event.schedule_finish_datetime).format(
+            "YYYY-MM-DDTHH:mm"
+          )}
           {...register("schedule_finish_datetime")}
           onChange={handleChange}
           style={{
@@ -168,7 +172,6 @@ const EventForm: React.FC<EventFormProps> = ({ onSubmit }) => {
 };
 
 const Cal = (props: ProgramProps) => {
-
   const [selectedEvent, setSelectedEvent] = useState<MyEvent | null>(null);
   const [events, setEvents] = useState<MyEvent[]>([]);
 
@@ -185,7 +188,7 @@ const Cal = (props: ProgramProps) => {
     event.schedule_finish_datetime = endDate;
     setEvents((state) => [...state, event]);
   };
-  
+
   // ------------------------------------ 입력된 다른 사람 데이터 가져온거 뿌리는거 ----------------
   // useEffect(() => {
   //   fetchEvents().then((data) => {
@@ -197,7 +200,7 @@ const Cal = (props: ProgramProps) => {
   //       mento_no: 0,
   //       mentee_no: 0,
   //       user_gb: "",
-  //       schedule_gb: "", 
+  //       schedule_gb: "",
   //     }));
   //     setEvents(events);
   //   });

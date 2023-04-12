@@ -41,15 +41,21 @@ export const loginAsync = createAsyncThunk<loginSuccess, loginInfo>(
 export const loginSlice = createSlice({
   name: "login",
   initialState,
-  reducers: {},
+  reducers: {
+    logOut: (state) => {
+      state.message = "";
+      state.object = { USER_NO: null, user_gb: "" };
+      state.status = "";
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(loginAsync.fulfilled, (state, { payload }) => {
       state.message = payload.message;
       state.status = payload.status;
-      sessionStorage.setItem('user', JSON.stringify(state.object));
-      const user = JSON.parse(String(sessionStorage.getItem('user')));
-      console.log(user)
+      state.object.USER_NO = payload.object.USER_NO;
+      state.object.user_gb = payload.object.user_gb;
     });
   },
 });
+export const { logOut } = loginSlice.actions;
 export default loginSlice.reducer;
